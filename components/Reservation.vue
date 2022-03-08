@@ -69,6 +69,8 @@ export default {
   },
   methods: {
     async reserve() {
+      if(this.$auth.loggedIn) {
+
       const sendData = {
         user_id: this.$auth.user.id,
         restaurant_id: this.restaurant_id,
@@ -78,6 +80,9 @@ export default {
       console.log(sendData);
       await this.$axios.post("http://127.0.0.1:8000/api/reservation/", sendData);
       this.$router.push("/done");
+      } else {
+        this.$router.push("/login");
+      };
     },
   }
 };

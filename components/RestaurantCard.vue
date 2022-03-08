@@ -23,7 +23,6 @@
 
 <script>
 export default {
-  
   props: ["id", "url", "name", "area", "genre", "filteredFavoriteId"],
   methods: {
     goToDetail() {
