@@ -144,9 +144,9 @@ input {
   line-height: 50px;
 }
 
-#fontawesome-glass {
-  font-size: 20px;
-  color:red;
+.fontawesome-glass {
+  font-size: 20px !important;
+  color:lightgray;
 }
 
 .flex-center {
