@@ -146,6 +146,7 @@ input {
 
 .fontawesome-glass {
   font-size: 20px;
+  color:red;
 }
 
 .flex-center {
