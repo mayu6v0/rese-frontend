@@ -3,7 +3,8 @@ export default {
   ssr: false,
 
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
+  //ここをstaticにするとHerokuデプロイ後ページが見れなかった
+  target: 'server',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
