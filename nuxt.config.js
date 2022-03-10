@@ -75,7 +75,7 @@ export default {
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
-        url: 'http://localhost:8000',
+        url: 'https://m-rese.herokuapp.com',
         token: {
           maxAge: 60 * 60
         },

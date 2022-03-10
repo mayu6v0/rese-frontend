@@ -36,7 +36,7 @@ export default {
         restaurant_id: this.id,
       };
       // console.log(sendData);
-      await this.$axios.post("http://127.0.0.1:8000/api/favorite/", sendData);
+      await this.$axios.post("https://m-rese.herokuapp.com/api/favorite/", sendData);
       this.$emit('get-list');
         } else {
           this.$router.push("/login");
@@ -48,7 +48,7 @@ export default {
         restaurant_id: this.id,
       };
       // console.log(sendData);
-      await this.$axios.delete("http://127.0.0.1:8000/api/favorite/"+this.id, sendData);
+      await this.$axios.delete("https://m-rese.herokuapp.com/api/favorite/"+this.id, sendData);
       this.$emit('get-list');
     },
     async deleteFavoriteToMypage() {
@@ -57,7 +57,7 @@ export default {
         restaurant_id: this.id,
       };
       // console.log(sendData);
-      await this.$axios.delete("http://127.0.0.1:8000/api/favorite/"+this.id, sendData);
+      await this.$axios.delete("https://m-rese.herokuapp.com/api/favorite/"+this.id, sendData);
       this.$emit('get-favorite-list');
     }
   },
