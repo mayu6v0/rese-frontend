@@ -36,7 +36,7 @@ export default {
         restaurant_id: this.id,
       };
       // console.log(sendData);
-      await this.$axios.post("https://m-rese.herokuapp.com/api/favorite/", sendData);
+      await this.$axios.post("https://m-rese.herokuapp.com/api/favorite", sendData);
       this.$emit('get-list');
         } else {
           this.$router.push("/login");

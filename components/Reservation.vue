@@ -78,7 +78,7 @@ export default {
         number: this.number,
       };
       console.log(sendData);
-      await this.$axios.post("https://m-rese.herokuapp.com/api/reservation/", sendData);
+      await this.$axios.post("https://m-rese.herokuapp.com/api/reservation", sendData);
       this.$router.push("/done");
       } else {
         this.$router.push("/login");

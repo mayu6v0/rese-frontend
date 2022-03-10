@@ -60,14 +60,14 @@ export default {
   methods: {
     async getList() {
       const resData = await this.$axios.get(
-        "https://m-rese.herokuapp.com/api/restaurant/"
+        "https://m-rese.herokuapp.com/api/restaurant"
       );
       this.restaurantList = resData.data.data;
       this.getFavoriteList();
     },
     async getFavoriteList() {
       const resData = await this.$axios.get(
-        "https://m-rese.herokuapp.com/api/favorite/"
+        "https://m-rese.herokuapp.com/api/favorite"
       );
       this.favoriteList = resData.data.data;
     },
