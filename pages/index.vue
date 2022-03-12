@@ -158,7 +158,7 @@ export default {
 }
 select {
   border: none;
-  width: 80px;
+  width: 100px;
   height: 100%;
   margin-right: 20px;
 }
