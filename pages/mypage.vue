@@ -7,7 +7,8 @@
     <div class="flex mypage--container">
       <div class="reservation">
         <p class="title">予約状況</p>
-        <ReservationCard @get-reservation-list="getReservationList" v-for="(item, index) in filteredReservationList" :index="index" :key="item.id" :id="item.id" :name="item.restaurant.name" :datetime="item.datetime" :number="item.number"></ReservationCard>
+        <ReservationCard @get-reservation-list="getReservationList"
+         v-for="(item, index) in filteredReservationList" :index="index" :key="item.id" :id="item.id" :name="item.restaurant.name" :restaurant_id="item.restaurant.id" :datetime="item.datetime" :number="item.number"></ReservationCard>
         <div class="no-list" v-if="filteredReservationList == ''">
           予約情報はありません
         </div>
@@ -15,7 +16,7 @@
       <div class="favorite">
         <p class="title">お気に入り店舗</p>
         <div class="flex">
-          <!-- filteredFavoriteListnに存在するときは💖を表示 -->
+          <!-- filteredFavoriteListに存在するときは💖を表示 -->
           <RestaurantCard @get-favorite-list="getFavoriteList" v-for="item in filteredFavoriteList" :key="item.id" :id="item.restaurant.id" :favorite_id="item.id" :url="item.restaurant.image_url" :name="item.restaurant.name" :area="item.restaurant.area.name" :genre="item.restaurant.genre.name"></RestaurantCard>
           <div class="no-list" v-if="filteredFavoriteList == ''">
           お気に入り店舗はありません
@@ -41,6 +42,7 @@ export default {
         "https://m-rese.herokuapp.com/api/reservation"
       );
       this.reservationList = resData.data.data;
+      console.log(this.reservationList);
     },
     async getFavoriteList() {
       const resData = await this.$axios.get(
@@ -70,7 +72,7 @@ export default {
           filteredReservationList.push(reservation);
         }
       }
-      // console.log(filteredReservationList);
+      console.log(filteredReservationList);
       return filteredReservationList;
     },
     filteredFavoriteList() {
@@ -120,5 +122,9 @@ export default {
 
 .no-list {
   margin: 50px;
+}
+
+Reservation {
+  width : 100%;
 }
 </style>

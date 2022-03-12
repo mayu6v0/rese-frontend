@@ -3,21 +3,66 @@
       <fa :icon="['far', 'clock']" class="fontawesome" />
       <p class="card--title">予約{{ index+1 }}</p>
       <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/>
-
       <p class="card--content">Shop{{ name }}</p>
-      <p class="card--content">Date{{ date }}</p>
-      <p class="card--content">Time{{ time }}</p>
-      <p class="card--content">Number{{ number }}人</p>
-      <p @click="updateReservation">予約変更</p>
+      <div v-if="!update">
+        <p class="card--content">Date{{ date }}</p>
+        <p class="card--content">Time{{ time }}</p>
+        <p class="card--content">Number{{ number }}人</p>
+        <button @click="openUpdateReservation">予約を変更する</button>
+      </div>
+      <div v-else class="update">
+        <p class="update-title">予約変更</p>
+        <input class="select-date" type="date" v-model="newDate" ><br />
+        <select class="select-time" v-model="newTime">
+          <option value="" selected hidden>Time</option>
+          <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
+        </select><br />
+        <select class="select-number" v-model="newNumber">
+          <option value="" selected hidden>Number</option>
+          <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
+        </select>
+        <button @click="openUpdateReservation">キャンセル</button>
+        <button @click="updateReservation">変更する</button>
+        </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["index", "id", "name", "datetime", "number"],
+  props: ["index", "id", "name", "restaurant_id",  "datetime", "number"],
   data() {
     return {
-      reservationDate: []
+      reservationDate: [],
+      update: false,
+      newDate: "",
+      newTime: "",
+      newNumber: this.number,
+      timeList: [
+        { value: "17:00", name: "17:00" },
+        { value: "17:30", name: "17:30" },
+        { value: "18:00", name: "18:00" },
+        { value: "18:30", name: "18:30" },
+        { value: "19:00", name: "19:00" },
+        { value: "19:30", name: "19:30" },
+        { value: "20:00", name: "20:00" },
+        { value: "20:30", name: "20:30" },
+        { value: "21:00", name: "21:00" },
+        { value: "21:30", name: "21:30" },
+        { value: "22:00", name: "22:00" },
+        { value: "22:30", name: "22:30" }
+      ],
+      numberList: [
+        { value: "1", name: "1" },
+        { value: "2", name: "2" },
+        { value: "3", name: "3" },
+        { value: "4", name: "4" },
+        { value: "5", name: "5" },
+        { value: "6", name: "6" },
+        { value: "7", name: "7" },
+        { value: "8", name: "8" },
+        { value: "9", name: "9" },
+        { value: "10", name: "10" }
+      ],
     }
   },
   methods: {
@@ -25,9 +70,21 @@ export default {
       await this.$axios.delete("https://m-rese.herokuapp.com/api/reservation/"+this.id);
       this.$emit('get-reservation-list');
     },
+    openUpdateReservation() {
+      this.update = !this.update;
+    },
     async updateReservation() {
-       await this.$axios.delete("https://m-rese.herokuapp.com/api/reservation/"+this.id);
+      console.log(this.id);
+      const sendData = {
+        user_id: this.$auth.user.id,
+        restaurant_id: this.restaurant_id,
+        datetime: this.newDate+ " "+this.newTime,
+        number: this.newNumber,
+      };
+      console.log(sendData);
+      await this.$axios.put("https://m-rese.herokuapp.com/api/reservation/"+this.id, sendData);
       this.$emit('get-reservation-list');
+      this.update = !this.update;
     },
     getStringFromDate(date, format) {
         // formatのYYYYを文字列に置換
@@ -47,17 +104,19 @@ export default {
   },
   computed: {
     date() {
-        return this.getStringFromDate(this.reservationDate, 'YYYY-MM-DD');
+      // mypageから受け継いだdatetimeを文字列→date型（経過ミリ秒）に変換
+      const date = Date.parse(this.datetime);
+      // 経過ミリ秒から任意の日付を取得
+      this.reservationDate = new Date(date);
+      this.newDate = this.getStringFromDate(this.reservationDate, 'YYYY-MM-DD');
+      return this.newDate;
     },
     time() {
-        return this.getStringFromTime(this.reservationDate, 'hh:mm');
+      // const date = Date.parse(this.datetime);
+      // this.reservationDate = new Date(date);
+      this.newTime = this.getStringFromTime(this.reservationDate, 'hh:mm');
+      return this.newTime;
     },
-  },
-  created() {
-    // mypageから受け継いだdatetimeを文字列→date型（経過ミリ秒）に変換
-    const date = Date.parse(this.datetime);
-    // 経過ミリ秒から任意の日付を取得
-    this.reservationDate = new Date(date);
   },
 };
 </script>
@@ -89,4 +148,31 @@ export default {
  right: 15px;
 }
 
+.select-time {
+  width: 100%;
+  height: 25px;
+  margin-top: 20px;
+}
+
+.select-number {
+  width: 100%;
+  height: 25px;
+  margin-top: 20px;
+}
+
+.update {
+  padding: 10px;
+  margin-top: 20px;
+  background-color: rgb(13, 148, 238);
+  color: black;
+}
+
+.update-title {
+  font-size:18px;
+  margin-bottom: 20px;
+}
+
+button {
+  margin-top: 20px;
+}
 </style>

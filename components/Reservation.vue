@@ -6,28 +6,11 @@
         <input class="select-date" type="date" v-model="date" ><br />
         <select class="select-time" v-model="time">
           <option value="" selected hidden>Time</option>
-          <option value="17:00">17:00</option>
-          <option value="17:30">17:30</option>
-          <option value="18:00">18:00</option>
-          <option value="18:30">18:30</option>
-          <option value="19:00">19:00</option>
-          <option value="19:30">19:30</option>
-          <option value="20:00">20:00</option>
-          <option value="20:30">20:30</option>
-          <option value="21:00">21:00</option>
-          <option value="21:30">21:30</option>
-          <option value="22:00">22:00</option>
+          <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
         </select><br />
         <select class="select-number" v-model="number">
           <option value="" selected hidden>Number</option>
-          <option value="1">1人</option>
-          <option value="2">2人</option>
-          <option value="3">3人</option>
-          <option value="4">4人</option>
-          <option value="5">5人</option>
-          <option value="6">6人</option>
-          <option value="7">7人</option>
-          <option value="8">8人</option>
+          <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
         </select><br />
         <div class="confirm">
 
@@ -65,7 +48,33 @@ export default {
       date: "",
       time: "",
       number: "",
-    }
+      timeList: [
+        { value: "17:00", name: "17:00" },
+        { value: "17:30", name: "17:30" },
+        { value: "18:00", name: "18:00" },
+        { value: "18:30", name: "18:30" },
+        { value: "19:00", name: "19:00" },
+        { value: "19:30", name: "19:30" },
+        { value: "20:00", name: "20:00" },
+        { value: "20:30", name: "20:30" },
+        { value: "21:00", name: "21:00" },
+        { value: "21:30", name: "21:30" },
+        { value: "22:00", name: "22:00" },
+        { value: "22:30", name: "22:30" }
+      ],
+      numberList: [
+        { value: "1", name: "1" },
+        { value: "2", name: "2" },
+        { value: "3", name: "3" },
+        { value: "4", name: "4" },
+        { value: "5", name: "5" },
+        { value: "6", name: "6" },
+        { value: "7", name: "7" },
+        { value: "8", name: "8" },
+        { value: "9", name: "9" },
+        { value: "10", name: "10" }
+      ],
+    };
   },
   methods: {
     async reserve() {
