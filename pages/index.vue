@@ -1,38 +1,38 @@
 <template>
   <div class="container">
     <Header />
-      <div class="search-field">
-          <select v-model="searchArea">
-            <option value="" selected>All area</option>
-            <option v-for="area in areaList" :key="area.id" :value="area.value">
-              {{ area.name }}
-            </option>
-          </select>
-        
-          <select v-model="searchGenre">
-            <option value="" selected>All genre</option>
-            <option v-for="genre in genreList" :key="genre.id" :value="genre.value">
-              {{ genre.name }}
-            </option>
-          </select>
-  
-        <div class="search relative">
-          <fa :icon="['fas', 'magnifying-glass']" class="fontawesome fontawesome-glass" />
-          <input type="text" v-model="searchWord" placeholder="Search..." />
-        </div>
+    <div class="search-field">
+      <select v-model="searchArea">
+        <option value="" selected>All area</option>
+        <option v-for="area in areaList" :key="area.id" :value="area.value">
+          {{ area.name }}
+        </option>
+      </select>
+      <select v-model="searchGenre">
+        <option value="" selected>All genre</option>
+        <option v-for="genre in genreList" :key="genre.id" :value="genre.value">
+          {{ genre.name }}
+        </option>
+      </select>
+      <div class="search relative">
+        <fa :icon="['fas', 'magnifying-glass']" class="fontawesome fontawesome-glass" />
+        <input type="text" v-model="searchWord" placeholder="Search..." />
       </div>
+    </div>
     <div class="flex flex-center">
-      <RestaurantCard @get-list="getList"
-        v-for="item in filteredList"
+      <RestaurantCard @get-list="getRestaurantList"
+      @get-favorite-list="getFavoriteList"
+        v-for="item in filteredRestaurant"
         :key="item.id"
         :id="item.id"
         :url="item.image_url"
         :name="item.name"
         :area="item.area.name"
         :genre="item.genre.name"
+        :filteredFavoriteList = "filteredFavoriteList"
         :filteredFavoriteId="filteredFavoriteId"
       ></RestaurantCard>
-      <p class="no-restaurant" v-if="filteredList == ''">検索結果に一致する店舗はありません</p>
+      <p class="no-restaurant" v-if="filteredRestaurant == ''">検索結果に一致する店舗はありません</p>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     return {
       restaurantList: [],
       favoriteList: [],
-      // filteredFavoriteList: [],
+      filteredFavoriteList: [],
       searchArea: "",
       searchGenre: "",
       searchWord: "",
@@ -62,13 +62,16 @@ export default {
     }
   },
   methods: {
-    async getList() {
+    //飲食店一覧のAPIを取得する
+    async getRestaurantList() {
       const resData = await this.$axios.get(
         "https://m-rese.herokuapp.com/api/restaurant"
       );
       this.restaurantList = resData.data.data;
+      //homeで♡押したときに変更が適用されるように際読み込み
       this.getFavoriteList();
     },
+    //お気に入り一覧のAPIを取得する
     async getFavoriteList() {
       const resData = await this.$axios.get(
         "https://m-rese.herokuapp.com/api/favorite"
@@ -77,43 +80,50 @@ export default {
     },
   },
   computed: {
-    filteredList() {
-      const filteredArray = [];
+    //飲食店一覧から検索条件に合うものを抽出する
+    filteredRestaurant() {
+      //検索条件に合う飲食店一覧で新たに配列を作成する
+      const filteredRestaurant = [];
       for (let i = 0; i < this.restaurantList.length; i++) {
         const restaurant = this.restaurantList[i];
         if (restaurant.area.name.indexOf(this.searchArea) !== -1 && restaurant.genre.name.indexOf(this.searchGenre) !== -1 && restaurant.name.indexOf(this.searchWord) !== -1) {
-          filteredArray.push(restaurant);
+          filteredRestaurant.push(restaurant);
         }
       }
-      return filteredArray;
+      return filteredRestaurant;
     },
     filteredFavoriteId() {
-      const filteredArray = [];
+      const filteredFavoriteList = [];
+        //ユーザーがログインしていたら、お気に入り一覧のuser_idとログインidが一致するもので新たに配列を作成する
         if(this.$auth.loggedIn) {
           for (let i = 0; i < this.favoriteList.length; i++) {
             const favorite = this.favoriteList[i];
             if (favorite.user_id === this.$auth.user.id) {
-              filteredArray.push(favorite);
+              filteredFavoriteList.push(favorite);
             }
           }
-          console.log(filteredArray);
+          this.filteredFavoriteList = filteredFavoriteList;
+          // console.log(filteredFavoriteList);
           // return filteredArray;
-          const array =[];
-          for(let k = 0; k < filteredArray.length; k++) {
-            const a = filteredArray[k].restaurant_id;
-            array.push(a);
+
+          //filterdFavoriteListから、そのrestaurant_idだけで別の配列を作る
+          const filteredFavoriteIdList =[];
+          for(let i = 0; i < filteredFavoriteList.length; i++) {
+            const favoriteListId = filteredFavoriteList[i].restaurant_id;
+            filteredFavoriteIdList.push(favoriteListId);
           }
-        console.log(array);
-        return array;
+        console.log(filteredFavoriteIdList);
+        return filteredFavoriteIdList;
 
         } else {
-          return filteredArray;
+          return filteredFavoriteList; //ログインしていない場合は空の配列を返す
         }
     },
   },
   created() {
-      this.getList();
-      // this.getFavoriteList();
+      this.getRestaurantList();
+      //いらない？
+      this.getFavoriteList();
   },
 };
 </script>

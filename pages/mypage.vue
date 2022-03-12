@@ -13,7 +13,7 @@
         <p class="title">お気に入り店舗</p>
         <div class="flex">
           <!-- filteredFavoriteListnに存在するときは💖を表示 -->
-          <RestaurantCard @get-favorite-list="getFavoriteList" v-for="item in filteredFavoriteList" :key="item.id" :id="item.id" :url="item.restaurant.image_url" :name="item.restaurant.name" :area="item.restaurant.area.name" :genre="item.restaurant.genre.name"></RestaurantCard>
+          <RestaurantCard @get-favorite-list="getFavoriteList" v-for="item in filteredFavoriteList" :key="item.id" :id="item.restaurant.id" :favorite_id="item.id" :url="item.restaurant.image_url" :name="item.restaurant.name" :area="item.restaurant.area.name" :genre="item.restaurant.genre.name"></RestaurantCard>
         </div>
       </div>
     </div>
@@ -32,13 +32,13 @@ export default {
   methods: {
     async getReservationList() {
       const resData = await this.$axios.get(
-        "http://127.0.0.1:8000/api/reservation/"
+        "https://m-rese.herokuapp.com/api/reservation"
       );
       this.reservationList = resData.data.data;
     },
     async getFavoriteList() {
       const resData = await this.$axios.get(
-        "http://127.0.0.1:8000/api/favorite/"
+        "https://m-rese.herokuapp.com/api/favorite"
       );
       this.favoriteList = resData.data.data;
     },
@@ -54,34 +54,29 @@ export default {
   },
   computed: {
     filteredReservationList() {
-      const filteredArray = [];
-
+      const filteredReservationList = [];
       // もしユーザーがログインしてたら
-      // if(this.$auth.loggedIn)
-
       // restaurantList[i].user_idが
       // this.$auth.user.idと一致するものを抽出して新たな配列を作る
-
-
       for (let i = 0; i < this.reservationList.length; i++) {
         const reservation = this.reservationList[i];
         if (reservation.user_id === this.$auth.user.id) {
-          filteredArray.push(reservation);
+          filteredReservationList.push(reservation);
         }
       }
-      console.log(filteredArray);
-      return filteredArray;
+      // console.log(filteredReservationList);
+      return filteredReservationList;
     },
     filteredFavoriteList() {
-      const filteredArray = [];
+      const filteredFavoriteList = [];
       for (let i = 0; i < this.favoriteList.length; i++) {
         const favorite = this.favoriteList[i];
         if (favorite.user_id === this.$auth.user.id) {
-          filteredArray.push(favorite);
+          filteredFavoriteList.push(favorite);
         }
       }
-      console.log(filteredArray);
-      return filteredArray;
+      console.log(filteredFavoriteList);
+      return filteredFavoriteList;
     },
   },
   created() {

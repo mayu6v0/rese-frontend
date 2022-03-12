@@ -33,7 +33,7 @@ export default {
   methods: {
     async getDetail() {
       const resData = await this.$axios.get(
-        "https://m-rese.herokuapp.com/api/restaurant"+"/"+this.$route.params.id
+        "https://m-rese.herokuapp.com/api/restaurant/"+this.$route.params.id
       );
       const restaurantData = resData.data.data;
       this.name = restaurantData[0].name;

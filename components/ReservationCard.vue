@@ -13,18 +13,15 @@
 
 <script>
 export default {
-  props: ["index","id", "name", "datetime", "number"],
+  props: ["index", "id", "name", "datetime", "number"],
   data() {
     return {
       reservationDate: []
     }
   },
   methods: {
-    goToDetail() {
-      this.$router.push("/detail"+"/"+this.id)
-    },
     async deleteReservation() {
-      await this.$axios.delete("http://127.0.0.1:8000/api/reservation"+this.id);
+      await this.$axios.delete("https://m-rese.herokuapp.com/api/reservation/"+this.id);
       this.$emit('get-reservation-list');
     },
     getStringFromDate(date, format) {

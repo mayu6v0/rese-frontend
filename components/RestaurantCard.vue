@@ -10,12 +10,14 @@
 
       <!-- mypageの時はお気に入り店舗だけが表示される -->
       <div v-if="mypage" class="favorite-icon">
-        <fa :icon="['fas', 'heart']" class="fontawesome heart-favorite" v-if="id !== null" @click="deleteFavoriteToMypage" />
+        <fa :icon="['fas', 'heart']" class="fontawesome heart-favorite" v-if="favorite_id !== null" @click="deleteFavoriteAtMypage" />
       </div>
       <!-- それ以外（home）の時はお気に入り登録の有無によってハートの表示が変わる -->
       <div v-else class="favorite-icon">
-          <fa :icon="['fas', 'heart']" class="fontawesome heart-favorite" v-if="isFavorite" @click="deleteFavorite" />
-          <fa :icon="['fas', 'heart']" class="fontawesome heart" v-else @click="addFavorite" />
+        <!-- お気に入り店舗の時 -->
+        <fa :icon="['fas', 'heart']" class="fontawesome heart-favorite" v-if="isFavorite" @click="deleteFavorite" />
+        <!-- お気に入り店舗でない時 -->
+        <fa :icon="['fas', 'heart']" class="fontawesome heart" v-else @click="addFavorite" />
       </div>
     </div>
   </div>
@@ -23,7 +25,7 @@
 
 <script>
 export default {
-  props: ["id", "url", "name", "area", "genre", "filteredFavoriteId"],
+  props: ["id", "favorite_id", "url", "name", "area", "genre", "filteredFavoriteList", "filteredFavoriteId"],
   methods: {
     goToDetail() {
       this.$router.push("/detail/"+this.id)
@@ -43,21 +45,21 @@ export default {
         }
     },
     async deleteFavorite() {
-      const sendData = {
-        user_id: this.$auth.user.id,
-        restaurant_id: this.id,
+      let deleteFavoriteId = "";
+      for (let i = 0; i < this.filteredFavoriteList.length; i++) {
+        const favorite = this.filteredFavoriteList[i];
+        if (favorite.restaurant.id === this.id) {
+          // console.log(favorite.id);
+          deleteFavoriteId = favorite.id;
+        }
       };
-      // console.log(sendData);
-      await this.$axios.delete("https://m-rese.herokuapp.com/api/favorite/"+this.id, sendData);
-      this.$emit('get-list');
+          // console.log(deleteFavoriteId);
+      await this.$axios.delete("https://m-rese.herokuapp.com/api/favorite/"+deleteFavoriteId);
+      console.log(deleteFavoriteId);
+      this.$emit('get-favorite-list');
     },
-    async deleteFavoriteToMypage() {
-      const sendData = {
-        user_id: this.$auth.user.id,
-        restaurant_id: this.id,
-      };
-      // console.log(sendData);
-      await this.$axios.delete("https://m-rese.herokuapp.com/api/favorite/"+this.id, sendData);
+    async deleteFavoriteAtMypage() {
+      await this.$axios.delete("https://m-rese.herokuapp.com/api/favorite/"+this.favorite_id);
       this.$emit('get-favorite-list');
     }
   },
