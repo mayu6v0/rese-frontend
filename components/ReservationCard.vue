@@ -105,7 +105,8 @@ export default {
   computed: {
     date() {
       // mypageから受け継いだdatetimeを文字列→date型（経過ミリ秒）に変換
-      const date = Date.parse(this.datetime);
+      const date = Date.parse(this.datetime.replace(/-/g, "/"));
+      console.log(date);
       // 経過ミリ秒から任意の日付を取得
       this.reservationDate = new Date(date);
       this.newDate = this.getStringFromDate(this.reservationDate, 'YYYY-MM-DD');

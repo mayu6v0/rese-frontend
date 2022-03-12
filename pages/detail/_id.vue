@@ -4,7 +4,7 @@
       <Header />
       <div class="restaurant-detail">
         <div class="group">
-          <button class="back-btn" @click="goToHome">＜</button>
+          <button class="back-btn" @click="backPage">＜</button>
           <h2 class="restaurant-name">{{ name }}</h2>
         </div>
         <img class="restaurant-img" :src="image_url">
@@ -42,8 +42,8 @@ export default {
       this.genre = restaurantData[0].genre.name;
       this.overview = restaurantData[0].overview;
     },
-    goToHome() {
-      this.$router.push("/");
+    backPage() {
+      this.$router.go(-1);
     },
   },
   created() {
