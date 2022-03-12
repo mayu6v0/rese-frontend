@@ -48,26 +48,18 @@ export default {
     'nuxt-fontawesome'
   ],
   fontawesome: {
+    component: "fa",
     imports: [
       {
-        set: '@fortawesome/free-solid-svg-icons',
-        icons: ['fas'],
-      }
-    ]
+        set: "@fortawesome/free-solid-svg-icons",
+        icons: ["faMagnifyingGlass", "faHeart", "faUser", "faEnvelope", "faLock"],
+      },
+       {
+        set: "@fortawesome/free-regular-svg-icons",
+        icons: ["faClock", "faCircleXmark"],
+      },
+    ],
   },
-  // fontawesome: {
-  //   component: "fa",
-  //   imports: [
-  //     {
-  //       set: "@fortawesome/free-solid-svg-icons",
-  //       icons: ["faMagnifyingGlass", "faHeart", "faUser", "faEnvelope", "faLock"],
-  //     },
-  //      {
-  //       set: "@fortawesome/free-regular-svg-icons",
-  //       icons: ["faClock", "faCircleXmark"],
-  //     },
-  //   ],
-  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
