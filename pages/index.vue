@@ -2,20 +2,24 @@
   <div class="container">
     <Header />
       <div class="search-field">
-        <select v-model="searchArea">
-          <option value="" selected>All area</option>
-          <option v-for="area in areaList" :key="area.id" :value="area.value">
-            {{ area.name }}
-          </option>
-        </select>
-        <select v-model="searchGenre">
-          <option value="" selected>All genre</option>
-          <option v-for="genre in genreList" :key="genre.id" :value="genre.value">
-            {{ genre.name }}
-          </option>
-        </select>
+          <select v-model="searchArea">
+            <option value="" selected>All area</option>
+            <option v-for="area in areaList" :key="area.id" :value="area.value">
+              {{ area.name }}
+            </option>
+          </select>
+        
+          <select v-model="searchGenre">
+            <option value="" selected>All genre</option>
+            <option v-for="genre in genreList" :key="genre.id" :value="genre.value">
+              {{ genre.name }}
+            </option>
+          </select>
+  
+        <div class="search relative">
           <fa :icon="['fas', 'magnifying-glass']" class="fontawesome fontawesome-glass" />
-        <input type="text" v-model="searchWord" placeholder="Search..." />
+          <input type="text" v-model="searchWord" placeholder="Search..." />
+        </div>
       </div>
     <div class="flex flex-center">
       <RestaurantCard @get-list="getList"
@@ -127,27 +131,43 @@ export default {
   position: absolute;
   top: 40px;
   right: 70px;
-  /* transform: translate(0, -50%); */
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
+.search {
+  display: inline-block;
+  height: 100%;
+  /* border: 1px solid blue; */
+
+}
 select {
   border: none;
-  width: 100px;
+  width: 80px;
   height: 100%;
+  margin-right: 20px;
 }
 
 input {
   border: none;
   width : 200px;
+  height: 50px;
   line-height: 50px;
+  margin-left: 30px;
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 30px; */
+  /* transform: translate(0, 0); */
 }
+
 .fontawesome-glass {
-  
-  width: 20px;
-  /* height: 50px; */
+  width: 25px;
+  height: 25px;
   color:lightgray;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  margin-right: 10px;
 }
 
 .flex-center {
