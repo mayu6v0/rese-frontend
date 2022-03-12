@@ -6,15 +6,15 @@
         <span class="menu__line--middle"></span>
         <span class="menu__line--bottom"></span>
       </div>
-      <NuxtLink to="/" class="header-title" :class="isOpen ? 'open' : ''"
-        >Rese</NuxtLink
+      <a @click="goToHome" class="header-title" :class="isOpen ? 'open' : ''"
+        >Rese</a
       >
     </div>
     <div class="menu-bg" :class="isOpen ? 'open' : ''">
       <div class="menu-list">
         <ul @click="changeIsOpen">
           <li class="menu-item">
-            <NuxtLink to="/">Home</NuxtLink>
+            <a @click="goToHome">Home</a>
           </li>
           <li class="menu-item" v-if="!$auth.loggedIn">
             <NuxtLink to="/register">Registration</NuxtLink>
@@ -53,9 +53,11 @@ export default {
         console.log(error);
       }
     },
-    // goToHome() {
-    //   this.$router.push("/");
-    // } homeに戻った時に検索条件がリセットされるようにしたい
+    goToHome() {
+      // homeのままのとき検索条件がリセットされる
+      this.$emit('reset-filter');
+      this.$router.push("/");
+    },
   },
 };
 </script>

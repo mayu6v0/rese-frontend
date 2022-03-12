@@ -91,8 +91,8 @@ export default {
 <style scoped>
 
 .reservation-container {
-  border: 3px solid green;
-  height: 100%;
+  /* border: 3px solid green; */
+  height: 85%;
   margin: 0 70px;
 }
 .form {
@@ -124,7 +124,7 @@ export default {
 .confirm {
   margin-top: 20px;
   padding: 20px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   background-color: rgb(39, 140, 173);
 }
 .confirm--table {

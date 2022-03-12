@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header />
+    <Header @reset-filter="resetFilter"/>
     <div class="search-field">
       <select v-model="searchArea">
         <option value="" selected>All area</option>
@@ -32,7 +32,7 @@
         :filteredFavoriteList = "filteredFavoriteList"
         :filteredFavoriteId="filteredFavoriteId"
       ></RestaurantCard>
-      <p class="no-restaurant" v-if="filteredRestaurant == ''">検索結果に一致する店舗はありません</p>
+      <div class="no-restaurant" v-if="filteredRestaurant == ''">検索結果に一致する店舗はありません</div>
     </div>
   </div>
 </template>
@@ -77,6 +77,12 @@ export default {
         "https://m-rese.herokuapp.com/api/favorite"
       );
       this.favoriteList = resData.data.data;
+    },
+    resetFilter() {
+      //検索条件をリセット
+      this.searchArea = "",
+      this.searchGenre = "",
+      this.searchWord = ""
     },
   },
   computed: {

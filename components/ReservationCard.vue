@@ -1,13 +1,14 @@
 <template>
-  <div class="card">
+  <div class="card relative">
       <fa :icon="['far', 'clock']" class="fontawesome" />
       <p class="card--title">予約{{ index+1 }}</p>
-      <fa :icon="['far', 'circle-xmark']" class="fontawesome" @click="deleteReservation"/>
+      <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/>
 
       <p class="card--content">Shop{{ name }}</p>
       <p class="card--content">Date{{ date }}</p>
       <p class="card--content">Time{{ time }}</p>
       <p class="card--content">Number{{ number }}人</p>
+      <p @click="updateReservation">予約変更</p>
   </div>
 </template>
 
@@ -24,6 +25,10 @@ export default {
       await this.$axios.delete("https://m-rese.herokuapp.com/api/reservation/"+this.id);
       this.$emit('get-reservation-list');
     },
+    async updateReservation() {
+       await this.$axios.delete("https://m-rese.herokuapp.com/api/reservation/"+this.id);
+      this.$emit('get-reservation-list');
+    },
     getStringFromDate(date, format) {
         // formatのYYYYを文字列に置換
         format = format.replace(/YYYY/g, date.getFullYear());
@@ -32,12 +37,13 @@ export default {
         // 日を文字列に置換して先頭に0を足し、後ろの2文字を取得してMM部分に置換
         format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
         return format;
-      },
+    },
     getStringFromTime(date, format) {
         format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
         format = format.replace(/mm/g, ('0' + this.reservationDate.getMinutes()).slice(-2));
         return format;
-      },
+    },
+
   },
   computed: {
     date() {
@@ -60,7 +66,7 @@ export default {
 .card {
     width: 400px;
     border-radius: 10px;
-    margin: 10px 0;
+    margin: 20px 0;
     background-color: blue;
     box-shadow: 5px 5px lightgray;
     padding: 20px;
@@ -75,6 +81,12 @@ export default {
 
 .card--content {
   margin-top: 30px;
+}
+
+.xmark {
+ position: absolute;
+ top: 15px;
+ right: 15px;
 }
 
 </style>
