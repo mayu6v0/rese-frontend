@@ -14,7 +14,8 @@
             {{ genre.name }}
           </option>
         </select>
-        <fa :icon="['fas', 'magnifying-glass']" class="fontawesome fontawesome-glass" />
+        <font-awesome-icon icon="magnifying-glass" style="font-size: 30px" />
+        <!-- <fa :icon="['fas', 'magnifying-glass']" class="fontawesome fontawesome-glass" /> -->
         <input type="text" v-model="searchWord" placeholder="Search..." />
       </div>
     <div class="flex flex-center">
