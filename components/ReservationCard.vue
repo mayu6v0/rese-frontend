@@ -21,10 +21,10 @@ export default {
   },
   methods: {
     goToDetail() {
-      this.$router.push("/detail/"+this.id)
+      this.$router.push("/detail"+"/"+this.id)
     },
     async deleteReservation() {
-      await this.$axios.delete("http://127.0.0.1:8000/api/reservation/"+this.id);
+      await this.$axios.delete("http://127.0.0.1:8000/api/reservation"+this.id);
       this.$emit('get-reservation-list');
     },
     getStringFromDate(date, format) {
