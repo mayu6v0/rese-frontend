@@ -1,11 +1,9 @@
 <template>
-<div class="container">
+  <div class="container">
   <Header />
-  <div class="relative">
-
-  <div class="login-container">
+    <div class="login-container">
       <p class="form-title">Login</p>
-  <form class="login-form" @submit.prevent="login">
+    <form class="login-form" @submit.prevent="login">
     <div class="input-area">
       <fa :icon="['fas', 'envelope']" class="fontawesome" />
     <input type="email" v-model="email" placeholder="Email" required />
@@ -20,8 +18,6 @@
   </form>
   </div>
   </div>
-
-</div>
 </template>
 
 <script>
@@ -52,15 +48,10 @@ export default {
 
 <style scoped>
 .container {
-  padding: 0;
-  /* margin: 0; */
+  /* position: relative; */
+  width: 95%;
+  margin: 0 auto;
   height: 100vh;
-}
-
-.relative {
-  position: relative;
-  /* border: 1px solid red; */
-  height: 85vh;
 }
 
 .login-container {

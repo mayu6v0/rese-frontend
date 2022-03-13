@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <Header />
-    <div class="relative">
       <div class="register-container">
         <p class="form-title">Registration</p>
         <form class="register-form" @submit.prevent="register">
@@ -25,13 +24,12 @@
           </validation-observer>
         </form>
       </div>
-      <div>
+      <!-- <div>
         <validation-provider v-slot="ProviderProps" rules="required">
           <input type="text" v-model="name" name="ユーザーネーム" placeholder="User name" required /><br />
           <div class="error">{{ ProviderProps.errors[0] }}</div>
         </validation-provider>
-      </div>
-    </div>
+      </div> -->
   </div>
 </template>
 
@@ -65,15 +63,9 @@ export default {
 <style scoped>
 
 .container {
-  padding: 0;
-  /* margin: 0; */
+  width: 95%;
+  margin: 0 auto;
   height: 100vh;
-}
-
-.relative {
-  position: relative;
-  /* border: 1px solid red; */
-  height: 85vh;
 }
 
 .register-container {
