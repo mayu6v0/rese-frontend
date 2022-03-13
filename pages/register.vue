@@ -46,7 +46,7 @@ export default {
   methods: {
     async register() {
       try {
-        await this.$axios.post("http://127.0.0.1:8001/api/auth/register", {
+        await this.$axios.post("http://m-rese.herokuapp.com/api/auth/register", {
           name: this.name,
           email: this.email,
           password: this.password,

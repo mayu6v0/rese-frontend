@@ -1,13 +1,10 @@
 <template>
   <div class="container">
     <Header />
-    <div class="relarive">
       <div class="card__thanks">
         <p class="card__text">会員登録ありがとうございます</p>
         <button @click="goToLogin">ログインする</button>
       </div>
-
-    </div>
   </div>
 </template>
 
@@ -23,12 +20,9 @@ export default {
 
 <style scoped>
 .container {
+  width: 95%;
+  margin: 0 auto;
   height: 100vh;
-  padding: 0;
-}
-.relative {
-  height: 80%;
-  position: relative;
 }
 
 .card__thanks {

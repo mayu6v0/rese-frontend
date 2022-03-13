@@ -68,9 +68,11 @@ export default {
 }
 
 .restaurant-detail {
-    padding: 50px 70px;
-    /* border: 1px solid red; */
-    /* margin-bottom: 30px; */
+  width: 85%;
+  margin: 0 auto;
+  padding: 50px 0;
+  /* border: 1px solid red; */
+  /* margin-bottom: 30px; */
 }
 
 .back-btn {
@@ -89,7 +91,7 @@ export default {
 
 .restaurant-name {
   display: inline-block;
-  font-size: 25px;
+  font-size: 30px;
   /* border: solid 1px red; */
   position: absolute;
   top: 50%;
@@ -97,10 +99,11 @@ export default {
   transform: translate(0, -50%);
 
 }
+
 .restaurant-img {
   width: 100%;
   display: block;
-  margin-top: 25px;
+  margin-top: 40px;
 }
 
 .restaurant-tag {

@@ -1,13 +1,11 @@
 <template>
   <div class="container">
     <Header />
-    <div class="relative">
       <div class="card__done">
         <p class="card__text">ご予約ありがとうございます</p>
         <button @click="goToMypage">戻る</button>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -22,12 +20,10 @@ export default {
 
 <style scoped>
 .container {
+  width: 95%;
+  margin: 0 auto;
   height: 100vh;
   padding: 0;
-}
-.relative {
-  height: 80%;
-  position: relative;
 }
 
 .card__done {
@@ -46,6 +42,7 @@ export default {
   text-align: center;
   font-size: 20px;
 }
+
 button {
   color: #fff;
   background-color: blue;

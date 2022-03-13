@@ -103,7 +103,7 @@ export default {
 .reservation-container {
   /* border: 3px solid green; */
   height: 85%;
-  margin: 25px 70px;
+  margin: 50px 70px;
 }
 .form {
   color: white;
@@ -114,7 +114,7 @@ export default {
 }
 
 .reservation-title {
-  font-size: 30px;
+  font-size: 28px;
   margin-bottom: 25px;
 }
 
@@ -163,7 +163,7 @@ export default {
 @media screen and (max-width: 768px) {
   .reservation-container {
   height: 450px;
-  /* margin: 0 70px; */
+  margin-top: 30px;
 }
   .form {
     padding:10px 40px;
