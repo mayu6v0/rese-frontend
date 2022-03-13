@@ -109,7 +109,7 @@ export default {
   color: white;
   padding:40px;
   border-radius: 5px 5px 0 0;
-  background: rgb(50, 50, 109);
+  background: #0E3EDA;
   height: 90%;
 }
 
@@ -135,11 +135,11 @@ export default {
   margin-top: 20px;
   padding: 20px;
   /* border: 1px solid red; */
-  background-color: rgb(39, 140, 173);
+  background-color: #41B3D3;
 }
 .confirm--table {
   width: 100%;
-  background-color: rgb(39, 140, 173);
+  background-color: #41B3D3;
   border-radius: 5px;
   text-align: left;
   line-height: 30px;
@@ -151,7 +151,7 @@ export default {
 
 .reservation-btn {
   color: #fff;
-  background: blue;
+  background: #0074E4;
   font-size: 18px;
   border: none;
   box-shadow: none;
@@ -179,6 +179,8 @@ export default {
 
   .reservation-btn {
     height: 20%;
+  cursor: pointer;
+
   }
 }
 </style>

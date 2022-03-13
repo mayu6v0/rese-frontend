@@ -138,7 +138,7 @@ export default {
 .container {
   width: 95%;
   margin: 0 auto;
-  background-color: rgb(245, 239, 239);
+  background-color: #EFF0F4;
   /* border: 1px solid red; */
 }
 
@@ -154,7 +154,7 @@ export default {
 .search {
   display: inline-block;
   height: 100%;
-  /* border: 1px solid blue; */
+  /* border: 1px solid #0074E4; */
 }
 select {
   border: none;

@@ -6,8 +6,7 @@
 
 <style scoped>
 .background {
-  background-color: rgb(245, 239, 239);
-  /* padding横70px */
+  background-color: #EFF0F4;
   padding: 20px 0;
   min-height: 100vh;
 }

@@ -111,11 +111,13 @@ export default {
 
 button {
   color: #fff;
-  background-color: blue;
+  background-color: #0074E4;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   margin-top: 10px;
+  cursor: pointer;
+
 }
 
 .favorite-icon {
@@ -127,9 +129,13 @@ button {
 
 .heart {
   color: lightgray;
+  cursor: pointer;
+
 }
 
 .heart-favorite {
   color: #f83979;
+  cursor: pointer;
+
 }
 </style>

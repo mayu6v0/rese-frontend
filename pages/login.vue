@@ -105,6 +105,8 @@ button {
   padding: 5px 10px;
   margin: 10px 0 0 auto;
   display: block;
+  cursor: pointer;
+
   /* align-items: right; */
 }
 

@@ -54,8 +54,7 @@ export default {
 
 <style scoped>
 .container {
-  /* padding: 0; */
-  width: 95%;
+  width: 93.4%;
   margin: 0 auto;
   background-color: rgb(245, 239, 239);
 }
@@ -79,15 +78,15 @@ export default {
   height: 30px;
   cursor: pointer;
   border-radius: 5px;
-  /* margin-right: 20px; */
   padding: 0;
   box-shadow: 5px 5px lightgray;
-  /* border: solid 1px red; */
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
   border: none;
+  background-color: #fff;
 }
+
 .restaurant-name {
   display: inline-block;
   font-size: 25px;

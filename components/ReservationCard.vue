@@ -143,7 +143,7 @@ export default {
     max-width: 400px;
     border-radius: 10px;
     margin: 20px auto;
-    background-color: blue;
+    background-color: #0074E4;
     box-shadow: 5px 5px lightgray;
     padding: 20px;
     color: white;
@@ -159,15 +159,19 @@ export default {
  position: absolute;
  top: 15px;
  right: 15px;
+  cursor: pointer;
+
 }
 
 table {
-  margin: 10px;
+  margin-top: 20px;
 }
 table th,
 table td {
-  padding: 10px;
+  padding: 10px 20px;
+  text-align: left;
 }
+
 
 .restaurant-name {
   font-size: 18px;
@@ -198,7 +202,15 @@ table td {
 }
 
 button {
-  margin-top: 20px;
+  color: #fff;
+  font-size: 18px;
+  background-color: #41B3D3;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px 0 0 auto;
+  cursor: pointer;
+  /* display: inline-block; */
 }
 
 @media screen and (max-width: 768px) {

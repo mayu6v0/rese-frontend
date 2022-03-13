@@ -72,12 +72,12 @@ export default {
 .header__menu {
   /* margin: 0 70px; */
   padding: 20px 0;
-  background-color: rgb(245, 239, 239);
+  background-color: #EFF0F4;
   /* border: 1px solid red; */
 }
 
 .header-title {
-  color: blue;
+  color: #0E3EDA;
   font-size: 40px;
   font-weight: bold;
 }
@@ -90,7 +90,7 @@ export default {
   display: inline-block;
   width: 36px;
   height: 36px;
-  background-color: blue;
+  background-color: #0E3EDA;
   cursor: pointer;
   border-radius: 5px;
   position: relative;
@@ -168,7 +168,7 @@ export default {
 .menu-item a {
   display: block;
   font-size: 30px;
-  color: blue;
+  color: #0E3EDA;
   text-decoration: none;
   text-align: center;
   padding: 30px;
