@@ -20,6 +20,12 @@ ul {
   flex-wrap: wrap;
 }
 
+.flex-center {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+}
+
 a {
   text-decoration: none;
   cursor: pointer;

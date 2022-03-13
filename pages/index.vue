@@ -19,7 +19,7 @@
         <input type="text" v-model="searchWord" placeholder="Search..." />
       </div>
     </div>
-    <div class="flex flex-center">
+    <div class="flex-center">
       <RestaurantCard @get-list="getRestaurantList"
       @get-favorite-list="getFavoriteList"
         v-for="item in filteredRestaurant"
@@ -136,7 +136,8 @@ export default {
 
 <style scoped>
 .container {
-  padding: 0;
+  width: 95%;
+  margin: 0 auto;
   background-color: rgb(245, 239, 239);
   /* border: 1px solid red; */
 }
@@ -185,10 +186,6 @@ input {
   margin-right: 10px;
 }
 
-.flex-center {
-  justify-content: center;
-}
-
 .no-restaurant{
   height: 100vh;
   margin-top: 100px;
@@ -198,6 +195,7 @@ input {
 
 @media screen and (max-width: 768px) {
   .search-field {
+    width: 90%;
     position: static;
     /* width: 95%; */
     margin: 0 auto;

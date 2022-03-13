@@ -103,7 +103,7 @@ export default {
 .reservation-container {
   /* border: 3px solid green; */
   height: 85%;
-  margin: 0 70px;
+  margin: 25px 70px;
 }
 .form {
   color: white;

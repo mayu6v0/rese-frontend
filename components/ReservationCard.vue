@@ -3,27 +3,43 @@
       <fa :icon="['far', 'clock']" class="fontawesome" />
       <p class="card--title">予約{{ index+1 }}</p>
       <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/>
-      <p class="card--content">Shop{{ name }}</p>
-      <div v-if="!update">
-        <p class="card--content">Date{{ date }}</p>
-        <p class="card--content">Time{{ time }}</p>
-        <p class="card--content">Number{{ number }}人</p>
-        <button @click="openUpdateReservation">予約を変更する</button>
-      </div>
-      <div v-else class="update">
-        <p class="update-title">予約変更</p>
-        <input class="select-date" type="date" v-model="newDate" ><br />
-        <select class="select-time" v-model="newTime">
-          <option value="" selected hidden>Time</option>
-          <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
-        </select><br />
-        <select class="select-number" v-model="newNumber">
-          <option value="" selected hidden>Number</option>
-          <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
-        </select>
-        <button @click="openUpdateReservation">キャンセル</button>
-        <button @click="updateReservation">変更する</button>
+        
+        <div v-if="!update">
+      <table>
+        <tr>
+          <th>Shop</th>
+          <td>{{ name }}</td>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <td>{{ date }}</td>
+        </tr>
+        <tr>
+          <th>Time</th>
+          <td>{{ time }}</td>
+        </tr>
+        <tr>
+          <th>Number</th>
+          <td>{{ number }}人</td>
+        </tr>
+      </table>
+      <button @click="openUpdateReservation">予約を変更する</button>
         </div>
+        <div v-else class="update">
+          <p class="update-title">予約変更</p>
+          <p class="restaurant-name">shop: {{ name }}</p>
+          <input class="select-date" type="date" v-model="newDate" ><br />
+          <select class="select-time" v-model="newTime">
+            <option value="" selected hidden>Time</option>
+            <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
+          </select><br />
+          <select class="select-number" v-model="newNumber">
+            <option value="" selected hidden>Number</option>
+            <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
+          </select>
+          <button @click="openUpdateReservation">キャンセル</button>
+          <button @click="updateReservation">変更する</button>
+          </div>
   </div>
 </template>
 
@@ -124,9 +140,9 @@ export default {
 
 <style scoped>
 .card {
-    width: 400px;
+    max-width: 400px;
     border-radius: 10px;
-    margin: 20px 50px;
+    margin: 20px auto;
     background-color: blue;
     box-shadow: 5px 5px lightgray;
     padding: 20px;
@@ -139,16 +155,24 @@ export default {
   margin-left: 10px;
 }
 
-.card--content {
-  margin-top: 30px;
-}
-
 .xmark {
  position: absolute;
  top: 15px;
  right: 15px;
 }
 
+table {
+  margin: 10px;
+}
+table th,
+table td {
+  padding: 10px;
+}
+
+.restaurant-name {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 .select-time {
   width: 100%;
   height: 25px;
@@ -165,7 +189,7 @@ export default {
   padding: 10px;
   margin-top: 20px;
   background-color: rgb(13, 148, 238);
-  color: black;
+  color: #fff;
 }
 
 .update-title {
@@ -175,5 +199,12 @@ export default {
 
 button {
   margin-top: 20px;
+}
+
+@media screen and (max-width: 768px) {
+.card {
+  margin: 20px auto;
+}
+
 }
 </style>

@@ -15,7 +15,7 @@
       </div>
       <div class="favorite">
         <p class="title">お気に入り店舗</p>
-        <div class="flex">
+        <div class="flex-center">
           <!-- filteredFavoriteListに存在するときは💖を表示 -->
           <RestaurantCard @get-favorite-list="getFavoriteList" v-for="item in filteredFavoriteList" :key="item.id" :id="item.restaurant.id" :favorite_id="item.id" :url="item.restaurant.image_url" :name="item.restaurant.name" :area="item.restaurant.area.name" :genre="item.restaurant.genre.name"></RestaurantCard>
           <div class="no-list" v-if="filteredFavoriteList == ''">
@@ -97,8 +97,10 @@ export default {
 <style scoped>
 
 .container {
-  padding: 0;
+  width: 95%;
+  margin: 0 auto;
 }
+
 .user-name {
   font-size: 25px;
   font-weight: bold;
@@ -114,14 +116,18 @@ export default {
 .title {
   font-size: 25px;
   font-weight: bold;
+  margin-left: 20px;
 }
 
 .reservation {
-  width: 50%;
+  width: 40%;
+  padding: 20px;
+
 }
 
 .favorite {
-  width: 50%;
+  width: 60%;
+  padding: 20px;
 }
 
 .no-list {
@@ -132,6 +138,19 @@ export default {
   .mypage--container {
     display: block;
   }
+
+  .flex {
+    justify-content: center;
+  }
+
+  .user-name {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 30px;
+  position: static;
+  /* top: 40px;
+  right: 200px; */
+}
 
   .reservation {
   width: 100%;

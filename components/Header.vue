@@ -1,5 +1,5 @@
 <template>
-  <div container>
+  <div class="container">
     <div class="header__menu flex">
       <div class="menu" @click="changeIsOpen" :class="isOpen ? 'open' : ''">
         <span class="menu__line--top"></span>
@@ -63,9 +63,15 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  /* width: 100%;/ */
+  /* margin: 0 auto; */
+  /* border: 1px solid red; */
+}
+
 .header__menu {
   /* margin: 0 70px; */
-  padding: 20px;
+  padding: 20px 0;
   background-color: rgb(245, 239, 239);
   /* border: 1px solid red; */
 }
@@ -144,8 +150,6 @@ export default {
   top: 0;
   left: 0;
   background-color: #fff;
-
-  border: 1px solid pink;
 }
 
 .menu-bg.open {

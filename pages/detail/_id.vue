@@ -3,7 +3,7 @@
     <div class="header-and-detail">
       <Header />
       <div class="restaurant-detail">
-        <div class="group">
+        <div class="relative">
           <button class="back-btn" @click="backPage">＜</button>
           <h2 class="restaurant-name">{{ name }}</h2>
         </div>
@@ -54,8 +54,10 @@ export default {
 
 <style scoped>
 .container {
-  padding: 0;
-  /* border: 3px solid orange; */
+  /* padding: 0; */
+  width: 95%;
+  margin: 0 auto;
+  background-color: rgb(245, 239, 239);
 }
 
 .header-and-detail {
@@ -72,10 +74,6 @@ export default {
     /* margin-bottom: 30px; */
 }
 
-.group {
-  position: relative;
-  /* border: solid 1px red; */
-}
 .back-btn {
   width: 30px;
   height: 30px;

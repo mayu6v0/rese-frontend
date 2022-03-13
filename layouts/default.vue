@@ -1,13 +1,14 @@
 <template>
-  <div class="container">
-    <Nuxt />
+  <div class="background">
+      <Nuxt />
   </div>
 </template>
 
 <style scoped>
-.container {
+.background {
   background-color: rgb(245, 239, 239);
-  padding: 20px 70px;
+  /* padding横70px */
+  padding: 20px 0;
   min-height: 100vh;
 }
 </style>
