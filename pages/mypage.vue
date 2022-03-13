@@ -95,6 +95,10 @@ export default {
 </script>
 
 <style scoped>
+
+.container {
+  padding: 0;
+}
 .user-name {
   font-size: 25px;
   font-weight: bold;
@@ -113,18 +117,29 @@ export default {
 }
 
 .reservation {
-  width: 40%;
+  width: 50%;
 }
 
 .favorite {
-  width: 60%;
+  width: 50%;
 }
 
 .no-list {
   margin: 50px;
 }
 
-Reservation {
-  width : 100%;
+@media screen and (max-width: 768px) {
+  .mypage--container {
+    display: block;
+  }
+
+  .reservation {
+  width: 100%;
+}
+
+.favorite {
+  width: 100%;
+  margin-top: 80px;
+}
 }
 </style>

@@ -59,7 +59,7 @@ export default {
 
 .relative {
   position: relative;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 85vh;
 }
 

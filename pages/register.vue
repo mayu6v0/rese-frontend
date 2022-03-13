@@ -5,9 +5,13 @@
       <div class="register-container">
         <p class="form-title">Registration</p>
         <form class="register-form" @submit.prevent="register">
+            <validation-observer ref="obs" v-slot="ObserverProps">
           <div class="input-area">
-            <fa :icon="['fas', 'user']" class="fontawesome" />
-            <input type="text" v-model="name" placeholder="User name" required /><br />
+              <fa :icon="['fas', 'user']" class="fontawesome" />
+            <validation-provider v-slot="ProviderProps" rules="required">
+              <input type="text" v-model="name" placeholder="User name" required /><br />
+              <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
           </div>
           <div class="input-area">
             <fa :icon="['fas', 'envelope']" class="fontawesome" />
@@ -17,8 +21,15 @@
             <fa :icon="['fas', 'lock']" class="fontawesome" />
             <input type="password" v-model="password" placeholder="Password" required />
           </div>
-          <button type="submit">登録</button>
+          <button type="submit" :disabled="ObserverProps.invalid || !ObserverProps.validated">登録</button>
+          </validation-observer>
         </form>
+      </div>
+      <div>
+        <validation-provider v-slot="ProviderProps" rules="required">
+          <input type="text" v-model="name" name="ユーザーネーム" placeholder="User name" required /><br />
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+        </validation-provider>
       </div>
     </div>
   </div>
@@ -37,14 +48,14 @@ export default {
   methods: {
     async register() {
       try {
-        await this.$axios.post("https://m-rese.herokuapp.com/api/auth/register", {
+        await this.$axios.post("http://127.0.0.1:8001/api/auth/register", {
           name: this.name,
           email: this.email,
           password: this.password,
         });
-        this.$router.push("/login");
+        this.$router.push("/thanks");
       } catch {
-        alert("メールアドレスがすでに登録されています");
+        alert("入力内容を確認してください");
       }
     },
   },
@@ -61,7 +72,7 @@ export default {
 
 .relative {
   position: relative;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 85vh;
 }
 
@@ -122,5 +133,10 @@ button {
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+}
+
+.error {
+  color: red;
+  display: inline;
 }
 </style>

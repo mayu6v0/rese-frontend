@@ -31,6 +31,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+     {src: '@/plugins/vee-validate.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -54,7 +55,7 @@ export default {
         set: "@fortawesome/free-solid-svg-icons",
         icons: ["faMagnifyingGlass", "faHeart", "faUser", "faEnvelope", "faLock"],
       },
-       {
+      {
         set: "@fortawesome/free-regular-svg-icons",
         icons: ["faClock", "faCircleXmark"],
       },

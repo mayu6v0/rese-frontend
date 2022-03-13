@@ -115,4 +115,18 @@ export default {
   margin-top: 20px;
   line-height:25px;
 }
+
+@media screen and (max-width: 768px) {
+  .flex {
+    display: block;
+  }
+
+  .header-and-detail {
+  width: 100%;
+  }
+
+  .reservation {
+    width: 100%;
+  }
+}
 </style>

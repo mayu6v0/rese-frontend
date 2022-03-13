@@ -154,7 +154,6 @@ export default {
   display: inline-block;
   height: 100%;
   /* border: 1px solid blue; */
-
 }
 select {
   border: none;
@@ -194,4 +193,28 @@ input {
   height: 100vh;
   margin-top: 100px;
 }
+
+/* --------responsive---------- */
+
+@media screen and (max-width: 768px) {
+  .search-field {
+    position: static;
+    /* width: 95%; */
+    margin: 0 auto;
+  }
+
+.search {
+  max-width: 100%;
+  background-color: #fff;
+  margin-right: 0;
+}
+  select {
+  max-width: 15%;
+  margin-right: 0;
+}
+  input {
+    width: 100%;
+  }
+}
+
 </style>

@@ -72,7 +72,8 @@ export default {
         { value: "7", name: "7" },
         { value: "8", name: "8" },
         { value: "9", name: "9" },
-        { value: "10", name: "10" }
+        { value: "10", name: "10" },
+        { value: "21", name: "21" }
       ],
     };
   },
@@ -157,5 +158,27 @@ export default {
   width: 100%;
   height: 10%;
   border-radius: 0 0 5px 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .reservation-container {
+  height: 450px;
+  /* margin: 0 70px; */
+}
+  .form {
+    padding:10px 40px;
+    height: 80%;
+  }
+
+  .confirm {
+  /* margin-top: 20px; */
+  padding: 10px;
+  /* border: 1px solid red; */
+  /* background-color: rgb(39, 140, 173); */
+}
+
+  .reservation-btn {
+    height: 20%;
+  }
 }
 </style>
