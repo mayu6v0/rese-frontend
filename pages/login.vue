@@ -61,6 +61,8 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
   border-radius: 5px;
+  box-shadow: 5px 5px 5px gray;
+
 }
 
 .form-title {

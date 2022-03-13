@@ -82,7 +82,9 @@ export default {
     border-radius: 10px;
     margin: 20px 10px 0;
     background-color: #fff;
-    box-shadow: 5px 5px lightgray;
+    box-shadow: 5px 5px 5px gray;
+    
+
 }
 
 .card-img {

@@ -101,7 +101,9 @@ export default {
 <style scoped>
 
 .reservation-container {
-  /* border: 3px solid green; */
+  box-shadow: 5px 5px 5px gray;
+  border-radius: 5px;
+
   height: 85%;
   margin: 50px 70px;
 }

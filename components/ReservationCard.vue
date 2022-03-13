@@ -144,7 +144,7 @@ export default {
     border-radius: 10px;
     margin: 20px auto;
     background-color: #0074E4;
-    box-shadow: 5px 5px lightgray;
+    box-shadow: 5px 5px 5px gray;
     padding: 20px;
     color: white;
 }
@@ -159,7 +159,7 @@ export default {
  position: absolute;
  top: 15px;
  right: 15px;
-  cursor: pointer;
+cursor: pointer;
 
 }
 

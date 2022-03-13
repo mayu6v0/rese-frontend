@@ -148,6 +148,8 @@ export default {
   position: absolute;
   top: 40px;
   right: 70px;
+  box-shadow: 5px 5px 5px gray;
+
   /* border: 1px solid red; */
 }
 

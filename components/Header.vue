@@ -96,7 +96,8 @@ export default {
   position: relative;
   margin-right: 20px;
   z-index: 10;
-  box-shadow: 5px 5px lightgray;
+    box-shadow: 5px 5px 5px gray;
+
 }
 
 .menu__line--top,
