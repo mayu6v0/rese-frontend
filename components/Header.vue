@@ -96,7 +96,7 @@ export default {
   position: relative;
   margin-right: 20px;
   z-index: 10;
-    box-shadow: 5px 5px 5px gray;
+  box-shadow: 5px 5px 5px gray;
 
 }
 

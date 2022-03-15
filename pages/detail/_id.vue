@@ -16,6 +16,7 @@
     <div class="reservation">
       <Reservation :id="$route.params.id" :name=name />
     </div>
+    <ReviewList :id="$route.params.id" />
   </div>
 </template>
 

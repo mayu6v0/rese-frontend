@@ -1,3 +1,6 @@
+const environment = process.env.NODE_ENV || 'development';
+const envSettings = require(`./env.${environment}.js`)
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -31,7 +34,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-     {src: '@/plugins/vee-validate.js'}
+    { src: '@/plugins/vee-validate.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -66,8 +69,10 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
+    // baseURL: process.env.apiBaseUrl
   },
 
+  env: envSettings,
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
@@ -76,7 +81,7 @@ export default {
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
-        url: 'https://m-rese.herokuapp.com',
+        url: 'http://127.0.0.1:8000',
         token: {
           maxAge: 60 * 60
         },
