@@ -2,8 +2,8 @@
   <div class="container">
     <Header />
     <p class="user-name" v-if="$auth.loggedIn">{{ $auth.user.name }}さん</p>
-   $auth.user {{ $auth.user }}
-   {{$store.state.token}}
+   <p>$auth.user {{ $auth.user }}</p>
+   <p>$store.state {{$store.state.auth.user}}</p>
     <!-- <button v-on:click="getUser">APIを叩く</button> -->
     <!-- {{ filteredReservationList }} -->
     <div class="flex mypage--container">
@@ -41,10 +41,10 @@ export default {
   methods: {
     async getReservationList() {
       console.log("development or production")
-      console.log(process.env.BASE_URL+"api/reservation");
+      console.log(process.env.BASE_URL+"/api/reservation");
       const token = this.$auth.strategy.token.get();
       const resData = await this.$axios.get(
-        process.env.BASE_URL+"api/reservation",
+        process.env.BASE_URL+"/api/reservation",
         {
           // params: {
           //   user_id: this.$auth.user.id
@@ -56,7 +56,7 @@ export default {
     },
     async getFavoriteList() {
       const resData = await this.$axios.get(
-        process.env.BASE_URL+"api/favorite",
+        process.env.BASE_URL+"/api/favorite",
         {
           params: {
             user_id: this.$auth.user.id
