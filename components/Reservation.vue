@@ -88,7 +88,7 @@ export default {
         number: this.number,
       };
       console.log(sendData);
-      await this.$axios.post("http://127.0.0.1:8001/api/reservation", sendData);
+      await this.$axios.post(process.env.BASE_URL+"/api/reservation", sendData);
       this.$router.push("/done");
       } else {
         this.$router.push("/login");

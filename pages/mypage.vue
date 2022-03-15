@@ -1,11 +1,10 @@
 <template>
   <div class="container">
-    <Header />
+    <!-- <Header /> -->
     <p class="user-name" v-if="$auth.loggedIn">{{ $auth.user.name }}さん</p>
-   <p>$auth.user {{ $auth.user }}</p>
-   <p>$store.state {{$store.state.auth.user}}</p>
+   <!-- <p>$auth.user {{ $auth.user }}</p> -->
+   <!-- <p>$store.state {{$store.state.auth.user}}</p> -->
     <!-- <button v-on:click="getUser">APIを叩く</button> -->
-    <!-- {{ filteredReservationList }} -->
     <div class="flex mypage--container">
       <div class="reservation">
         <p class="title">予約状況</p>
@@ -40,9 +39,9 @@ export default {
   },
   methods: {
     async getReservationList() {
-      console.log("development or production")
       console.log(process.env.BASE_URL+"/api/reservation");
       const token = this.$auth.strategy.token.get();
+      console.log(token);
       const resData = await this.$axios.get(
         process.env.BASE_URL+"/api/reservation",
         {

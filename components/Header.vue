@@ -64,9 +64,9 @@ export default {
 
 <style scoped>
 .container {
-  /* width: 100%;/ */
-  /* margin: 0 auto; */
-  /* border: 1px solid red; */
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid red;
 }
 
 .header__menu {

@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     async deleteReservation() {
-      await this.$axios.delete("https://m-rese.herokuapp.com/api/reservation/"+this.id);
+      await this.$axios.delete(process.env.BASE_URL+"/api/reservation/"+this.id);
       this.$emit('get-reservation-list');
     },
     openUpdateReservation() {
@@ -98,7 +98,7 @@ export default {
         number: this.newNumber,
       };
       console.log(sendData);
-      await this.$axios.put("https://m-rese.herokuapp.com/api/reservation/"+this.id, sendData);
+      await this.$axios.put(process.env.BASE_URL+"/api/reservation/"+this.id, sendData);
       this.$emit('get-reservation-list');
       this.update = !this.update;
     },

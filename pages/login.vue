@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-  <Header />
+  <!-- <Header /> -->
     <div class="login-container">
       <p class="form-title">Login</p>
     <form class="login-form" @submit.prevent="login">

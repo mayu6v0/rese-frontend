@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header />
+    <!-- <Header /> -->
       <div class="card__done">
         <p class="card__text">ご予約ありがとうございます</p>
         <button @click="goToMypage">戻る</button>

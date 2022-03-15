@@ -20,8 +20,7 @@
       </div>
     </div>
     <div class="flex-center">
-      <RestaurantCard @get-list="getRestaurantList"
-      @get-favorite-list="getFavoriteList"
+      <RestaurantCard @get-favorite-list="getFavoriteList"
         v-for="item in filteredRestaurant"
         :key="item.id"
         :id="item.id"
@@ -29,8 +28,8 @@
         :name="item.name"
         :area="item.area.name"
         :genre="item.genre.name"
-        :filteredFavoriteList = "filteredFavoriteList"
-        :filteredFavoriteId="filteredFavoriteId"
+        :favoriteList = "favoriteList"
+        :favoriteIdList="favoriteIdList"
       ></RestaurantCard>
       <div class="no-restaurant" v-if="filteredRestaurant == ''">検索結果に一致する店舗はありません</div>
     </div>
@@ -39,11 +38,12 @@
 
 <script>
 export default {
+  layout: 'top',
   data() {
     return {
       restaurantList: [],
       favoriteList: [],
-      filteredFavoriteList: [],
+      // favoriteIdList: [],
       searchArea: "",
       searchGenre: "",
       searchWord: "",
@@ -65,18 +65,28 @@ export default {
     //飲食店一覧のAPIを取得する
     async getRestaurantList() {
       const resData = await this.$axios.get(
-        "https://m-rese.herokuapp.com/api/restaurant"
+        process.env.BASE_URL+"/api/restaurant"
       );
       this.restaurantList = resData.data.data;
-      //homeで♡押したときに変更が適用されるように際読み込み
-      this.getFavoriteList();
+      //homeで♡押したときに変更が適用されるように再読み込み
+      // this.getFavoriteList();
     },
-    //お気に入り一覧のAPIを取得する
     async getFavoriteList() {
-      const resData = await this.$axios.get(
-        "https://m-rese.herokuapp.com/api/favorite"
-      );
+      if(this.$auth.loggedIn) {
+        const token = this.$auth.strategy.token.get();
+        console.log(token);
+        //ユーザーがログインしていたらユーザーのお気に入り一覧のAPIを取得する
+        const resData = await this.$axios.get(
+        process.env.BASE_URL+"/api/favorite",
+        {
+          headers: { Authorization: 'Bearer ' + token }
+        }
+        );
       this.favoriteList = resData.data.data;
+      console.log(this.favoriteList);
+      } else {
+        this.favoriteList = [];
+      }
     },
     resetFilter() {
       //検索条件をリセット
@@ -98,32 +108,20 @@ export default {
       }
       return filteredRestaurant;
     },
-    filteredFavoriteId() {
-      const filteredFavoriteList = [];
-        //ユーザーがログインしていたら、お気に入り一覧のuser_idとログインidが一致するもので新たに配列を作成する
-        if(this.$auth.loggedIn) {
-          for (let i = 0; i < this.favoriteList.length; i++) {
-            const favorite = this.favoriteList[i];
-            if (favorite.user_id === this.$auth.user.id) {
-              filteredFavoriteList.push(favorite);
-            }
-          }
-          this.filteredFavoriteList = filteredFavoriteList;
-          // console.log(filteredFavoriteList);
-          // return filteredArray;
-
-          //filterdFavoriteListから、そのrestaurant_idだけで別の配列を作る
-          const filteredFavoriteIdList =[];
-          for(let i = 0; i < filteredFavoriteList.length; i++) {
-            const favoriteListId = filteredFavoriteList[i].restaurant_id;
-            filteredFavoriteIdList.push(favoriteListId);
-          }
-        console.log(filteredFavoriteIdList);
-        return filteredFavoriteIdList;
-
-        } else {
-          return filteredFavoriteList; //ログインしていない場合は空の配列を返す
-        }
+    favoriteIdList() {
+      const favoriteIdList = [];
+      if(this.$auth.loggedIn) {
+      //favoriteListのrestaurant_idで新たに配列を作る
+      for(let i = 0; i < this.favoriteList.length; i++) {
+        const favoriteId = this.favoriteList[i].restaurant_id;
+        // console.log(this.favoriteList[0]);
+        favoriteIdList.push(favoriteId);
+      };
+      console.log(favoriteIdList);
+      return favoriteIdList;
+      } else {
+        return favoriteIdList;
+      }
     },
   },
   created() {

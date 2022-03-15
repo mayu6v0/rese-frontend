@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header />
+    <!-- <Header /> -->
       <div class="card__thanks">
         <p class="card__text">会員登録ありがとうございます</p>
         <button @click="goToLogin">ログインする</button>

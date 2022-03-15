@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ["id", "favorite_id", "url", "name", "area", "genre", "filteredFavoriteList", "filteredFavoriteId"],
+  props: ["id", "favorite_id", "url", "name", "area", "genre", "favoriteList", "favoriteIdList"],
   methods: {
     goToDetail() {
       this.$router.push("/detail/"+this.id)
@@ -35,31 +35,32 @@ export default {
 
         const sendData = {
           user_id: this.$auth.user.id,
-        restaurant_id: this.id,
+          restaurant_id: this.id,
       };
-      // console.log(sendData);
-      await this.$axios.post("http://127.0.0.1:8001/api/favorite", sendData);
-      this.$emit('get-list');
+      console.log(sendData);
+      // console.log(process.env.BASE_URL);
+      await this.$axios.post(process.env.BASE_URL+"/api/favorite", sendData);
+      this.$emit('get-favorite-list');
         } else {
           this.$router.push("/login");
         }
     },
     async deleteFavorite() {
       let deleteFavoriteId = "";
-      for (let i = 0; i < this.filteredFavoriteList.length; i++) {
-        const favorite = this.filteredFavoriteList[i];
+      for (let i = 0; i < this.favoriteList.length; i++) {
+        const favorite = this.favoriteList[i];
         if (favorite.restaurant.id === this.id) {
           // console.log(favorite.id);
           deleteFavoriteId = favorite.id;
         }
       };
           // console.log(deleteFavoriteId);
-      await this.$axios.delete("http://127.0.0.1:8001/api/favorite/"+deleteFavoriteId);
+      await this.$axios.delete(process.env.BASE_URL+"/api/favorite/"+deleteFavoriteId);
       console.log(deleteFavoriteId);
       this.$emit('get-favorite-list');
     },
     async deleteFavoriteAtMypage() {
-      await this.$axios.delete("https://m-rese.herokuapp.com/api/favorite/"+this.favorite_id);
+      await this.$axios.delete(process.env.BASE_URL+"/api/favorite/"+this.favorite_id);
       this.$emit('get-favorite-list');
     }
   },
@@ -68,10 +69,9 @@ export default {
       return this.$route.name === "mypage";
     },
     isFavorite() {
-      return this.filteredFavoriteId.indexOf(this.id) !== -1
+      return this.favoriteIdList.indexOf(this.id) !== -1
     }
   },
-
 };
 
 </script>

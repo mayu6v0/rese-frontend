@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header />
+    <!-- <Header /> -->
       <div class="register-container">
         <p class="form-title">Registration</p>
         <form class="register-form" @submit.prevent="register">
@@ -46,7 +46,7 @@ export default {
   methods: {
     async register() {
       try {
-        await this.$axios.post("https://m-rese.herokuapp.com/api/auth/register", {
+        await this.$axios.post(process.env.BASE_URL+"/api/auth/register", {
           name: this.name,
           email: this.email,
           password: this.password,
@@ -76,7 +76,6 @@ export default {
   transform: translate(-50%, -50%);
   border-radius: 5px;
   box-shadow: 5px 5px 5px gray;
-  
 }
 
 .form-title {

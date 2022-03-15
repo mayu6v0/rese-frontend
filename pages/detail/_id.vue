@@ -1,7 +1,7 @@
 <template>
   <div class="container flex">
-    <div class="header-and-detail">
-      <Header />
+    <div class="detail">
+      <!-- <Header /> -->
       <div class="restaurant-detail">
         <div class="relative">
           <button class="back-btn" @click="backPage">＜</button>
@@ -34,7 +34,7 @@ export default {
   methods: {
     async getDetail() {
       const resData = await this.$axios.get(
-        "https://m-rese.herokuapp.com/api/restaurant/"+this.$route.params.id
+        process.env.BASE_URL+"/api/restaurant/"+this.$route.params.id
       );
       const restaurantData = resData.data.data;
       this.name = restaurantData[0].name;
@@ -60,7 +60,7 @@ export default {
   background-color: rgb(245, 239, 239);
 }
 
-.header-and-detail {
+.detail {
   width: 50%;
 }
 
