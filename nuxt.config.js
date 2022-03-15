@@ -81,7 +81,7 @@ export default {
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
-        url: 'http://127.0.0.1:8000',
+        url: 'process.env.BASE_URL',
         token: {
           maxAge: 60 * 60
         },
