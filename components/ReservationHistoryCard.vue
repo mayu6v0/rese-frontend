@@ -1,11 +1,11 @@
 <template>
   <div class="card relative">
-    <p>マイページからコンポーネントにreservation_idを渡す→それを遷移先のreview/_reservationIdにパラメータとして渡す:27とする</p>
-      <fa :icon="['far', 'clock']" class="fontawesome" />
+    <!-- reviewAPI叩いて、予約ごとに
+    ・reviewがあればレビュー済み表示と入力したreviewを表示
+    ・reviewがなければレビューを書くボタン表示 -->
+
       <p class="card--title">ご来店ありがとうございました</p>
-      <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/>
-        
-        <div v-if="!update">
+      <!-- <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/> -->
       <table>
         <tr>
           <th>Shop</th>
@@ -24,23 +24,7 @@
           <td>{{ number }}人</td>
         </tr>
       </table>
-      <button @click="openUpdateReservation">予約を変更する</button>
-        </div>
-        <div v-else class="update">
-          <p class="update-title">予約変更</p>
-          <p class="restaurant-name">shop: {{ name }}</p>
-          <input class="select-date" type="date" v-model="newDate" ><br />
-          <select class="select-time" v-model="newTime">
-            <option value="" selected hidden>Time</option>
-            <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
-          </select><br />
-          <select class="select-number" v-model="newNumber">
-            <option value="" selected hidden>Number</option>
-            <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
-          </select>
-          <button @click="openUpdateReservation">キャンセル</button>
-          <button @click="updateReservation">変更する</button>
-          </div>
+      <button @click="goToReview">お店のレビューを書く</button>
   </div>
 </template>
 
@@ -53,12 +37,9 @@ export default {
     }
   },
   methods: {
-    goToDetail() {
-      this.$router.push("/detail/"+this.id)
-    },
-    async deleteReservation() {
-      await this.$axios.delete("https://m-rese.herokuapp.com/api/reservation/"+this.id);
-      this.$emit('get-reservation-list');
+    goToReview() {
+      //this.idはreservationのid
+      this.$router.push("/review/"+this.restaurant_id+"/"+this.id)
     },
     getStringFromDate(date, format) {
         // formatのYYYYを文字列に置換
@@ -97,13 +78,13 @@ export default {
 
 <style scoped>
 .card {
-    max-width: 400px;
+    max-width: 1000px;
     border-radius: 10px;
     margin: 20px auto;
-    background-color: #0074E4;
+    background-color: #fff;
     box-shadow: 5px 5px 5px gray;
     padding: 20px;
-    color: white;
+    color: black;
 }
 
 .card--title {

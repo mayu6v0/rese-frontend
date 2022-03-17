@@ -55,7 +55,7 @@ export default {
 
 <style scoped>
 .container {
-  width: 93.4%;
+  width: 95%;
   margin: 0 auto;
   background-color: rgb(245, 239, 239);
 }
