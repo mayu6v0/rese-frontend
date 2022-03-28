@@ -39,7 +39,7 @@ export default {
   methods: {
     goToReview() {
       //this.idはreservationのid
-      this.$router.push("/review/"+this.restaurant_id+"/"+this.id)
+      this.$router.push("/review/"+this.id)
     },
     getStringFromDate(date, format) {
         // formatのYYYYを文字列に置換
