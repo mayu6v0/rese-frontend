@@ -1,19 +1,27 @@
 <template>
-  <div>
-    <p>店名{{restaurantName}}</p>
-    <p>来店日時{{reservationDate}}</p>
-    <!-- <p>restaurant_id{{$route.params.restaurantId}}</p> -->
-    <!-- <p>reservation_id{{$route.params.reservationId}}</p> -->
-    <!-- reservationAPI叩いてreservation_idから予約情報取得（showメソッド）
-    →店名、来店日時を表示 restaurant_idも取得 -->
-    <label>評価</label>
-    <star-rating v-model="rating" @rating-selected ="setRating"></star-rating>
-
-    <label for="title">タイトル</label>
-    <input type="text" v-model="title" /><br />
-
-    <label for="review">コメント</label>
-    <textarea type="text" id="review" v-model="review"></textarea>
+  <div class="container">
+    <table>
+      <tr>
+        <th>店名</th>
+        <td>{{restaurantName}}</td>
+      </tr>
+      <tr>
+        <th>来店日時</th>
+        <td>{{reservationDate}}</td>
+      </tr>
+      <tr>
+        <th>評価</th>
+        <td><star-rating v-model="rating" @rating-selected ="setRating"></star-rating></td>
+      </tr>
+      <tr>
+        <th><label for="title">タイトル</label></th>
+        <td><input type="text" v-model="title" /></td>
+      </tr>
+      <tr>
+        <th><label for="review">コメント</label></th>
+        <td><textarea type="text" id="review" v-model="review"></textarea></td>
+      </tr>
+    </table>
     <button @click="insertReview">レビューを送信</button>
   </div>
 </template>
@@ -73,5 +81,43 @@
 </script>
 
 <style scoped>
+.container {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px;
+}
 
+table {
+  margin: 20px auto;
+}
+
+table th,
+table td {
+  padding: 10px 20px;
+  text-align: left;
+}
+
+table th {
+  vertical-align: middle;
+}
+input,
+textarea {
+  width: 500px;
+  line-height: 30px;
+}
+
+textarea {
+  height: 200px;
+}
+button {
+  display: block;
+  color: #fff;
+  background-color: #0074E4;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 30px auto;
+  cursor: pointer;
+}
 </style>
