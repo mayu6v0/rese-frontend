@@ -119,7 +119,6 @@ button {
   padding: 5px 10px;
   margin-top: 10px;
   cursor: pointer;
-
 }
 
 .favorite-icon {

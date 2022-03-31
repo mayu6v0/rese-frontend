@@ -17,7 +17,7 @@
       <div class="favorite">
         <h2 class="title">お気に入り店舗</h2>
         <div class="flex-center">
-          <!-- filteredFavoriteListに存在するときは💖を表示 -->
+          <!-- favoriteListに存在するときは💖を表示 -->
           <RestaurantCard @get-favorite-list="getFavoriteList" v-for="item in favoriteList" :key="item.id" :id="item.restaurant.id" :favorite_id="item.id" :url="item.restaurant.image_url" :name="item.restaurant.name" :area="item.restaurant.area.name" :genre="item.restaurant.genre.name"></RestaurantCard>
           <div class="no-list" v-if="favoriteList == ''">
           お気に入り店舗はありません
@@ -27,8 +27,9 @@
     </div>
     <div class="reservation-history">
       <h2 class="title">予約履歴</h2>
+      {{reviewedReservationList}}
       <ReservationHistoryCard @get-reservation-list="getReservationList"
-         v-for="(item, index) in pastReservation" :index="index" :key="item.id" :id="item.id" :name="item.restaurant.name" :restaurant_id="item.restaurant.id" :datetime="item.datetime" :number="item.number"></ReservationHistoryCard>
+         v-for="(item, index) in pastReservation" :index="index" :key="item.id" :id="item.id" :name="item.restaurant.name" :restaurant_id="item.restaurant.id" :datetime="item.datetime" :number="item.number" :reviewedReservationList="reviewedReservationList"></ReservationHistoryCard>
     </div>
   </div>
 </template>
@@ -40,6 +41,7 @@ export default {
     return {
       reservationList: [],
       favoriteList:[],
+      reviewList: [],
       todayMs: "",
     }
   },
@@ -70,6 +72,19 @@ export default {
         }
       );
       this.favoriteList = resData.data.data;
+    },
+    async getReviewList() {
+      const resData = await this.$axios.get(
+        process.env.BASE_URL+"/api/review",
+        {
+          params: {
+            user_id: this.$auth.user.id
+          }
+        }
+      );
+      this.reviewList = resData.data.data;
+      console.log("reviesList");
+      console.log(this.reviewList);
     },
     // async getUser() {
     //   try {
@@ -119,12 +134,22 @@ export default {
       }
         console.log(pastReservationList);
         return pastReservationList.reverse();
-
+    },
+    reviewedReservationList() {
+      const reviewedReservationList = [];
+      //reviewListのreservation_idで新たに配列を作る
+      for(let i = 0; i < this.reviewList.length; i++) {
+        const reviewedReservation = this.reviewList[i].reservation_id;
+        reviewedReservationList.push(reviewedReservation);
+      };
+      console.log(reviewedReservationList);
+      return reviewedReservationList;
     },
   },
   created() {
       this.getReservationList();
       this.getFavoriteList();
+      this.getReviewList();
       //現在日時を取得
       const today = new Date();
       console.log ("現在日時");

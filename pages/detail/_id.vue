@@ -16,7 +16,10 @@
     <div class="reservation">
       <Reservation :id="$route.params.id" :name=name />
     </div>
-    <ReviewList :id="$route.params.id" />
+    <div class="review">
+      <p class="rating">総合評価<star-rating :read-only="true" :rating="averageRating" :increment="0.1"></star-rating></p>
+      <ReviewCard v-for="item in reviewList" :key="item.id" :title="item.title" :rating="item.rating" :review="item.review"></ReviewCard>
+    </div>
   </div>
 </template>
 
@@ -29,6 +32,7 @@ export default {
       area: "",
       genre: "",
       overview: "",
+      reviewList: [],
     }
   },
   methods: {
@@ -46,9 +50,41 @@ export default {
     backPage() {
       this.$router.go(-1);
     },
+    async getReviewList() {
+      const resData = await this.$axios.get(
+        process.env.BASE_URL+"/api/restaurantreview?restaurant_id="+this.$route.params.id
+      );
+      this.reviewList = resData.data.data;
+      console.log(this.reviewList);
+    },
+  },
+  computed: {
+    ratingArray() {
+      const ratingArray = [];
+      //favoriteListのrestaurant_idで新たに配列を作る
+      for(let i = 0; i < this.reviewList.length; i++) {
+        const rating = this.reviewList[i].rating;
+        // console.log(this.favoriteList[0]);
+        ratingArray.push(rating);
+      };
+      console.log(ratingArray);
+      return ratingArray;
+    },
+    averageRating() {
+      //計算式　配列作ってひとつずつ足してlengthで割る？
+      let sum = 0;
+      for (let i = 0; i < this.ratingArray.length; i++) {
+        sum += this.ratingArray[i];
+      }
+      const average = sum / this.ratingArray.length;
+      console.log( average );
+      console.log(average.toFixed(1));
+      return average.toFixed(1);
+    },
   },
   created() {
       this.getDetail();
+      this.getReviewList();
     },
 };
 </script>
@@ -115,6 +151,15 @@ export default {
 .restaurant-overview {
   margin-top: 20px;
   line-height:25px;
+}
+
+.review {
+  margin: 30px auto;
+}
+
+.rating {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 768px) {

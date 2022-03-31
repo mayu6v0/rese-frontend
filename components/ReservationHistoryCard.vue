@@ -3,7 +3,7 @@
     <!-- reviewAPI叩いて、予約ごとに
     ・reviewがあればレビュー済み表示と入力したreviewを表示
     ・reviewがなければレビューを書くボタン表示 -->
-
+{{reviewedReservationList}}
       <p class="card--title">ご来店ありがとうございました</p>
       <!-- <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/> -->
       <table>
@@ -24,13 +24,14 @@
           <td>{{ number }}人</td>
         </tr>
       </table>
-      <button @click="goToReview">お店のレビューを書く</button>
+      <button v-if="reviewedReservation">レビュー済み</button>
+      <button v-else @click="goToReview">お店のレビューを書く</button>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["index", "id", "name", "restaurant_id",  "datetime", "number"],
+  props: ["index", "id", "name", "restaurant_id", "datetime", "number", "reviewedReservationList"],
   data() {
     return {
       reservationDate: [],
@@ -72,6 +73,9 @@ export default {
       this.newTime = this.getStringFromTime(this.reservationDate, 'hh:mm');
       return this.newTime;
     },
+    reviewedReservation() {
+      return this.reviewedReservationList.indexOf(this.id) !== -1
+    }
   },
 };
 </script>
@@ -94,10 +98,10 @@ export default {
 }
 
 .xmark {
- position: absolute;
- top: 15px;
- right: 15px;
-cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
 
 }
 
@@ -109,7 +113,6 @@ table td {
   padding: 10px 20px;
   text-align: left;
 }
-
 
 .restaurant-name {
   font-size: 18px;
