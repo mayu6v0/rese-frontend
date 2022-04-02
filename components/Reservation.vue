@@ -6,11 +6,11 @@
         <input class="select-date" type="date" v-model="date" ><br />
         <select class="select-time" v-model="time">
           <option value="" selected hidden>Time</option>
-          <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
+          <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name }}</option>
         </select><br />
         <select class="select-number" v-model="number">
           <option value="" selected hidden>Number</option>
-          <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
+          <option v-for="number in numberList" :key="number.id" :value="number.value">{{ number.name }}人</option>
         </select><br />
         <div class="confirm">
 

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <!-- <Header /> -->
     <p class="user-name" v-if="$auth.loggedIn">{{ $auth.user.name }}さん</p>
+    {{$auth.user.authority}}
    <!-- <p>$auth.user {{ $auth.user }}</p> -->
    <!-- <p>$store.state {{$store.state.auth.user}}</p> -->
     <!-- <button v-on:click="getUser">APIを叩く</button> -->
@@ -36,6 +36,7 @@
 
 <script>
 export default {
+  //ログインユーザーのみがmypageにアクセスできる
   middleware: 'auth',
   data() {
     return {
