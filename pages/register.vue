@@ -50,6 +50,8 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
+          authority: "user",
+          restaurant_id: "",
         });
         this.$router.push("/thanks");
       } catch {
