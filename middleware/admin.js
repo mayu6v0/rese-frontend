@@ -3,7 +3,7 @@ export default function ({ store, redirect, error }) {
   if (store.state.auth.user.authority != 'admin') {
     return error({
       statusCode: 401,
-      message: '権限がありません。'
+      message: '権限がありません'
     })
   }
 }

@@ -1,7 +1,6 @@
 <template>
   <div class="container flex">
     <div class="detail">
-      <!-- <Header /> -->
       <div class="restaurant-detail">
         <div class="relative">
           <button class="back-btn" @click="backPage">＜</button>

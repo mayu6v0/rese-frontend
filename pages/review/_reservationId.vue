@@ -110,6 +110,7 @@ textarea {
 textarea {
   height: 200px;
 }
+
 button {
   display: block;
   color: #fff;

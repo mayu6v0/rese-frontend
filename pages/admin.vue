@@ -1,9 +1,12 @@
 
 <template>
   <div class="container">
-    <h1 class="title">管理者ページ</h1>
-    <div class="">
-      <table class="create-user">
+    <h1 class="title">管理画面</h1>
+    <div class="create">
+      <h2 class="create__title">新規登録</h2>
+      <form class="register-form" @submit.prevent="register">
+        <validation-observer ref="obs" v-slot="ObserverProps">
+      <table class="table__create">
         <tr>
           <th>店舗代表者名/管理者名</th>
           <td><input type="text" v-model="name" /></td>
@@ -14,7 +17,7 @@
             <select class="" v-model="authority">
               <!-- <option value="" selected hidden>選択</option> -->
               <option value="owner" selected>店舗代表者</option>
-              <option value="adminr">管理者</option>
+              <option value="admin">管理者</option>
         </select>
           </td>
         </tr>
@@ -22,36 +25,75 @@
           <th>店舗名</th>
           <td>
             <select class="select-restaurant" v-model="restaurant_id">
-              <option value="" selected hidden>選択する</option>
-              <option v-for="item in restaurantList" :key="item.id" :value="item.restaurant_id">{{ item.name }}</option>
+              <!-- <option value="" selected hidden>選択する</option> -->
+              <option value="" selected>新規店舗</option>
+              <optgroup label="既存店舗">
+                <option v-for="item in restaurantList" :key="item.id" :value="item.id">{{ item.name }}</option>
+              </optgroup>
             </select>
           </td>
         </tr>
         <tr>
           <th>メールアドレス</th>
-          <td><input type="email" /></td>
+          <td><input type="email" v-model="email" /></td>
         </tr>
         <tr>
           <th>パスワード</th>
-          <td><input type="password"></td>
+          <td><input type="password" v-model="password" /></td>
         </tr>
         
       </table>
+      <!-- <button type="submit" :disabled="ObserverProps.invalid || !ObserverProps.validated">登録</button> -->
+      <button type="submit" :disabled="ObserverProps.invalid">登録</button>
+      </validation-observer>
+      </form>
+    </div>
+    <div class="">
+      <div class="owner">
+        <h2 class="list">店舗代表者一覧</h2>
+        <table class="owner-list">
+          <tr>
+            <th>店舗名</th>
+            <th>店舗代表者名</th>
+            <th>メールアドレス</th>
+          </tr>
+          <tr  v-for="owner in ownerList" :key=owner.id >
+            <td v-if="!owner.restaurant"></td>
+            <td v-else>{{ owner.restaurant.name }}</td>
+            <td>{{ owner.name }}</td>
+            <td>{{ owner.email }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="admin">
+        <h2 class="list">管理者一覧</h2>
+        <table class="admin-list">
+          <tr>
+            <th>管理者名</th>
+            <th>メールアドレス</th>
+          </tr>
+          <tr  v-for="admin in adminList" :key=admin.id >
+            <td>{{ admin.name }}</td>
+            <td>{{ admin.email }}</td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  //ログインユーザーのみがmypageにアクセスできる
   middleware: ['auth','admin'],
   data() {
     return {
-      restaurantList: [],
+      authority: "owner",
       name: "",
       email: "",
       password: "",
       restaurant_id: "",
-      authority: "owner",
+      restaurantList: [],
+      ownerList: [],
+      adminList: [],
     }
   },
   methods: {
@@ -62,17 +104,129 @@ export default {
       );
       this.restaurantList = resData.data.data;
     },
+    async getOwnerList() {
+      const resData = await this.$axios.get(
+        process.env.BASE_URL+"/api/auth/owner"
+      );
+      this.ownerList = resData.data.data;
+      console.log(this.ownerList);
+    },
+    async getAdminList() {
+      const resData = await this.$axios.get(
+        process.env.BASE_URL+"/api/auth/admin"
+      );
+      this.adminList = resData.data.data;
+      console.log(this.adminList);
+    },
+    async register() {
+      try {
+        // 管理者を登録する場合はrestaurant_idをnullにする
+        if(this.authority === "admin") {
+          this.restaurant_id = null;
+        }
+        // 新規店舗代表者を登録する場合
+        // 会員登録の前に新規のrestaurant_idを取得する
+        if(this.authority === "owner" && this.restaurant_id == "") {
+          const resData = await this.$axios.post(process.env.BASE_URL+"/api/restaurant");
+          this.restaurant_id = resData.data.data.id;
+        }
+
+        // 新規会員登録する
+        const sendData = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          authority: this.authority,
+          restaurant_id: this.restaurant_id
+        };
+        await this.$axios.post(process.env.BASE_URL+"/api/auth/register", sendData);
+        alert("新規店舗代表者/管理者が登録されました");
+        // 店舗代表者と管理者の一覧を更新する
+        this.getOwnerList();
+        this.getAdminList();
+      } catch {
+        alert("入力内容を確認してください");
+      }
+    },
   },
   created() {
     this.getRestaurantList();
-  }
+    this.getOwnerList();
+    this.getAdminList();
+  },
 }
 </script>
 <style scoped>
 .container {
   width: 90%;
   margin: 0 auto;
-  background-color: #fff;
   padding: 30px;
+}
+
+.title {
+  font-size: 35px;
+  text-align: center;
+}
+
+.table tr,th,td {
+  padding: 10px 30px;
+  border: 1px solid black;
+}
+
+.create {
+  margin-top: 30px;
+  padding-bottom: 30px;
+  background-color: #fff;
+}
+
+.create__title {
+  font-size: 25px;
+  color: #fff;
+  padding: 20px;
+  background-color: #0074E4;
+}
+
+input,
+select {
+  /* line-height: 30px; */
+  width: 300px;;
+  height: 30px;
+}
+
+.table__create {
+  margin: 20px auto;
+}
+
+button {
+  display: block;
+  font-size: 20px;
+  color: #fff;
+  background-color: #0074E4;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 30px;
+  margin: 30px auto 0;
+  cursor: pointer;
+}
+
+.list {
+  margin-top: 50px;
+  font-size: 25px;
+  color: #fff;
+  padding: 20px;
+  background-color: #0074E4;
+}
+
+.owner-list,
+.admin-list {
+  margin-top: 20px;
+  width: 800px;
+}
+
+.owner-list th,
+.owner-list td,
+.admin-list th,
+.admin-list td {
+  width: 200px;
 }
 </style>
