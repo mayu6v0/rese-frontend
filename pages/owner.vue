@@ -93,7 +93,6 @@
 </template>
 <script>
 export default {
-  //ログインユーザーのみがmypageにアクセスできる
   middleware: ['auth','owner'],
   data() {
     return {
