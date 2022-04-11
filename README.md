@@ -8,12 +8,13 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 ## URL
 <https://rese-nuxt.herokuapp.com>
 
+```
 テストユーザーアカウント
 
 email: test@mail
 
 password: test
-
+```
 ## 機能一覧
 ### 店舗
   * エリア、ジャンル、店舗名での検索
