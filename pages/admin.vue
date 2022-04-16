@@ -79,6 +79,24 @@
         </table>
       </div>
     </div>
+    <div class="mail">
+        <h2 class="list">メール送信</h2>
+        <table class="send-new-mail">
+          <tr>
+            <th>送信先</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>タイトル</th>
+            <td><input type="text" v-model="mailTitle"></td>
+          </tr>
+          <tr>
+            <th>本文</th>
+            <td><textarea name="" id="" cols="50" rows="10" v-model="mailText"></textarea></td>
+          </tr>
+        </table>
+        <button @click="sendMail">送信</button>
+      </div>
   </div>
 </template>
 <script>
@@ -94,6 +112,8 @@ export default {
       restaurantList: [],
       ownerList: [],
       adminList: [],
+      mailTitle: "",
+      mailText: "",
     }
   },
   methods: {
@@ -148,6 +168,15 @@ export default {
         alert("入力内容を確認してください");
       }
     },
+    async sendMail() {
+      const sendData = {
+          // user: this.user,
+          mailTitle: this.mailTitle,
+          mailText: this.mailText,
+        };
+      await this.$axios.post(process.env.BASE_URL+"/api/sendmail", sendData);
+        alert("メール送信が完了しました");
+    }
   },
   created() {
     this.getRestaurantList();
@@ -173,7 +202,10 @@ export default {
   border: 1px solid black;
 }
 
-.create {
+.create,
+.owner,
+.admin,
+.mail {
   margin-top: 30px;
   padding-bottom: 30px;
   background-color: #fff;
@@ -218,7 +250,8 @@ button {
 }
 
 .owner-list,
-.admin-list {
+.admin-list,
+.send-new-mail {
   margin-top: 20px;
   width: 800px;
 }

@@ -12,7 +12,6 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 テストユーザーアカウント
 
 email: test@mail
-
 password: test
 ```
 ## 機能一覧
@@ -36,7 +35,7 @@ password: test
     * 店舗代表者の作成
 
 
-## Build Setup
+## 環境構築方法
 
 ```bash
 # install dependencies
@@ -55,7 +54,7 @@ $ yarn generate
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
-## Special Directories
+<!-- ## Special Directories
 
 You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
 
@@ -102,4 +101,4 @@ More information about the usage of this directory in [the documentation](https:
 
 This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store). -->
