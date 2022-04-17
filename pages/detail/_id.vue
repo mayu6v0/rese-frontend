@@ -16,7 +16,11 @@
       <Reservation :id="$route.params.id" :name=name />
     </div>
     <div class="review">
-      <p class="rating">総合評価<star-rating :read-only="true" :rating="averageRating" :increment="0.1"></star-rating></p>
+      <p class="rating">総合評価</p>
+      <star-rating
+      :read-only="true" :rating="averageRating" :increment="0.1"></star-rating>
+      <!-- <div v-if="averageRating != 'NaN'"></div> -->
+      <p v-show="averageRating === 'NaN'" class="nothing">評価はまだありません</p>
       <ReviewCard v-for="item in reviewList" :key="item.id" :title="item.title" :rating="item.rating" :review="item.review"></ReviewCard>
     </div>
   </div>
@@ -32,6 +36,7 @@ export default {
       genre: "",
       overview: "",
       reviewList: [],
+      rating: "",
     }
   },
   methods: {
@@ -75,9 +80,11 @@ export default {
       for (let i = 0; i < this.ratingArray.length; i++) {
         sum += this.ratingArray[i];
       }
+
       const average = sum / this.ratingArray.length;
       console.log( average );
       console.log(average.toFixed(1));
+      // this.rating = average.toFixed(1);
       return average.toFixed(1);
     },
   },
@@ -162,6 +169,9 @@ export default {
   font-weight: bold;
 }
 
+.nothing {
+  margin-top: 30px;
+}
 @media screen and (max-width: 768px) {
   .flex {
     display: block;
