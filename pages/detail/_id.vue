@@ -92,7 +92,7 @@ export default {
 .container {
   width: 95%;
   margin: 0 auto;
-  background-color: rgb(245, 239, 239);
+  background-color: #EFF0F4;
 }
 
 .detail {
@@ -154,6 +154,7 @@ export default {
 
 .review {
   margin: 30px auto;
+  width: 80%;
 }
 
 .rating {
@@ -172,6 +173,10 @@ export default {
 
   .reservation {
     width: 100%;
+  }
+
+  .review {
+  width: 100%;
   }
 }
 </style>
