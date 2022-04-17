@@ -159,6 +159,7 @@ export default {
   width: 100%;
   height: 10%;
   border-radius: 0 0 5px 5px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -172,16 +173,11 @@ export default {
   }
 
   .confirm {
-  /* margin-top: 20px; */
   padding: 10px;
-  /* border: 1px solid red; */
-  /* background-color: rgb(39, 140, 173); */
 }
 
   .reservation-btn {
     height: 20%;
-  cursor: pointer;
-
   }
 }
 </style>
