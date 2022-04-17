@@ -60,7 +60,7 @@
 
       const sendData = {
         user_id: this.$auth.user.id,
-        restaurant_id: this.$route.params.restaurantId,
+        restaurant_id: this.restaurantId,
         reservation_id: this.$route.params.reservationId,
         rating: this.rating,
         title: this.title,
