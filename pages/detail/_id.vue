@@ -166,8 +166,8 @@ export default {
     display: block;
   }
 
-  .header-and-detail {
-  width: 100%;
+  .detail {
+    width: 100%;
   }
 
   .reservation {
