@@ -49,6 +49,7 @@ export default {
   font-size: 14px;
   text-align: center;
 }
+
 button {
   color: #fff;
   background-color: blue;

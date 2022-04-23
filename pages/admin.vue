@@ -101,7 +101,7 @@
 </template>
 <script>
 export default {
-  middleware: ['auth','admin'],
+  middleware: ['auth','admin', 'emailVerify'],
   data() {
     return {
       authority: "owner",

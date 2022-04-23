@@ -28,6 +28,12 @@
           <li class="menu-item" v-if="$auth.loggedIn">
             <NuxtLink to="/mypage">Mypage</NuxtLink>
           </li>
+          <li class="menu-item" v-if="$auth.loggedIn && $auth.user.authority === 'admin'">
+            <NuxtLink to="/admin">Admin page</NuxtLink>
+          </li>
+          <li class="menu-item" v-if="$auth.loggedIn && $auth.user.authority === 'owner'">
+            <NuxtLink to="/owner">Owner page</NuxtLink>
+          </li>
         </ul>
       </div>
     </div>

@@ -4,7 +4,6 @@
     {{$auth.user.authority}}
    <!-- <p>$auth.user {{ $auth.user }}</p> -->
    <!-- <p>$store.state {{$store.state.auth.user}}</p> -->
-    <!-- <button v-on:click="getUser">APIを叩く</button> -->
     <div class="flex mypage--container">
       <div class="reservation">
         <h2 class="title">予約状況</h2>
@@ -36,8 +35,8 @@
 
 <script>
 export default {
-  //ログインユーザーのみがmypageにアクセスできる
-  middleware: 'auth',
+  //メール認証済みのログインユーザーのみがmypageにアクセスできる
+  middleware: ['auth','emailVerify'],
   data() {
     return {
       reservationList: [],

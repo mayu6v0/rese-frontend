@@ -51,7 +51,7 @@ export default {
           email: this.email,
           password: this.password,
           authority: "user",
-          restaurant_id: "",
+          // restaurant_id: "",
         });
         this.$router.push("/thanks");
       } catch {
