@@ -14,11 +14,11 @@
 
 <script>
 export default {
- methods: {
-   resendVerify() {
-     this.$router.push("/auth/resendverify")
-   }
- },
+  methods: {
+    resendVerify() {
+      this.$router.push("/auth/resendverify")
+    }
+  },
 }
 </script>
 
