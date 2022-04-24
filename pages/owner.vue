@@ -93,7 +93,7 @@
 </template>
 <script>
 export default {
-  middleware: ['auth','owner'],
+  middleware: ['auth', 'owner', 'emailVerify'],
   data() {
     return {
       name: "",

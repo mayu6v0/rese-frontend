@@ -28,7 +28,7 @@
 
 <script>
   export default {
-  // props: ["id", "name"],
+  middleware: ['auth','emailVerify'],
   data() {
     return {
       reservation: [],
