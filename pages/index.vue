@@ -72,9 +72,8 @@ export default {
       // this.getFavoriteList();
     },
     async getFavoriteList() {
-      if(this.$auth.loggedIn) {
+      if(this.$auth.loggedIn && this.$auth.user.email_verified_at !== null) {
         const token = this.$auth.strategy.token.get();
-        console.log(token);
         //ユーザーがログインしていたらユーザーのお気に入り一覧のAPIを取得する
         const resData = await this.$axios.get(
         process.env.BASE_URL+"/api/favorite",
@@ -110,7 +109,7 @@ export default {
     },
     favoriteIdList() {
       const favoriteIdList = [];
-      if(this.$auth.loggedIn) {
+      if(this.$auth.loggedIn && this.$auth.user.email_verified_at !== null) {
       //favoriteListのrestaurant_idで新たに配列を作る
       for(let i = 0; i < this.favoriteList.length; i++) {
         const favoriteId = this.favoriteList[i].restaurant_id;

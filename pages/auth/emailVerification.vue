@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card__txt">
         <p>{{ text }}</p>
-        <button v-if="verified" @click="goToLogin">ログインする</button>
+        <button v-if="verified" @click="goToMypage">マイページへ</button>
       </div>
   </div>
   </div>
@@ -18,8 +18,8 @@
       }
     },
     methods: {
-      goToLogin() {
-        this.$router.push("/login")
+      goToMypage() {
+        this.$router.push("/mypage")
       }
     },
     async mounted() {

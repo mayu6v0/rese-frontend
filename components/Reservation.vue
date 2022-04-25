@@ -79,14 +79,13 @@ export default {
   },
   methods: {
     async reserve() {
-      if(this.$auth.loggedIn) {
+      if(this.$auth.loggedIn && this.$auth.user.email_verified_at !== null) {
         const sendData = {
           user_id: this.$auth.user.id,
           restaurant_id: this.restaurant_id,
           datetime: this.date +" "+ this.time,
           number: this.number,
         };
-        // console.log(sendData);
         await this.$axios.post(process.env.BASE_URL+"/api/reservation", sendData);
         this.$router.push("/done");
       } else {

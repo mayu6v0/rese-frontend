@@ -31,14 +31,12 @@ export default {
       this.$router.push("/detail/"+this.id)
     },
     async addFavorite() {
-      if(this.$auth.loggedIn) {
+      if(this.$auth.loggedIn && this.$auth.user.email_verified_at !== null) {
 
         const sendData = {
           user_id: this.$auth.user.id,
           restaurant_id: this.id,
       };
-      console.log(sendData);
-      // console.log(process.env.BASE_URL);
       await this.$axios.post(process.env.BASE_URL+"/api/favorite", sendData);
       this.$emit('get-favorite-list');
         } else {
