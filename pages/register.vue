@@ -1,35 +1,34 @@
 <template>
   <div class="container">
-    <!-- <Header /> -->
       <div class="register-container">
         <p class="form-title">Registration</p>
         <form class="register-form" @submit.prevent="register">
-            <validation-observer ref="obs" v-slot="ObserverProps">
-          <div class="input-area">
-              <fa :icon="['fas', 'user']" class="fontawesome" />
+          <validation-observer ref="obs" v-slot="ObserverProps">
             <validation-provider v-slot="ProviderProps" rules="required">
-              <input type="text" v-model="name" placeholder="User name" required /><br />
+              <div class="input-area">
+                <fa :icon="['fas', 'user']" class="fontawesome" />
+                <input type="text" v-model="name" name="User name" placeholder="User name" required />
+              </div>
               <div class="error">{{ ProviderProps.errors[0] }}</div>
             </validation-provider>
-          </div>
-          <div class="input-area">
-            <fa :icon="['fas', 'envelope']" class="fontawesome" />
-            <input type="email" v-model="email" placeholder="Email" required /><br />
-          </div>
-          <div class="input-area">
-            <fa :icon="['fas', 'lock']" class="fontawesome" />
-            <input type="password" v-model="password" placeholder="Password" required />
-          </div>
-          <button type="submit" :disabled="ObserverProps.invalid || !ObserverProps.validated">登録</button>
+            <validation-provider v-slot="ProviderProps" rules="required">
+              <div class="input-area">
+                <fa :icon="['fas', 'envelope']" class="fontawesome" />
+                <input type="email" v-model="email" name="Email" placeholder="Email" required /><br />
+              </div>
+              <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
+            <validation-provider v-slot="ProviderProps" rules="required|min:8">
+              <div class="input-area">
+                <fa :icon="['fas', 'lock']" class="fontawesome" />
+                <input type="password" v-model="password" name="Password" placeholder="Password" required />
+              </div>
+              <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
+            <button type="submit" :disabled="ObserverProps.invalid || !ObserverProps.validated">登録</button>
           </validation-observer>
         </form>
       </div>
-      <!-- <div>
-        <validation-provider v-slot="ProviderProps" rules="required">
-          <input type="text" v-model="name" name="ユーザーネーム" placeholder="User name" required /><br />
-          <div class="error">{{ ProviderProps.errors[0] }}</div>
-        </validation-provider>
-      </div> -->
   </div>
 </template>
 
@@ -51,7 +50,6 @@ export default {
           email: this.email,
           password: this.password,
           authority: "user",
-          // restaurant_id: "",
         });
         this.$router.push("/thanks");
       } catch {
@@ -113,6 +111,7 @@ input {
   position: relative;
   /* border: 1px solid red; */
 }
+
 button {
   color: #fff;
   background-color: blue;
@@ -122,8 +121,6 @@ button {
   margin: 10px 0 0 auto;
   display: block;
   cursor: pointer;
-
-  /* align-items: right; */
 }
 
 .fontawesome {
@@ -134,6 +131,6 @@ button {
 
 .error {
   color: red;
-  display: inline;
+  font-size: 14px;
 }
 </style>

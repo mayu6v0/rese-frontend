@@ -1,17 +1,27 @@
 <template>
   <div class="reservation-container">
+    <validation-observer ref="obs" v-slot="ObserverProps">
     <div class="form">
       <p class="reservation-title">予約</p>
       <div>
-        <input class="select-date" type="date" v-model="date" ><br />
-        <select class="select-time" v-model="time">
-          <option value="" selected hidden>Time</option>
-          <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name }}</option>
-        </select><br />
-        <select class="select-number" v-model="number">
-          <option value="" selected hidden>Number</option>
-          <option v-for="number in numberList" :key="number.id" :value="number.value">{{ number.name }}人</option>
-        </select><br />
+        <validation-provider v-slot="ProviderProps" rules="required">
+          <input class="select-date" type="date" name="日付" v-model="date" >
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+        </validation-provider>
+        <validation-provider v-slot="ProviderProps" rules="required">
+          <select class="select-time" name="予約時間" v-model="time">
+            <option value="" selected hidden>Time</option>
+            <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name }}</option>
+          </select>
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+        </validation-provider>
+        <validation-provider v-slot="ProviderProps" rules="required">
+          <select class="select-number" name="人数" v-model="number">
+            <option value="" selected hidden>Number</option>
+            <option v-for="number in numberList" :key="number.id" :value="number.value">{{ number.name }}人</option>
+          </select>
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+        </validation-provider>
         <div class="confirm">
 
         <table class="confirm--table">
@@ -35,7 +45,9 @@
         </div>
       </div>
     </div>
-    <button class="reservation-btn" @click="reserve">予約する</button>
+    <button class="reservation-btn" :disabled="ObserverProps.invalid || !ObserverProps.validated" @click="reserve">予約する</button>
+    </validation-observer>
+
   </div>
 </template>
 
@@ -159,6 +171,11 @@ export default {
   height: 10%;
   border-radius: 0 0 5px 5px;
   cursor: pointer;
+}
+
+.error {
+  color: #fff;
+  font-size: 14px;
 }
 
 @media screen and (max-width: 768px) {
