@@ -170,12 +170,6 @@ export default {
         if(this.authority === "admin") {
           this.restaurant_id = null;
         }
-        // 新規店舗代表者を登録する場合
-        // 会員登録の前に新規のrestaurant_idを取得する
-        if(this.authority === "owner" && this.restaurant_id == "") {
-          const resData = await this.$axios.post(process.env.BASE_URL+"/api/restaurant");
-          this.restaurant_id = resData.data.data.id;
-        }
 
         // 新規会員登録する
         const sendData = {
@@ -187,6 +181,7 @@ export default {
         };
         await this.$axios.post(process.env.BASE_URL+"/api/auth/register", sendData);
         alert("新規店舗代表者/管理者が登録されました");
+        
         // 店舗代表者と管理者の一覧を更新する
         this.getOwnerList();
         this.getAdminList();

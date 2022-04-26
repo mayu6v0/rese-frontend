@@ -26,16 +26,15 @@
       const queryURL = this.$route.query.queryURL || '';
       if (queryURL != '') {
         await this.$axios.$get(queryURL)
-          .then(data => {
+          try {
             this.text = "メール認証が完了しました";
             this.verified = true;
             setTimeout(() => {
               this.$router.push("/mypage");
             }, 2000);
-          })
-          .catch(err => {
+          } catch(error) {
             alert('メール認証に失敗しました');
-          });
+          }
       }
     },
   }

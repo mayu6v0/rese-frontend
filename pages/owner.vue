@@ -3,10 +3,55 @@
   <div class="container">
     <h1 class="title">店舗管理画面</h1>
     <p class="user-name">{{ $auth.user.name }}さん</p>
-    <p>店舗ID：{{ $auth.user.restaurant_id }}</p>
-    <div class="detail">
+    <p>店舗ID：{{ restaurant_id }}</p>
+    <div class="detail" v-if="restaurant_id === null">
+        <h2 class="detail__title">店舗情報作成</h2>
+
+      <table class="table__create">
+        <tr>
+          <th class="th">店名</th>
+          <td><input type="text" v-model="name" /></td>
+        </tr>
+        <tr>
+          <th>画像URL</th>
+          <td>
+            <input class="" v-model="image_url" />
+          </td>
+        </tr>
+        <tr>
+          <th>画像</th>
+          <td>
+            <img class="restaurant-img" :src="image_url">
+          </td>
+        </tr>
+        <tr>
+          <th>エリア</th>
+          <td>
+            <!-- <p>{{ area }}</p> -->
+            <select class="select-restaurant" v-model="area_id">
+              <!-- <option :value="area_id" selected>{{ area }}</option> -->
+              <option v-for="area in areaList" :key="area.id" :value="area.id">{{ area.name }}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>ジャンル</th>
+          <td>
+            <!-- <p>{{ genre }}</p> -->
+            <select v-model="genre_id">
+              <!-- <option value="" selected>変更する</option> -->
+              <option v-for="genre in genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
+          </select>
+          </td>
+        </tr>
+        <tr>
+          <th>店舗概要</th>
+          <td><textarea type="text" v-model="overview" ></textarea></td>
+        </tr>
+      </table>
+      <button class="" @click="createNewRestaurant">新規店舗作成</button>
     </div>
-    <div class="create">
+    <div class="create" v-else>
         <h2 class="detail__title">店舗情報</h2>
 
       <table class="table__create">
@@ -144,6 +189,27 @@ export default {
       this.reservationList = resData.data.data;
       console.log(this.reservationList);
     },
+    async createNewRestaurant() {
+      const sendData = {
+        name: this.name,
+        area_id: this.area_id,
+        genre_id: this.genre_id,
+        overview: this.overview,
+        image_url: this.image_url
+      };
+      const resData = await this.$axios.post(process.env.BASE_URL+"/api/restaurant", sendData);
+      this.restaurant_id = resData.data.data.id;
+
+      //新規追加した店舗のrestaurant_idをログインユーザーのrestaurant_idに追加
+      const Data = await this.$axios.put(process.env.BASE_URL+"/api/auth/update",
+      {
+        restaurant_id: this.restaurant_id
+      });
+
+      // // 表示する店舗情報を更新
+      this.getDetail();
+      alert('店舗情報が新規作成されました');
+    },
     async updateDetail() {
       const sendData = {
         name: this.name,
@@ -152,7 +218,6 @@ export default {
         overview: this.overview,
         image_url: this.image_url
       };
-      console.log(sendData);
       const resData = await this.$axios.put(process.env.BASE_URL+"/api/restaurant/"+this.restaurant_id, sendData);
       alert('店舗情報が更新されました');
       // 表示する店舗情報を更新
