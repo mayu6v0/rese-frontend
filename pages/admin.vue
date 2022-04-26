@@ -9,7 +9,12 @@
       <table class="table__create">
         <tr>
           <th>店舗代表者名/管理者名</th>
-          <td><input type="text" v-model="name" /></td>
+          <td>
+            <validation-provider v-slot="ProviderProps" rules="required">
+              <input type="text" name="名前" v-model="name" />
+              <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
+          </td>
         </tr>
         <tr>
           <th>権限</th>
@@ -34,16 +39,25 @@
           </td>
         </tr>
         <tr>
+
           <th>メールアドレス</th>
-          <td><input type="email" v-model="email" /></td>
+          <td>
+            <validation-provider v-slot="ProviderProps" rules="required|email">
+            <input type="email" name="メールアドレス" v-model="email" />
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
+          </td>
         </tr>
         <tr>
           <th>パスワード</th>
-          <td><input type="password" v-model="password" /></td>
+          <td>
+            <validation-provider v-slot="ProviderProps" rules="required|min:8">
+            <input type="password" name="パスワード" v-model="password" />
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
+            </td>
         </tr>
-        
       </table>
-      <!-- <button type="submit" :disabled="ObserverProps.invalid || !ObserverProps.validated">登録</button> -->
       <button type="submit" :disabled="ObserverProps.invalid">登録</button>
       </validation-observer>
       </form>
@@ -81,6 +95,7 @@
     </div>
     <div class="mail">
         <h2 class="list">メール送信</h2>
+        <validation-observer ref="obs" v-slot="ObserverProps">
         <table class="send-new-mail">
           <tr>
             <th>送信先</th>
@@ -88,14 +103,25 @@
           </tr>
           <tr>
             <th>タイトル</th>
-            <td><input type="text" v-model="mailTitle"></td>
+            <validation-provider v-slot="ProviderProps" rules="required">
+              <td>
+                <input type="text" name="タイトル"   v-model="mailTitle">
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </td>
+            </validation-provider>
           </tr>
           <tr>
             <th>本文</th>
-            <td><textarea name="" id="" cols="50" rows="10" v-model="mailText"></textarea></td>
+            <validation-provider v-slot="ProviderProps" rules="required">
+              <td>
+                <textarea name="本文" id="" cols="50" rows="10" v-model="mailText"></textarea>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </td>
+            </validation-provider>
           </tr>
         </table>
-        <button @click="sendMail">送信</button>
+        <button @click="sendMail" :disabled="ObserverProps.invalid || !ObserverProps.validated">送信</button>
+        </validation-observer>
       </div>
   </div>
 </template>
@@ -197,9 +223,9 @@ export default {
   text-align: center;
 }
 
-.table tr,th,td {
+tr,th,td {
   padding: 10px 30px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .create,
@@ -256,10 +282,24 @@ button {
   width: 800px;
 }
 
+.admin-list tr,
+.admin-list th,
+.admin-list td,
+.owner-list tr,
+.owner-list th,
+.owner-list td {
+  border: 1px solid black;
+
+}
 .owner-list th,
 .owner-list td,
 .admin-list th,
 .admin-list td {
   width: 200px;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
 }
 </style>

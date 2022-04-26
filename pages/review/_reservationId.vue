@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+          <validation-observer ref="obs" v-slot="ObserverProps">
+
     <table>
       <tr>
         <th>店名</th>
@@ -15,14 +17,24 @@
       </tr>
       <tr>
         <th><label for="title">タイトル</label></th>
-        <td><input type="text" v-model="title" /></td>
+        <td>
+            <validation-provider v-slot="ProviderProps" rules="required">
+          <input type="text" name="タイトル" v-model="title" />
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider></td>
       </tr>
       <tr>
         <th><label for="review">コメント</label></th>
-        <td><textarea type="text" id="review" v-model="review"></textarea></td>
+        <td>
+            <validation-provider v-slot="ProviderProps" rules="required">
+          <textarea type="text" name="コメント" id="review" v-model="review"></textarea>
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider></td>
       </tr>
     </table>
-    <button @click="insertReview">レビューを送信</button>
+    <button :disabled="ObserverProps.invalid || !ObserverProps.validated" @click="insertReview">レビューを送信</button>
+          </validation-observer>
+
   </div>
 </template>
 
@@ -120,5 +132,10 @@ button {
   padding: 10px 20px;
   margin: 30px auto;
   cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
 }
 </style>

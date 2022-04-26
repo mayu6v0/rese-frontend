@@ -2,20 +2,28 @@
   <div class="container">
     <div class="login-container">
       <p class="form-title">Login</p>
-    <form class="login-form" @submit.prevent="login">
-    <div class="input-area">
-      <fa :icon="['fas', 'envelope']" class="fontawesome" />
-    <input type="email" v-model="email" placeholder="Email" required />
-    </div>
-    <div class="input-area">
+      <form class="login-form" @submit.prevent="login">
+        <validation-observer ref="obs" v-slot="ObserverProps">
+        <validation-provider v-slot="ProviderProps" rules="required">
+          <div class="input-area">
+            <fa :icon="['fas', 'envelope']" class="fontawesome" />
+          <input type="email" name="Email" v-model="email" placeholder="Email" required />
+          </div>
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+        </validation-provider>
+        <validation-provider v-slot="ProviderProps" rules="required|min:8">
+          <div class="input-area">
 
-      <fa :icon="['fas', 'lock']" class="fontawesome" />
+            <fa :icon="['fas', 'lock']" class="fontawesome" />
 
-    <input type="password" v-model="password" placeholder="Password" required />
+          <input type="password" name="Password" v-model="password" placeholder="Password" required />
+          </div>
+          <div class="error">{{ ProviderProps.errors[0] }}</div>
+        </validation-provider>
+        <button type="submit" :disabled="ObserverProps.invalid || !ObserverProps.validated">ログイン</button>
+      </validation-observer>
+    </form>
     </div>
-    <button type="submit">ログイン</button>
-  </form>
-  </div>
   </div>
 </template>
 
@@ -115,6 +123,11 @@ button {
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+}
+
+.error {
+  color: red;
+  font-size: 14px;
 }
 
 </style>
