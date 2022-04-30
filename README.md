@@ -3,8 +3,7 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 
 　* バックエンドとしてrese-backendの使用を前提としています。
 
-  rese-backend
-
+    rese-backend
   <https://github.com/mayu6v0/rese-backend.git>
 
 ## 開発環境
