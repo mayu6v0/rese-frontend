@@ -44,7 +44,7 @@
       const queryURL = this.$route.query.queryURL || '';
       console.log(queryURL);
       if (queryURL != '') {
-         await this.$axios.$get(queryURL)
+         await this.$axios.get(queryURL)
           .then(data =>{
             this.text = "予約情報取得完了";
             this.checked = true;
