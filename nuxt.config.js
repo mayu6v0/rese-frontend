@@ -86,8 +86,6 @@ export default {
       'laravelJWT': {
         provider: 'laravel/jwt',
         url: envSettings.BASE_URL,
-        // url: 'http://127.0.0.1:8000',
-        // url: 'https://m-rese.herokuapp.com',
 
         token: {
           maxAge: 60 * 60

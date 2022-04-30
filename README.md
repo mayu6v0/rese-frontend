@@ -1,6 +1,9 @@
 # Rese
 Rese(リーズ)はある企業のグループ会社の飲食店予約サービスを想定したアプリです。
 
+　*バックエンドとしてrese-backendの使用を前提としています。
+    rese-backend  <https://github.com/mayu6v0/rese-backend.git>
+
 ## 開発環境
 * Nuxt.js　2.15.8
 * Laravel　8.75
@@ -8,17 +11,13 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 ## URL
 <https://rese-nuxt.herokuapp.com>
 
-```
-テストユーザーアカウント
 
-email: test@mail
-password: test
-```
 ## 機能一覧
-### 店舗
+### 店舗ページ
   * エリア、ジャンル、店舗名での検索
   * お気に入り店舗登録
   * 店舗詳細情報の表示
+  * 予約機能
 
 ### マイページ
   * 認証機能
@@ -33,72 +32,32 @@ password: test
     * 店舗情報の作成、更新、予約情報の作成
   * 管理者
     * 店舗代表者の作成
+    * メール送信機能
+
+### その他
+  * メール認証機能
+  * 予約時と予約当日に認証QRコード付きのメール送信
+  * レスポンシブデザイン対応
 
 
 ## 環境構築方法
 
 ```bash
-# install dependencies
+# パッケージのインストール
 $ yarn install
 
-# serve with hot reload at localhost:3000
+# バックエンドのURL設定
+  cross-envを使用し本番環境と開発環境のURLの切り分けが可能です。
+  env.development.js と　env.production.js　
+  それぞれに環境変数に合わせたURLの値を設定してください。
+
+# ローカルサーバーの立ち上げ（localhost:3000）
 $ yarn dev
 
-# build for production and launch server
+#  Node.js サーバにデプロイする場合
 $ yarn build
 $ yarn start
 
-# generate static project
+# 静的ホスティングサービスにデプロイする場合
 $ yarn generate
 ```
-
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
-
-<!-- ## Special Directories
-
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store). -->
