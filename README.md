@@ -2,8 +2,10 @@
 Rese(リーズ)はある企業のグループ会社の飲食店予約サービスを想定したアプリです。
 <br>
 <br>
+<br>
 　* バックエンドとしてrese-backendの使用を前提としています。
-      -[rese-backend](https://github.com/mayu6v0/rese-backend.git)
+<br>
+      [rese-backend](https://github.com/mayu6v0/rese-backend.git)
 
 ## 開発環境
 * Nuxt.js　2.15.8
