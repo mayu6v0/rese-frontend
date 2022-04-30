@@ -3,9 +3,9 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 <br>
 <br>
 <br>
-　* バックエンドとしてrese-backendの使用を前提としています。
+バックエンドとしてrese-backendの使用を前提としています。
 <br>
-      [rese-backend](https://github.com/mayu6v0/rese-backend.git)
+[rese-backend](https://github.com/mayu6v0/rese-backend.git)
 
 ## 開発環境
 * Nuxt.js　2.15.8
@@ -45,22 +45,30 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 
 ## 環境構築方法
 
+
+### パッケージのインストール
 ```bash
-# パッケージのインストール
 $ yarn install
+```
 
-# バックエンドのURL設定
+### バックエンドのURL設定
+
   cross-envを使用し本番環境と開発環境のURLの切り分けが可能です。
-  env.development.js と　env.production.js　
-  それぞれに環境変数に合わせたURLの値を設定してください。
 
-# ローカルサーバーの立ち上げ（localhost:3000）
+  env.development.jsとenv.production.jsそれぞれに環境変数に合わせたURLの値を設定してください。
+
+### ローカルサーバーの立ち上げ（localhost:3000）
+```bash
 $ yarn dev
+```
 
-#  Node.js サーバにデプロイする場合
+### Node.jsサーバにデプロイする場合
+```bash
 $ yarn build
 $ yarn start
+```
 
-# 静的ホスティングサービスにデプロイする場合
+### 静的ホスティングサービスにデプロイする場合
+```bash
 $ yarn generate
 ```
