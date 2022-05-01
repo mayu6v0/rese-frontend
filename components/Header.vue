@@ -160,11 +160,9 @@ export default {
 
 .menu-bg.open {
   display: block;
-  /* margin: 0; */
 }
 
 .menu-list {
-  /* border: 1px solid red; */
   position: absolute;
   top: 50%;
   left: 50%;

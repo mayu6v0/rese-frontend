@@ -2,8 +2,12 @@
 <template>
   <div class="container">
     <h1 class="title">管理画面</h1>
+    <div class="menu">
+      <a class="menu-item" @click="goToNewOwner">店舗代表者・管理者作成</a>
+      <a class="menu-item" @click="goToSendMail">メール送信</a>
+    </div>
     <div class="create">
-      <h2 class="create__title">新規登録</h2>
+      <h2 class="create__title">店舗代表者・管理者　新規登録</h2>
       <form class="register-form" @submit.prevent="register">
         <validation-observer ref="obs" v-slot="ObserverProps">
       <table class="table__create">
@@ -93,36 +97,6 @@
         </table>
       </div>
     </div>
-    <div class="mail">
-        <h2 class="list">メール送信</h2>
-        <validation-observer ref="obs" v-slot="ObserverProps">
-        <table class="send-new-mail">
-          <tr>
-            <th>送信先</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>タイトル</th>
-            <validation-provider v-slot="ProviderProps" rules="required">
-              <td>
-                <input type="text" name="タイトル"   v-model="mailTitle">
-                <div class="error">{{ ProviderProps.errors[0] }}</div>
-              </td>
-            </validation-provider>
-          </tr>
-          <tr>
-            <th>本文</th>
-            <validation-provider v-slot="ProviderProps" rules="required">
-              <td>
-                <textarea name="本文" id="" cols="50" rows="10" v-model="mailText"></textarea>
-                <div class="error">{{ ProviderProps.errors[0] }}</div>
-              </td>
-            </validation-provider>
-          </tr>
-        </table>
-        <button @click="sendMail" :disabled="ObserverProps.invalid || !ObserverProps.validated">送信</button>
-        </validation-observer>
-      </div>
   </div>
 </template>
 <script>
@@ -138,11 +112,15 @@ export default {
       restaurantList: [],
       ownerList: [],
       adminList: [],
-      mailTitle: "",
-      mailText: "",
     }
   },
   methods: {
+    goToNewOwner() {
+      this.$router.push("/admin");
+    },
+    goToSendMail() {
+      this.$router.push("/sendmail");
+    },
     //飲食店一覧のAPIを取得する
     async getRestaurantList() {
       const resData = await this.$axios.get(
@@ -189,15 +167,6 @@ export default {
         alert("入力内容を確認してください");
       }
     },
-    async sendMail() {
-      const sendData = {
-          // user: this.user,
-          mailTitle: this.mailTitle,
-          mailText: this.mailText,
-        };
-      await this.$axios.post(process.env.BASE_URL+"/api/sendmail", sendData);
-        alert("メール送信が完了しました");
-    }
   },
   created() {
     this.getRestaurantList();
@@ -206,6 +175,7 @@ export default {
   },
 }
 </script>
+
 <style scoped>
 .container {
   width: 90%;
@@ -218,15 +188,26 @@ export default {
   text-align: center;
 }
 
+.menu {
+  margin: 0px 0px auto 0px;
+  text-align: right;
+}
+
+.menu-item {
+  display: block;
+  font-size: 18px;
+  color: #0E3EDA;
+  text-decoration: none;
+  padding: 10px;
+}
+
 tr,th,td {
   padding: 10px 30px;
-  /* border: 1px solid black; */
 }
 
 .create,
 .owner,
-.admin,
-.mail {
+.admin {
   margin-top: 30px;
   padding-bottom: 30px;
   background-color: #fff;
@@ -241,7 +222,6 @@ tr,th,td {
 
 input,
 select {
-  /* line-height: 30px; */
   width: 300px;;
   height: 30px;
 }
@@ -271,11 +251,9 @@ button {
 }
 
 .owner-list,
-.admin-list,
-.send-new-mail {
+.admin-list {
   margin-top: 20px;
   width: 800px;
-  
 }
 
 .admin-list tr,
@@ -294,9 +272,6 @@ button {
   width: 200px;
 }
 
-.send-new-mail th {
-  vertical-align: middle;
-}
 .error {
   color: red;
   font-size: 14px;
