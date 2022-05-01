@@ -8,63 +8,62 @@
     </div>
     <div class="create">
       <h2 class="create__title">店舗代表者・管理者　新規登録</h2>
-      <form class="register__form" @submit.prevent="register">
         <validation-observer ref="obs" v-slot="ObserverProps">
-      <table class="table__create">
-        <tr>
-          <th>店舗代表者名/管理者名</th>
-          <td>
-            <validation-provider v-slot="ProviderProps" rules="required">
-              <input type="text" name="名前" v-model="name" />
-              <div class="error">{{ ProviderProps.errors[0] }}</div>
-            </validation-provider>
-          </td>
-        </tr>
-        <tr>
-          <th>権限</th>
-          <td>
-            <select class="" v-model="authority">
-              <option value="owner" selected>店舗代表者</option>
-              <option value="admin">管理者</option>
-        </select>
-          </td>
-        </tr>
-        <tr v-show="authority === 'owner'">
-          <th>店舗名</th>
-          <td>
-            <select class="select-restaurant" v-model="restaurant_id">
-              <option value="" selected>新規店舗</option>
-              <optgroup label="既存店舗">
-                <option v-for="item in restaurantList" :key="item.id" :value="item.id">{{ item.name }}</option>
-              </optgroup>
-            </select>
-          </td>
-        </tr>
-        <tr>
-
-          <th>メールアドレス</th>
-          <td>
-            <validation-provider v-slot="ProviderProps" rules="required|email">
-            <input type="email" name="メールアドレス" v-model="email" />
-          <div class="error">{{ ProviderProps.errors[0] }}</div>
-            </validation-provider>
-          </td>
-        </tr>
-        <tr>
-          <th>パスワード</th>
-          <td>
-            <validation-provider v-slot="ProviderProps" rules="required|min:8">
-            <input type="password" name="パスワード" v-model="password" />
-            <div class="error">{{ ProviderProps.errors[0] }}</div>
-            </validation-provider>
-            </td>
-        </tr>
-      </table>
-      <button type="submit" :disabled="ObserverProps.invalid">登録</button>
+          <form class="register__form" @submit.prevent="register">
+            <table class="table__create">
+              <tr>
+                <th>店舗代表者名/管理者名</th>
+                <td>
+                  <validation-provider v-slot="ProviderProps" rules="required">
+                    <input type="text" name="名前" v-model="name" />
+                    <div class="error">{{ ProviderProps.errors[0] }}</div>
+                  </validation-provider>
+                </td>
+              </tr>
+              <tr>
+                <th>権限</th>
+                <td>
+                  <select class="" v-model="authority">
+                    <option value="owner" selected>店舗代表者</option>
+                    <option value="admin">管理者</option>
+                  </select>
+                </td>
+              </tr>
+              <tr v-show="authority === 'owner'">
+                <th>店舗名</th>
+                <td>
+                  <select class="select-restaurant" name="店舗名" v-model="restaurant_id">
+                    <option value="" selected>新規店舗</option>
+                    <optgroup label="既存店舗">
+                      <option v-for="item in restaurantList" :key="item.id" :value="item.id">{{ item.name }}</option>
+                    </optgroup>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th>メールアドレス</th>
+                <td>
+                  <validation-provider v-slot="ProviderProps" rules="required|email">
+                    <input type="email" name="メールアドレス" v-model="email" />
+                    <div class="error">{{ ProviderProps.errors[0] }}</div>
+                  </validation-provider>
+                </td>
+              </tr>
+              <tr>
+                <th>パスワード</th>
+                <td>
+                  <validation-provider v-slot="ProviderProps" rules="required|min:8|max:10">
+                    <input type="password" name="パスワード" v-model="password" />
+                    <div class="error">{{ ProviderProps.errors[0] }}</div>
+                  </validation-provider>
+                </td>
+              </tr>
+            </table>
+          <button type="submit" :disabled="ObserverProps.invalid">登録</button>
+        </form>
       </validation-observer>
-      </form>
     </div>
-    <div class="">
+    <div>
       <div class="owner">
         <h2 class="list">店舗代表者一覧</h2>
         <table class="table__owner">

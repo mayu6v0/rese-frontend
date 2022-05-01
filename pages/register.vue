@@ -18,7 +18,7 @@
               </div>
               <div class="error">{{ ProviderProps.errors[0] }}</div>
             </validation-provider>
-            <validation-provider v-slot="ProviderProps" rules="required|min:8">
+            <validation-provider v-slot="ProviderProps" rules="required|min:8|max:10">
               <div class="input__area">
                 <fa :icon="['fas', 'lock']" class="fontawesome" />
                 <input type="password" v-model="password" name="Password" placeholder="Password" required />
