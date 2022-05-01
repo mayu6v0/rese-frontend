@@ -2,15 +2,35 @@
 <template>
   <div class="container">
     <h1 class="title">店舗管理画面</h1>
-    <p class="user-name">{{ $auth.user.name }}さん</p>
-    <p>店舗ID：{{ restaurant_id }}</p>
-    <div class="detail" v-if="restaurant_id === null">
-        <h2 class="detail__title">店舗情報作成</h2>
-
-      <table class="table__create">
+    <div class="menu">
+      <a class="menu-item" @click="goToRestaurantInfo">店舗情報新規作成・更新</a>
+      <a class="menu-item" @click="goToReservationInfo">予約情報照会</a>
+    </div>
+    <div>
+      <table class="restaurant_info">
+        <tr>
+          <th>店舗ID</th>
+          <td>{{ restaurant_id }}</td>
+        </tr>
+        <tr>
+          <th>店名</th>
+          <td>{{ name }}</td>
+        </tr>
+        <tr>
+          <th>代表者</th>
+          <td>{{ $auth.user.name }}さん
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="create" v-if="restaurant_id === null">
+      <h2 class="detail__title">店舗情報作成</h2>
+      <table class="detail__table">
         <tr>
           <th class="th">店名</th>
-          <td><input type="text" v-model="name" /></td>
+          <td>
+            <input type="text" v-model="name" />
+          </td>
         </tr>
         <tr>
           <th>画像URL</th>
@@ -27,9 +47,7 @@
         <tr>
           <th>エリア</th>
           <td>
-            <!-- <p>{{ area }}</p> -->
             <select class="select-restaurant" v-model="area_id">
-              <!-- <option :value="area_id" selected>{{ area }}</option> -->
               <option v-for="area in areaList" :key="area.id" :value="area.id">{{ area.name }}</option>
             </select>
           </td>
@@ -37,27 +55,28 @@
         <tr>
           <th>ジャンル</th>
           <td>
-            <!-- <p>{{ genre }}</p> -->
             <select v-model="genre_id">
-              <!-- <option value="" selected>変更する</option> -->
               <option v-for="genre in genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
           </select>
           </td>
         </tr>
         <tr>
           <th>店舗概要</th>
-          <td><textarea type="text" v-model="overview" ></textarea></td>
+          <td>
+            <textarea type="text" v-model="overview" ></textarea>
+          </td>
         </tr>
       </table>
-      <button class="" @click="createNewRestaurant">新規店舗作成</button>
+      <button @click="createNewRestaurant">新規店舗作成</button>
     </div>
-    <div class="create" v-else>
-        <h2 class="detail__title">店舗情報</h2>
-
-      <table class="table__create">
+    <div class="update" v-else>
+      <h2 class="detail__title">店舗情報</h2>
+      <table class="detail__table">
         <tr>
           <th class="th">店名</th>
-          <td><input type="text" v-model="name" /></td>
+          <td>
+            <input type="text" v-model="name" />
+          </td>
         </tr>
         <tr>
           <th>画像URL</th>
@@ -74,9 +93,7 @@
         <tr>
           <th>エリア</th>
           <td>
-            <!-- <p>{{ area }}</p> -->
             <select class="select-restaurant" v-model="area_id">
-              <!-- <option :value="area_id" selected>{{ area }}</option> -->
               <option v-for="area in areaList" :key="area.id" :value="area.id">{{ area.name }}</option>
             </select>
           </td>
@@ -84,55 +101,40 @@
         <tr>
           <th>ジャンル</th>
           <td>
-            <!-- <p>{{ genre }}</p> -->
             <select v-model="genre_id">
-              <!-- <option value="" selected>変更する</option> -->
               <option v-for="genre in genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
           </select>
           </td>
         </tr>
         <tr>
           <th>店舗概要</th>
-          <td><textarea type="text" v-model="overview" ></textarea></td>
+          <td>
+            <textarea type="text" v-model="overview" ></textarea>
+          </td>
         </tr>
       </table>
-      <button class="" @click="updateDetail">更新する</button>
+      <button @click="updateDetail">更新する</button>
     </div>
-    <div class="">
-      <div class="owner">
-        <h2 class="list">予約一覧</h2>
-        <table class="owner-list">
-          <tr>
-            <th>予約日時</th>
-            <th>人数</th>
-            <th>予約者</th>
-            <th>メールアドレス</th>
-          </tr>
-          <tr  v-for="reservation in futureReservation" :key=reservation.id >
-            <td>{{ reservation.datetime }}</td>
-            <td>{{ reservation.number }}名</td>
-            <td>{{ reservation.user.name }}</td>
-            <td>{{ reservation.user.email }}</td>
-          </tr>
-        </table>
+    <div class="images">
+      <h2 class="detail__title">店舗画像</h2>
+      <h3 class="detail__title--sub">店舗画像アップロード</h3>
+      <div class="image__upload">
+        <input @change="changeFile" ref="rfafile" type="file" />
+        <button class="button--upload" @click="regist">アップロード</button>
       </div>
-      <div class="owner">
-        <h2 class="list">過去の予約</h2>
-        <table class="owner-list">
+      <h3 class="detail__title--sub">店舗画像一覧</h3>
+      <table class="detail__table">
           <tr>
-            <th>予約日時</th>
-            <th>人数</th>
-            <th>予約者</th>
-            <th>メールアドレス</th>
+            <th>画像URL</th>
+            <th>画像</th>
           </tr>
-          <tr  v-for="reservation in pastReservation" :key=reservation.id >
-            <td>{{ reservation.datetime }}</td>
-            <td>{{ reservation.number }}名</td>
-            <td>{{ reservation.user.name }}</td>
-            <td>{{ reservation.user.email }}</td>
+          <tr  v-for="URL in imagesURL" :key=URL.id>
+            <td>{{ URL.image_url }}</td>
+            <td>
+              <img class="restaurant-img" :src="URL.image_url">
+            </td>
           </tr>
-        </table>
-      </div>
+      </table>
     </div>
   </div>
 </template>
@@ -149,8 +151,6 @@ export default {
       genre: "",
       overview: "",
       restaurant_id: this.$auth.user.restaurant_id,
-      reservationList: [],
-      todayMs: "",
       areaList: [
         { id: 1, name: "東京都" },
         { id: 2, name: "大阪府" },
@@ -163,9 +163,17 @@ export default {
         { id: 4, name: "イタリアン" },
         { id: 5, name: "ラーメン" },
       ],
+      uploadfile: {},
+      imagesURL: [],
     }
   },
   methods: {
+    goToRestaurantInfo() {
+      this.$router.push("/owner");
+    },
+    goToReservationInfo() {
+      this.$router.push("/reservationinfo");
+    },
     // 店舗情報を取得する
     async getDetail() {
       const resData = await this.$axios.get(
@@ -180,14 +188,6 @@ export default {
       this.area_id = restaurantData[0].area.id
       this.genre_id = restaurantData[0].genre.id
       this.overview = restaurantData[0].overview;
-    },
-    //飲食店の予約一覧のAPIを取得する
-    async getReservationList() {
-      const resData = await this.$axios.get(
-        process.env.BASE_URL+"/api/owner/reservation?restaurant_id="+this.restaurant_id
-      );
-      this.reservationList = resData.data.data;
-      console.log(this.reservationList);
     },
     async createNewRestaurant() {
       const sendData = {
@@ -223,57 +223,39 @@ export default {
       // 表示する店舗情報を更新
       this.getDetail();
     },
-  },
-  computed: {
-    futureReservation(){
-      const futureReservationList = [];
-      //reservationListのdatetimeを取得
-      for(let i = 0; i < this.reservationList.length; i++) {
-        const reservation = this.reservationList[i];
-        //reservationListのdatetimeを取得（文字列）
-        const reservationDateStr = reservation.datetime;
-        //経過msに変換
-        const reservationDate = Date.parse(reservationDateStr.replace(/-/g, "/"));
-        //現在日時より先ならfutureReservationListに入れる
-        if(reservationDate > this.todayMs ) {
-          console.log("未来予約");
-          console.log(reservationDateStr);
-          futureReservationList.push(reservation);
-        }
-      }
-        console.log(futureReservationList);
-        return futureReservationList;
+    changeFile(e) {
+      const files = e.target.files || e.dataTransfer.files;
+	  // ファイルが選択されたら変数に入れる
+      this.uploadfile = files[0];
     },
-    pastReservation(){
-      const pastReservationList = [];
-      //reservationListのdatetimeを取得
-      for(let i = 0; i < this.reservationList.length; i++) {
-        const reservation = this.reservationList[i];
-      //   //reservationListのdatetimeを取得（文字列）
-        const reservationDateStr = reservation.datetime;
-        //経過msに変換
-        const reservationDate = Date.parse(reservationDateStr.replace(/-/g, "/"));
-        //現在日時より先ならpastReservationListに入れる
-        if(reservationDate <= this.todayMs ) {
-          console.log("過去予約");
-          console.log(reservationDateStr);
-          pastReservationList.push(reservation);
-        }
-      }
-        console.log(pastReservationList);
-        return pastReservationList.reverse();
+    // 送信アクション
+    async regist() {
+      // パラメータ生成
+      const params = new FormData();
+      // FormDataにアップロードするファイルを設定
+      params.append('photo', this.uploadfile);
+      // API実行
+      const response = await this.$axios.post(process.env.BASE_URL+"/api/images",
+        params,
+        {
+          headers: {
+            // multipartで送信
+            'content-type': 'multipart/form-data',
+          },
+        },
+      );
+      this.getImagesURL();
+    },
+    async getImagesURL() {
+      const response = await this.$axios.get(process.env.BASE_URL+"/api/images");
+      this.imagesURL = response.data.data;
+      console.log(response);
+      console.log(this.imagesURL);
     },
   },
   created() {
     this.getDetail();
-    this.getReservationList();
-    //現在日時を取得
-      const today = new Date();
-      console.log ("現在日時");
-      console.log (today);
-      //現在日時を経過msに変換
-      this.todayMs = today.getTime();
-      console.log(this.todayMs);
+    this.getImagesURL();
   }
 }
 </script>
@@ -281,13 +263,37 @@ export default {
 .container {
   width: 90%;
   margin: 0 auto;
-  /* background-color: #fff; */
   padding: 30px;
 }
 
 .title {
   font-size: 35px;
   text-align: center;
+}
+
+.menu {
+  margin: 0px 0px auto 0px;
+  text-align: right;
+}
+
+.menu-item {
+  display: block;
+  font-size: 18px;
+  color: #0E3EDA;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.restaurant_info tr,
+.restaurant_info th,
+.restaurant_info td {
+  border: none;
+  padding: 3px;
+  text-align: left;
+}
+
+.restaurant_info th {
+  width: 100px;
 }
 
 .restaurant-img {
@@ -300,7 +306,9 @@ export default {
   border: 1px solid black;
 }
 
-.create {
+.create,
+.update,
+.images {
   margin-top: 30px;
   padding-bottom: 30px;
   background-color: #fff;
@@ -315,7 +323,6 @@ export default {
 
 input,
 select {
-  /* line-height: 30px; */
   width: 600px;;
   height: 30px;
 }
@@ -325,12 +332,12 @@ textarea {
   height: 100px;
 }
 
-.table__create {
+.detail__table {
   width: 800px;
   margin: 20px auto;
 }
 
-.table__create th {
+.detail__table th {
   vertical-align: middle;
 }
 
@@ -350,24 +357,23 @@ button {
   cursor: pointer;
 }
 
-.list {
-  margin-top: 50px;
-  font-size: 25px;
+.image__upload {
+  margin: 30px auto;
+  width: 50%;
+  padding: 30px;
+}
+
+.detail__title--sub {
+  font-size: 18px;
+  padding: 10px;
   color: #fff;
-  padding: 20px;
-  background-color: #0074E4;
+  background-color:  #6495ed;
 }
 
-.owner-list,
-.admin-list {
-  margin-top: 20px;
-  width: 1000px;
-}
+.button--upload {
+  font-size: 18px;
 
-.owner-list th,
-.owner-list td,
-.admin-list th,
-.admin-list td {
-  width: 200px;
+  padding: 10px 20px;
+
 }
 </style>
