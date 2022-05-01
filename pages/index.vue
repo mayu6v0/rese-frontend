@@ -31,7 +31,7 @@
         :favoriteList = "favoriteList"
         :favoriteIdList="favoriteIdList">
       </RestaurantCard>
-      <div class="no-restaurant" v-if="filteredRestaurant == ''">検索結果に一致する店舗はありません</div>
+      <div class="no-restaurant" v-if="filteredRestaurant == ''">{{ message }}</div>
     </div>
   </div>
 </template>
@@ -41,6 +41,7 @@ export default {
   layout: 'top',
   data() {
     return {
+      message : "読み込み中...",
       restaurantList: [],
       favoriteList: [],
       searchArea: "",
@@ -63,6 +64,8 @@ export default {
   methods: {
     //飲食店一覧のAPIを取得する
     async getRestaurantList() {
+      this.message = '読み込み中...';
+
       const resData = await this.$axios.get(
         process.env.BASE_URL+"/api/restaurant"
       );
@@ -98,6 +101,12 @@ export default {
           filteredRestaurant.push(restaurant);
         }
       }
+      if(filteredRestaurant == '') {
+        setTimeout(() => {
+              this.message = '検索結果に一致する店舗はありません';
+        }, 500);
+      }
+
       return filteredRestaurant;
     },
     favoriteIdList() {
