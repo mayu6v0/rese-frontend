@@ -14,7 +14,7 @@
           :datetime="item.datetime"
           :number="item.number">
         </ReservationCard>
-        <div class="no-list" v-if="reservationList == ''">予約情報はありません</div>
+        <div class="no-list" v-if="futureReservation == ''">予約情報はありません</div>
       </div>
       <div class="favorite">
         <h2 class="title">お気に入り店舗</h2>
@@ -46,6 +46,8 @@
         :datetime="item.datetime"
         :number="item.number" :reviewedReservationList="reviewedReservationList">
       </ReservationHistoryCard>
+      <div class="no-list" v-if="pastReservation == ''">過去の予約情報はありません</div>
+
     </div>
   </div>
 </template>

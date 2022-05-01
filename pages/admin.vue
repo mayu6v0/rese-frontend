@@ -232,8 +232,6 @@ select {
   text-align:left;
 }
 
-
-
 button {
   display: block;
   font-size: 20px;

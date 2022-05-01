@@ -25,102 +25,141 @@
     </div>
     <div class="create" v-if="restaurant_id === null">
       <h2 class="detail__title">店舗情報作成</h2>
-      <table class="detail__table">
-        <tr>
-          <th class="th">店名</th>
-          <td>
-            <input type="text" v-model="name" />
-          </td>
-        </tr>
-        <tr>
-          <th>画像URL</th>
-          <td>
-            <input class="" v-model="image_url" />
-          </td>
-        </tr>
-        <tr>
-          <th>画像</th>
-          <td>
-            <img class="restaurant__img" :src="image_url">
-          </td>
-        </tr>
-        <tr>
-          <th>エリア</th>
-          <td>
-            <select class="select-restaurant" v-model="area_id">
-              <option v-for="area in areaList" :key="area.id" :value="area.id">{{ area.name }}</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>ジャンル</th>
-          <td>
-            <select v-model="genre_id">
-              <option v-for="genre in genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
-          </select>
-          </td>
-        </tr>
-        <tr>
-          <th>店舗概要</th>
-          <td>
-            <textarea type="text" v-model="overview" ></textarea>
-          </td>
-        </tr>
-      </table>
-      <button @click="createNewRestaurant">新規店舗作成</button>
+      <validation-observer ref="obs" v-slot="ObserverProps">
+        <table class="detail__table">
+          <tr>
+            <th class="th">店名</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <input type="text" name="店名"   v-model="name" />
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>画像URL</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <input class="" name="画像URL" v-model="image_url" />
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>画像</th>
+            <td>
+              <img class="restaurant__img" :src="image_url">
+            </td>
+          </tr>
+          <tr>
+            <th>エリア</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <select class="select-restaurant" name="エリア" v-model="area_id">
+                  <option v-for="area in areaList" :key="area.id" :value="area.id">{{ area.name }}</option>
+                </select>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>ジャンル</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <select name="ジャンル" v-model="genre_id">
+                  <option v-for="genre in genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
+                </select>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>店舗概要</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <textarea type="text" name="店舗概要" v-model="overview" ></textarea>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+        </table>
+      <button :disabled="ObserverProps.invalid" @click="createNewRestaurant">新規店舗作成</button>
+      </validation-observer>
     </div>
     <div class="update" v-else>
       <h2 class="detail__title">店舗情報</h2>
-      <table class="detail__table">
-        <tr>
-          <th class="th">店名</th>
-          <td>
-            <input type="text" v-model="name" />
-          </td>
-        </tr>
-        <tr>
-          <th>画像URL</th>
-          <td>
-            <input class="" v-model="image_url" />
-          </td>
-        </tr>
-        <tr>
-          <th>画像</th>
-          <td>
-            <img class="restaurant__img" :src="image_url">
-          </td>
-        </tr>
-        <tr>
-          <th>エリア</th>
-          <td>
-            <select class="select-restaurant" v-model="area_id">
-              <option v-for="area in areaList" :key="area.id" :value="area.id">{{ area.name }}</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>ジャンル</th>
-          <td>
-            <select v-model="genre_id">
-              <option v-for="genre in genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
-          </select>
-          </td>
-        </tr>
-        <tr>
-          <th>店舗概要</th>
-          <td>
-            <textarea type="text" v-model="overview" ></textarea>
-          </td>
-        </tr>
-      </table>
-      <button @click="updateDetail">更新する</button>
+      <validation-observer ref="obs" v-slot="ObserverProps">
+        <table class="detail__table">
+          <tr>
+            <th class="th">店名</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <input type="text" name=" 店名" v-model="name" />
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>画像URL</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <input name="画像URL" v-model="image_url" />
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>画像</th>
+            <td>
+              <img class="restaurant__img" :src="image_url">
+            </td>
+          </tr>
+          <tr>
+            <th>エリア</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <select class="select-restaurant" name="エリア" v-model="area_id">
+                  <option v-for="area in areaList" :key="area.id" :value="area.id">{{ area.name }}</option>
+                </select>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>ジャンル</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <select name="ジャンル" v-model="genre_id">
+                  <option v-for="genre in genreList" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
+                </select>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+          <tr>
+            <th>店舗概要</th>
+            <td>
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <textarea type="text" name="店舗概要" v-model="overview" ></textarea>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+            </td>
+          </tr>
+        </table>
+      <button :disabled="ObserverProps.invalid" @click="updateDetail">更新する</button>
+      </validation-observer>
     </div>
     <div class="images">
       <h2 class="detail__title">店舗画像</h2>
       <h3 class="detail__title--sub">店舗画像アップロード</h3>
       <div class="image__upload">
-        <input @change="changeFile" ref="rfafile" type="file" />
-        <button class="button--upload" @click="regist">アップロード</button>
+        <validation-observer ref="obs" v-slot="ObserverProps">
+          <validation-provider v-slot="ProviderProps" rules="required">
+            <input name="画像" @change="changeFile" ref="rfafile" type="file" />
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+          </validation-provider>
+          <button class="button--upload" :disabled="ObserverProps.invalid" @click="regist">アップロード</button>
+        </validation-observer>
       </div>
       <h3 class="detail__title--sub">店舗画像一覧</h3>
       <table class="detail__table">
@@ -375,8 +414,11 @@ button {
 
 .button--upload {
   font-size: 18px;
-
   padding: 10px 20px;
+}
 
+.error {
+  color: red;
+  font-size: 14px;
 }
 </style>
