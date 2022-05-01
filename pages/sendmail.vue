@@ -1,18 +1,28 @@
 
 <template>
   <div class="container">
-      <h1 class="title">管理画面</h1>
-      <div class="menu">
-        <a class="menu-item" @click="goToNewOwner">店舗代表者・管理者作成</a>
-        <a class="menu-item" @click="goToSendMail">メール送信</a>
-      </div>
+    <h1 class="title">管理画面</h1>
+    <div class="menu">
+      <a class="menu__item" @click="goToNewOwner">店舗代表者・管理者作成</a>
+      <a class="menu__item" @click="goToSendMail">メール送信</a>
+    </div>
     <div class="mail">
-        <h2 class="list">メール送信</h2>
-        <validation-observer ref="obs" v-slot="ObserverProps">
+      <h2 class="list">メール送信</h2>
+      <validation-observer ref="obs" v-slot="ObserverProps">
         <table class="send-new-mail">
           <tr>
             <th>送信先</th>
-            <td></td>
+            <validation-provider v-slot="ProviderProps" rules="required">
+              <td>
+                <select class="" v-model="mailTo">
+                  <option value="" name="送信先" selected hidden>送信先を選択</option>
+                  <option value="user">全ユーザー</option>
+                  <option value="owner">全店舗代表者</option>
+                  <option value="admin">全管理者</option>
+                </select>
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </td>
+            </validation-provider>
           </tr>
           <tr>
             <th>タイトル</th>
@@ -34,8 +44,8 @@
           </tr>
         </table>
         <button @click="sendMail" :disabled="ObserverProps.invalid || !ObserverProps.validated">送信</button>
-        </validation-observer>
-      </div>
+      </validation-observer>
+    </div>
   </div>
 </template>
 <script>
@@ -43,6 +53,7 @@ export default {
   middleware: ['auth','admin', 'emailVerify'],
   data() {
     return {
+      mailTo: "",
       mailTitle: "",
       mailText: "",
     }
@@ -56,9 +67,11 @@ export default {
     },
     async sendMail() {
       const sendData = {
+          mailTo : this.mailTo,
           mailTitle: this.mailTitle,
           mailText: this.mailText,
-        };
+      };
+      console.log(sendData);
       await this.$axios.post(process.env.BASE_URL+"/api/sendmail", sendData);
         alert("メール送信が完了しました");
     }
@@ -83,7 +96,7 @@ export default {
   text-align: right;
 }
 
-.menu-item {
+.menu__item {
   display: block;
   font-size: 18px;
   color: #0E3EDA;
@@ -101,7 +114,8 @@ tr,th,td {
   background-color: #fff;
 }
 
-input {
+input,
+select {
   width: 600px;;
   height: 30px;
 }
@@ -132,12 +146,13 @@ button {
 }
 
 .send-new-mail {
-  margin-top: 20px;
+  margin: 20px auto;
   width: 800px;
 }
 
 .send-new-mail th {
   vertical-align: middle;
+  text-align: left;
 }
 
 .error {
