@@ -1,15 +1,15 @@
 <template>
   <div class="container flex">
     <div class="detail">
-      <div class="restaurant-detail">
+      <div class="restaurant__detail">
         <div class="relative">
-          <button class="back-btn" @click="backPage">＜</button>
-          <h2 class="restaurant-name">{{ name }}</h2>
+          <button class="back__btn" @click="backPage">＜</button>
+          <h2 class="restaurant__name">{{ name }}</h2>
         </div>
-        <img class="restaurant-img" :src="image_url">
-        <p class="restaurant-tag">#{{ area }}</p>
-        <p class="restaurant-tag">#{{ genre }}</p>
-        <p class="restaurant-overview">{{ overview }}</p>
+        <img class="restaurant__img" :src="image_url">
+        <p class="restaurant__tag">#{{ area }}</p>
+        <p class="restaurant__tag">#{{ genre }}</p>
+        <p class="restaurant__overview">{{ overview }}</p>
       </div>
     </div>
     <div class="reservation">
@@ -19,9 +19,13 @@
       <p class="rating">総合評価</p>
       <star-rating
       :read-only="true" :rating="averageRating" :increment="0.1"></star-rating>
-      <!-- <div v-if="averageRating != 'NaN'"></div> -->
       <p v-show="averageRating === 'NaN'" class="nothing">評価はまだありません</p>
-      <ReviewCard v-for="item in reviewList" :key="item.id" :title="item.title" :rating="item.rating" :review="item.review"></ReviewCard>
+      <ReviewCard v-for="item in reviewList"
+        :key="item.id"
+        :title="item.title"
+        :rating="item.rating"
+        :review="item.review">
+      </ReviewCard>
     </div>
   </div>
 </template>
@@ -59,7 +63,6 @@ export default {
         process.env.BASE_URL+"/api/restaurantreview?restaurant_id="+this.$route.params.id
       );
       this.reviewList = resData.data.data;
-      console.log(this.reviewList);
     },
   },
   computed: {
@@ -68,30 +71,24 @@ export default {
       //favoriteListのrestaurant_idで新たに配列を作る
       for(let i = 0; i < this.reviewList.length; i++) {
         const rating = this.reviewList[i].rating;
-        // console.log(this.favoriteList[0]);
         ratingArray.push(rating);
       };
       console.log(ratingArray);
       return ratingArray;
     },
     averageRating() {
-      //計算式　配列作ってひとつずつ足してlengthで割る？
       let sum = 0;
       for (let i = 0; i < this.ratingArray.length; i++) {
         sum += this.ratingArray[i];
       }
-
       const average = sum / this.ratingArray.length;
-      console.log( average );
-      console.log(average.toFixed(1));
-      // this.rating = average.toFixed(1);
       return average.toFixed(1);
     },
   },
   created() {
       this.getDetail();
       this.getReviewList();
-    },
+  },
 };
 </script>
 
@@ -110,15 +107,13 @@ export default {
   width: 50%;
 }
 
-.restaurant-detail {
+.restaurant__detail {
   width: 85%;
   margin: 0 auto;
   padding: 50px 0;
-  /* border: 1px solid red; */
-  /* margin-bottom: 30px; */
 }
 
-.back-btn {
+.back__btn {
   width: 30px;
   height: 30px;
   cursor: pointer;
@@ -132,10 +127,9 @@ export default {
   background-color: #fff;
 }
 
-.restaurant-name {
+.restaurant__name {
   display: inline-block;
   font-size: 30px;
-  /* border: solid 1px red; */
   position: absolute;
   top: 50%;
   left: 50px;
@@ -143,18 +137,18 @@ export default {
 
 }
 
-.restaurant-img {
+.restaurant__img {
   width: 100%;
   display: block;
   margin-top: 40px;
 }
 
-.restaurant-tag {
+.restaurant__tag {
   margin-top: 20px;
   display: inline-block;
 }
 
-.restaurant-overview {
+.restaurant__overview {
   margin-top: 20px;
   line-height:25px;
 }
@@ -172,6 +166,7 @@ export default {
 .nothing {
   margin-top: 30px;
 }
+
 @media screen and (max-width: 768px) {
   .flex {
     display: block;

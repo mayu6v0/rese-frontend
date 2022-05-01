@@ -1,45 +1,44 @@
 <template>
   <div class="card relative">
       <fa :icon="['far', 'clock']" class="fontawesome" />
-      <p class="card--title">予約{{ index+1 }}</p>
+      <p class="card__title">予約{{ index+1 }}</p>
       <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/>
-        
-        <div v-if="!update">
-      <table>
-        <tr>
-          <th>Shop</th>
-          <td>{{ name }}</td>
-        </tr>
-        <tr>
-          <th>Date</th>
-          <td>{{ date }}</td>
-        </tr>
-        <tr>
-          <th>Time</th>
-          <td>{{ time }}</td>
-        </tr>
-        <tr>
-          <th>Number</th>
-          <td>{{ number }}人</td>
-        </tr>
-      </table>
-      <button @click="openUpdateReservation">予約を変更する</button>
-        </div>
-        <div v-else class="update">
-          <p class="update-title">予約変更</p>
-          <p class="restaurant-name">shop: {{ name }}</p>
-          <input class="select-date" type="date" v-model="newDate" ><br />
-          <select class="select-time" v-model="newTime">
-            <option value="" selected hidden>Time</option>
-            <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
-          </select><br />
-          <select class="select-number" v-model="newNumber">
-            <option value="" selected hidden>Number</option>
-            <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
-          </select>
-          <button @click="openUpdateReservation">キャンセル</button>
-          <button @click="updateReservation">変更する</button>
-          </div>
+      <div v-if="!update">
+        <table>
+          <tr>
+            <th>Shop</th>
+            <td>{{ name }}</td>
+          </tr>
+          <tr>
+            <th>Date</th>
+            <td>{{ date }}</td>
+          </tr>
+          <tr>
+            <th>Time</th>
+            <td>{{ time }}</td>
+          </tr>
+          <tr>
+            <th>Number</th>
+            <td>{{ number }}人</td>
+          </tr>
+        </table>
+        <button @click="openUpdateReservation">予約を変更する</button>
+      </div>
+      <div v-else class="update">
+        <p class="update__title">予約変更</p>
+        <p class="restaurant__name">shop: {{ name }}</p>
+        <input class="select__date" type="date" v-model="newDate" ><br />
+        <select class="select__time" v-model="newTime">
+          <option value="" selected hidden>Time</option>
+          <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
+        </select><br />
+        <select class="select__number" v-model="newNumber">
+          <option value="" selected hidden>Number</option>
+          <option v-for="number in numberList" :key="number.id" :value="number.value">{{number.name}}人</option>
+        </select>
+        <button @click="openUpdateReservation">キャンセル</button>
+        <button @click="updateReservation">変更する</button>
+      </div>
   </div>
 </template>
 
@@ -90,14 +89,12 @@ export default {
       this.update = !this.update;
     },
     async updateReservation() {
-      console.log(this.id);
       const sendData = {
         user_id: this.$auth.user.id,
         restaurant_id: this.restaurant_id,
         datetime: this.newDate+ " "+this.newTime,
         number: this.newNumber,
       };
-      console.log(sendData);
       await this.$axios.put(process.env.BASE_URL+"/api/reservation/"+this.id, sendData);
       this.$emit('get-reservation-list');
       this.update = !this.update;
@@ -116,13 +113,11 @@ export default {
         format = format.replace(/mm/g, ('0' + this.reservationDate.getMinutes()).slice(-2));
         return format;
     },
-
   },
   computed: {
     date() {
       // mypageから受け継いだdatetimeを文字列→date型（経過ミリ秒）に変換
       const date = Date.parse(this.datetime.replace(/-/g, "/"));
-      console.log(date);
       // 経過ミリ秒から任意の日付を取得
       this.reservationDate = new Date(date);
       this.newDate = this.getStringFromDate(this.reservationDate, 'YYYY-MM-DD');
@@ -149,41 +144,41 @@ export default {
     color: white;
 }
 
-.card--title {
+.card__title {
   display: inline-block;
   font-size: 18px;
   margin-left: 10px;
 }
 
 .xmark {
- position: absolute;
- top: 15px;
- right: 15px;
-cursor: pointer;
-
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
 }
 
 table {
   margin-top: 20px;
 }
+
 table th,
 table td {
   padding: 10px 20px;
   text-align: left;
 }
 
-
-.restaurant-name {
+.restaurant__name {
   font-size: 18px;
   margin-bottom: 20px;
 }
-.select-time {
+
+.select__time {
   width: 100%;
   height: 25px;
   margin-top: 20px;
 }
 
-.select-number {
+.select__number {
   width: 100%;
   height: 25px;
   margin-top: 20px;
@@ -196,7 +191,7 @@ table td {
   color: #fff;
 }
 
-.update-title {
+.update__title {
   font-size:18px;
   margin-bottom: 20px;
 }
@@ -210,13 +205,11 @@ button {
   padding: 5px 10px;
   margin: 10px 0 0 auto;
   cursor: pointer;
-  /* display: inline-block; */
 }
 
 @media screen and (max-width: 768px) {
-.card {
-  margin: 20px auto;
-}
-
+  .card {
+    margin: 20px auto;
+  }
 }
 </style>

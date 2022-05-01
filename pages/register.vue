@@ -1,25 +1,25 @@
 <template>
   <div class="container">
-      <div class="register-container">
-        <p class="form-title">Registration</p>
-        <form class="register-form" @submit.prevent="register">
+      <div class="register__container">
+        <p class="form__title">Registration</p>
+        <form class="register__form" @submit.prevent="register">
           <validation-observer ref="obs" v-slot="ObserverProps">
             <validation-provider v-slot="ProviderProps" rules="required">
-              <div class="input-area">
+              <div class="input__area">
                 <fa :icon="['fas', 'user']" class="fontawesome" />
                 <input type="text" v-model="name" name="User name" placeholder="User name" required />
               </div>
               <div class="error">{{ ProviderProps.errors[0] }}</div>
             </validation-provider>
             <validation-provider v-slot="ProviderProps" rules="required">
-              <div class="input-area">
+              <div class="input__area">
                 <fa :icon="['fas', 'envelope']" class="fontawesome" />
                 <input type="email" v-model="email" name="Email" placeholder="Email" required /><br />
               </div>
               <div class="error">{{ ProviderProps.errors[0] }}</div>
             </validation-provider>
             <validation-provider v-slot="ProviderProps" rules="required|min:8">
-              <div class="input-area">
+              <div class="input__area">
                 <fa :icon="['fas', 'lock']" class="fontawesome" />
                 <input type="password" v-model="password" name="Password" placeholder="Password" required />
               </div>
@@ -68,7 +68,7 @@ export default {
   height: 100vh;
 }
 
-.register-container {
+.register__container {
   width: 400px;
   position: absolute;
   left: 50%;
@@ -78,20 +78,18 @@ export default {
   box-shadow: 5px 5px 5px gray;
 }
 
-.form-title {
-    background-color: blue;
-    color: #fff;
+.form__title {
+  background-color: blue;
+  color: #fff;
   border-radius: 5px 5px 0 0;
   padding: 20px;
   font-size: 18px
-
 }
 
-.register-form {
+.register__form {
   background-color: #fff;
   padding: 20px;
   border-radius: 0 0 5px 5px;
-
 }
 
 input {
@@ -106,7 +104,7 @@ input {
   border-bottom: 1px solid lightgray;
 }
 
-.input-area {
+.input__area {
   height: 40px;
   position: relative;
   /* border: 1px solid red; */

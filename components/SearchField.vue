@@ -17,6 +17,7 @@
     </div>
   </div>
 </template>
+<script>
 export default {
   props: ["restaurantList"],
   data() {
@@ -50,3 +51,5 @@ export default {
       return filteredArray;
     },
   }
+}
+</script>

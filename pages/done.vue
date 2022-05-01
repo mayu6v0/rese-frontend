@@ -1,21 +1,20 @@
 <template>
   <div class="container">
-    <!-- <Header /> -->
-      <div class="card__done">
-        <p class="card__ttl">ご予約ありがとうございます</p>
-        <p class="card__txt">ご登録のメールアドレスに予約完了メールをお送りしております</p>
-        <button @click="goToMypage">戻る</button>
-      </div>
+    <div class="card__done">
+      <p class="card__ttl">ご予約ありがとうございます</p>
+      <p class="card__txt">ご登録のメールアドレスに予約完了メールをお送りしております</p>
+      <button @click="goToMypage">戻る</button>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
- methods: {
-   goToMypage() {
-     this.$router.go(-1);
-   }
- },
+  methods: {
+    goToMypage() {
+    this.$router.go(-1);
+    },
+  }
 }
 </script>
 

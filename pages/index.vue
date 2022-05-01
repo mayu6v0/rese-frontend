@@ -29,8 +29,8 @@
         :area="item.area.name"
         :genre="item.genre.name"
         :favoriteList = "favoriteList"
-        :favoriteIdList="favoriteIdList"
-      ></RestaurantCard>
+        :favoriteIdList="favoriteIdList">
+      </RestaurantCard>
       <div class="no-restaurant" v-if="filteredRestaurant == ''">検索結果に一致する店舗はありません</div>
     </div>
   </div>
@@ -43,7 +43,6 @@ export default {
     return {
       restaurantList: [],
       favoriteList: [],
-      // favoriteIdList: [],
       searchArea: "",
       searchGenre: "",
       searchWord: "",
@@ -68,8 +67,6 @@ export default {
         process.env.BASE_URL+"/api/restaurant"
       );
       this.restaurantList = resData.data.data;
-      //homeで♡押したときに変更が適用されるように再読み込み
-      // this.getFavoriteList();
     },
     async getFavoriteList() {
       if(this.$auth.loggedIn && this.$auth.user.email_verified_at !== null) {
@@ -77,12 +74,8 @@ export default {
         //ユーザーがログインしていたらユーザーのお気に入り一覧のAPIを取得する
         const resData = await this.$axios.get(
         process.env.BASE_URL+"/api/favorite",
-        {
-          headers: { Authorization: 'Bearer ' + token }
-        }
         );
       this.favoriteList = resData.data.data;
-      console.log(this.favoriteList);
       } else {
         this.favoriteList = [];
       }
@@ -113,10 +106,8 @@ export default {
       //favoriteListのrestaurant_idで新たに配列を作る
       for(let i = 0; i < this.favoriteList.length; i++) {
         const favoriteId = this.favoriteList[i].restaurant_id;
-        // console.log(this.favoriteList[0]);
         favoriteIdList.push(favoriteId);
       };
-      console.log(favoriteIdList);
       return favoriteIdList;
       } else {
         return favoriteIdList;
@@ -125,7 +116,6 @@ export default {
   },
   created() {
       this.getRestaurantList();
-      //いらない？
       this.getFavoriteList();
   },
 };
@@ -146,15 +136,13 @@ export default {
   top: 40px;
   right: 70px;
   box-shadow: 5px 5px 5px gray;
-
-  /* border: 1px solid red; */
 }
 
 .search {
   display: inline-block;
   height: 100%;
-  /* border: 1px solid #0074E4; */
 }
+
 select {
   border: none;
   width: 100px;
@@ -168,17 +156,12 @@ input {
   height: 50px;
   line-height: 50px;
   margin-left: 30px;
-  /* position: absolute; */
-  /* top: 50%; */
-  /* left: 30px; */
-  /* transform: translate(0, 0); */
 }
 
 .fontawesome-glass {
   width: 25px;
   height: 25px;
   color:lightgray;
-  /* border: 1px solid red; */
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
@@ -196,19 +179,20 @@ input {
   .search-field {
     width: 90%;
     position: static;
-    /* width: 95%; */
     margin: 0 auto;
   }
 
-.search {
+  .search {
   max-width: 100%;
   background-color: #fff;
   margin-right: 0;
-}
+  }
+
   select {
   max-width: 15%;
   margin-right: 0;
-}
+  }
+
   input {
     width: 100%;
   }

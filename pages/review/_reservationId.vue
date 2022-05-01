@@ -1,40 +1,46 @@
 <template>
   <div class="container">
-          <validation-observer ref="obs" v-slot="ObserverProps">
-
-    <table>
-      <tr>
-        <th>店名</th>
-        <td>{{restaurantName}}</td>
-      </tr>
-      <tr>
-        <th>来店日時</th>
-        <td>{{reservationDate}}</td>
-      </tr>
-      <tr>
-        <th>評価</th>
-        <td><star-rating v-model="rating" @rating-selected ="setRating"></star-rating></td>
-      </tr>
-      <tr>
-        <th><label for="title">タイトル</label></th>
-        <td>
+    <validation-observer ref="obs" v-slot="ObserverProps">
+      <table>
+        <tr>
+          <th>店名</th>
+          <td>{{restaurantName}}</td>
+        </tr>
+        <tr>
+          <th>来店日時</th>
+          <td>{{reservationDate}}</td>
+        </tr>
+        <tr>
+          <th>評価</th>
+          <td>
+            <star-rating v-model="rating" @rating-selected ="setRating"></star-rating>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="title">タイトル</label>
+          </th>
+          <td>
             <validation-provider v-slot="ProviderProps" rules="required">
-          <input type="text" name="タイトル" v-model="title" />
-          <div class="error">{{ ProviderProps.errors[0] }}</div>
-            </validation-provider></td>
-      </tr>
-      <tr>
-        <th><label for="review">コメント</label></th>
-        <td>
+              <input type="text" name="タイトル" v-model="title" />
+              <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="review">コメント</label>
+          </th>
+          <td>
             <validation-provider v-slot="ProviderProps" rules="required">
-          <textarea type="text" name="コメント" id="review" v-model="review"></textarea>
-          <div class="error">{{ ProviderProps.errors[0] }}</div>
-            </validation-provider></td>
-      </tr>
-    </table>
-    <button :disabled="ObserverProps.invalid || !ObserverProps.validated" @click="insertReview">レビューを送信</button>
-          </validation-observer>
-
+              <textarea type="text" name="コメント" id="review" v-model="review"></textarea>
+              <div class="error">{{ ProviderProps.errors[0] }}</div>
+            </validation-provider>
+          </td>
+        </tr>
+      </table>
+      <button :disabled="ObserverProps.invalid || !ObserverProps.validated" @click="insertReview">レビューを送信</button>
+    </validation-observer>
   </div>
 </template>
 
@@ -59,7 +65,6 @@
         process.env.BASE_URL+"/api/reservation/"+this.$route.params.reservationId,
       );
       this.reservation = resData.data.data;
-      console.log(this.reservation);
       this.restaurantName = this.reservation[0].restaurant.name;
       this.restaurantId = this.reservation[0].restaurant_id;
       this.reservationDate = this.reservation[0].datetime;
@@ -78,7 +83,6 @@
         title: this.title,
         review: this.review,
       };
-      console.log(sendData);
       await this.$axios.post(process.env.BASE_URL+"/api/review", sendData);
       this.$router.push("/thanksReview");
       } else {
@@ -113,6 +117,7 @@ table td {
 table th {
   vertical-align: middle;
 }
+
 input,
 textarea {
   width: 500px;

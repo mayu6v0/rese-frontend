@@ -3,11 +3,11 @@
   <div class="container">
     <h1 class="title">店舗管理画面</h1>
     <div class="menu">
-      <a class="menu-item" @click="goToRestaurantInfo">店舗情報新規作成・更新</a>
-      <a class="menu-item" @click="goToReservationInfo">予約情報照会</a>
+      <a class="menu__item" @click="goToRestaurantInfo">店舗情報新規作成・更新</a>
+      <a class="menu__item" @click="goToReservationInfo">予約情報照会</a>
     </div>
     <div>
-      <table class="restaurant_info">
+      <table class="restaurant__info">
         <tr>
           <th>店舗ID</th>
           <td>{{ restaurant_id }}</td>
@@ -85,7 +85,6 @@ export default {
         process.env.BASE_URL+"/api/restaurant/"+this.restaurant_id
       );
       const restaurantData = resData.data.data;
-      console.log(restaurantData);
       this.name = restaurantData[0].name;
     },
     //飲食店の予約一覧のAPIを取得する
@@ -94,7 +93,6 @@ export default {
         process.env.BASE_URL+"/api/owner/reservation?restaurant_id="+this.restaurant_id
       );
       this.reservationList = resData.data.data;
-      console.log(this.reservationList);
     },
   },
   computed: {
@@ -109,12 +107,9 @@ export default {
         const reservationDate = Date.parse(reservationDateStr.replace(/-/g, "/"));
         //現在日時より先ならfutureReservationListに入れる
         if(reservationDate > this.todayMs ) {
-          console.log("未来予約");
-          console.log(reservationDateStr);
           futureReservationList.push(reservation);
         }
       }
-        console.log(futureReservationList);
         return futureReservationList;
     },
     pastReservation(){
@@ -128,12 +123,9 @@ export default {
         const reservationDate = Date.parse(reservationDateStr.replace(/-/g, "/"));
         //現在日時より先ならpastReservationListに入れる
         if(reservationDate <= this.todayMs ) {
-          console.log("過去予約");
-          console.log(reservationDateStr);
           pastReservationList.push(reservation);
         }
       }
-        console.log(pastReservationList);
         return pastReservationList.reverse();
     },
   },
@@ -141,12 +133,9 @@ export default {
     this.getDetail();
     this.getReservationList();
     //現在日時を取得
-      const today = new Date();
-      console.log ("現在日時");
-      console.log (today);
-      //現在日時を経過msに変換
-      this.todayMs = today.getTime();
-      console.log(this.todayMs);
+    const today = new Date();
+    //現在日時を経過msに変換
+    this.todayMs = today.getTime();
   }
 }
 </script>
@@ -168,7 +157,7 @@ export default {
   text-align: right;
 }
 
-.menu-item {
+.menu__item {
   display: block;
   font-size: 18px;
   color: #0E3EDA;
@@ -176,15 +165,15 @@ export default {
   padding: 10px;
 }
 
-.restaurant_info tr,
-.restaurant_info th,
-.restaurant_info td {
+.restaurant__info tr,
+.restaurant__info th,
+.restaurant__info td {
   border: none;
   padding: 3px;
   text-align: left;
 }
 
-.restaurant_info th {
+.restaurant__info th {
   width: 100px;
 }
 

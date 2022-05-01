@@ -1,11 +1,12 @@
 <template>
-<div class="container">
-  <div class="card__thanks">
-    <p class="card__text">レビューを書いていただきありがとうございました</p>
-    <button @click="goToMypage">マイページに戻る</button>
+  <div class="container">
+    <div class="card__thanks">
+      <p class="card__text">レビューを書いていただきありがとうございました</p>
+      <button @click="goToMypage">マイページに戻る</button>
+    </div>
   </div>
-</div>
 </template>
+
 <script>
 export default {
   methods: {
@@ -15,6 +16,7 @@ export default {
   },
 }
 </script>
+
 <style scoped>
 .container {
   width: 95%;

@@ -3,11 +3,11 @@
   <div class="container">
     <h1 class="title">店舗管理画面</h1>
     <div class="menu">
-      <a class="menu-item" @click="goToRestaurantInfo">店舗情報新規作成・更新</a>
-      <a class="menu-item" @click="goToReservationInfo">予約情報照会</a>
+      <a class="menu__item" @click="goToRestaurantInfo">店舗情報新規作成・更新</a>
+      <a class="menu__item" @click="goToReservationInfo">予約情報照会</a>
     </div>
     <div>
-      <table class="restaurant_info">
+      <table class="restaurant__info">
         <tr>
           <th>店舗ID</th>
           <td>{{ restaurant_id }}</td>
@@ -41,7 +41,7 @@
         <tr>
           <th>画像</th>
           <td>
-            <img class="restaurant-img" :src="image_url">
+            <img class="restaurant__img" :src="image_url">
           </td>
         </tr>
         <tr>
@@ -87,7 +87,7 @@
         <tr>
           <th>画像</th>
           <td>
-            <img class="restaurant-img" :src="image_url">
+            <img class="restaurant__img" :src="image_url">
           </td>
         </tr>
         <tr>
@@ -126,12 +126,12 @@
       <table class="detail__table">
           <tr>
             <th>画像URL</th>
-            <th>画像</th>
+            <th class="td__img">画像</th>
           </tr>
           <tr  v-for="URL in imagesURL" :key=URL.id>
             <td>{{ URL.image_url }}</td>
             <td>
-              <img class="restaurant-img" :src="URL.image_url">
+              <img class="restaurant__img" :src="URL.image_url">
             </td>
           </tr>
       </table>
@@ -180,7 +180,6 @@ export default {
         process.env.BASE_URL+"/api/restaurant/"+this.restaurant_id
       );
       const restaurantData = resData.data.data;
-      console.log(restaurantData);
       this.name = restaurantData[0].name;
       this.image_url = restaurantData[0].image_url
       this.area = restaurantData[0].area.name;
@@ -244,13 +243,12 @@ export default {
           },
         },
       );
+      alert('画像がアップロードされました');
       this.getImagesURL();
     },
     async getImagesURL() {
       const response = await this.$axios.get(process.env.BASE_URL+"/api/images");
       this.imagesURL = response.data.data;
-      console.log(response);
-      console.log(this.imagesURL);
     },
   },
   created() {
@@ -259,6 +257,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .container {
   width: 90%;
@@ -276,7 +275,7 @@ export default {
   text-align: right;
 }
 
-.menu-item {
+.menu__item {
   display: block;
   font-size: 18px;
   color: #0E3EDA;
@@ -284,19 +283,19 @@ export default {
   padding: 10px;
 }
 
-.restaurant_info tr,
-.restaurant_info th,
-.restaurant_info td {
+.restaurant__info tr,
+.restaurant__info th,
+.restaurant__info td {
   border: none;
   padding: 3px;
   text-align: left;
 }
 
-.restaurant_info th {
+.restaurant__info th {
   width: 100px;
 }
 
-.restaurant-img {
+.restaurant__img {
   width: 50%;
   display: block;
 }
@@ -343,6 +342,10 @@ textarea {
 
 .th {
   width: 200px;
+}
+
+.td__img {
+  width: 100%;
 }
 
 button {

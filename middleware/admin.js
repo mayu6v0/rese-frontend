@@ -1,4 +1,4 @@
-export default function ({ store, redirect, error }) {
+export default function ({ store, error }) {
   // authorityがadminでない場合
   if (store.state.auth.user.authority != 'admin') {
     return error({

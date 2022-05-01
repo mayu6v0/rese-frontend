@@ -1,11 +1,6 @@
 <template>
   <div class="card relative">
-    <!-- reviewAPI叩いて、予約ごとに
-    ・reviewがあればレビュー済み表示と入力したreviewを表示
-    ・reviewがなければレビューを書くボタン表示 -->
-{{reviewedReservationList}}
-      <p class="card--title">ご来店ありがとうございました</p>
-      <!-- <fa :icon="['far', 'circle-xmark']" class="fontawesome xmark" @click="deleteReservation"/> -->
+    <p class="card__title">ご来店ありがとうございました</p>
       <table>
         <tr>
           <th>Shop</th>
@@ -61,7 +56,6 @@ export default {
     date() {
       // mypageから受け継いだdatetimeを文字列→date型（経過ミリ秒）に変換
       const date = Date.parse(this.datetime.replace(/-/g, "/"));
-      console.log(date);
       // 経過ミリ秒から任意の日付を取得
       this.reservationDate = new Date(date);
       this.newDate = this.getStringFromDate(this.reservationDate, 'YYYY-MM-DD');
@@ -74,6 +68,7 @@ export default {
       return this.newTime;
     },
     reviewedReservation() {
+      //レビューが既に書かれているかどうか
       return this.reviewedReservationList.indexOf(this.id) !== -1
     }
   },
@@ -91,55 +86,20 @@ export default {
     color: black;
 }
 
-.card--title {
+.card__title {
   display: inline-block;
   font-size: 18px;
   margin-left: 10px;
 }
 
-.xmark {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  cursor: pointer;
-
-}
-
 table {
   margin-top: 20px;
 }
+
 table th,
 table td {
   padding: 10px 20px;
   text-align: left;
-}
-
-.restaurant-name {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-.select-time {
-  width: 100%;
-  height: 25px;
-  margin-top: 20px;
-}
-
-.select-number {
-  width: 100%;
-  height: 25px;
-  margin-top: 20px;
-}
-
-.update {
-  padding: 10px;
-  margin-top: 20px;
-  background-color: rgb(13, 148, 238);
-  color: #fff;
-}
-
-.update-title {
-  font-size:18px;
-  margin-bottom: 20px;
 }
 
 button {
@@ -151,13 +111,11 @@ button {
   padding: 5px 10px;
   margin: 10px 0 0 auto;
   cursor: pointer;
-  /* display: inline-block; */
 }
 
 @media screen and (max-width: 768px) {
-.card {
-  margin: 20px auto;
-}
-
+  .card {
+    margin: 20px auto;
+  }
 }
 </style>

@@ -3,12 +3,12 @@
   <div class="container">
     <h1 class="title">管理画面</h1>
     <div class="menu">
-      <a class="menu-item" @click="goToNewOwner">店舗代表者・管理者作成</a>
-      <a class="menu-item" @click="goToSendMail">メール送信</a>
+      <a class="menu__item" @click="goToNewOwner">店舗代表者・管理者作成</a>
+      <a class="menu__item" @click="goToSendMail">メール送信</a>
     </div>
     <div class="create">
       <h2 class="create__title">店舗代表者・管理者　新規登録</h2>
-      <form class="register-form" @submit.prevent="register">
+      <form class="register__form" @submit.prevent="register">
         <validation-observer ref="obs" v-slot="ObserverProps">
       <table class="table__create">
         <tr>
@@ -24,7 +24,6 @@
           <th>権限</th>
           <td>
             <select class="" v-model="authority">
-              <!-- <option value="" selected hidden>選択</option> -->
               <option value="owner" selected>店舗代表者</option>
               <option value="admin">管理者</option>
         </select>
@@ -34,7 +33,6 @@
           <th>店舗名</th>
           <td>
             <select class="select-restaurant" v-model="restaurant_id">
-              <!-- <option value="" selected hidden>選択する</option> -->
               <option value="" selected>新規店舗</option>
               <optgroup label="既存店舗">
                 <option v-for="item in restaurantList" :key="item.id" :value="item.id">{{ item.name }}</option>
@@ -69,7 +67,7 @@
     <div class="">
       <div class="owner">
         <h2 class="list">店舗代表者一覧</h2>
-        <table class="owner-list">
+        <table class="table__owner">
           <tr>
             <th>店舗名</th>
             <th>店舗代表者名</th>
@@ -85,7 +83,7 @@
       </div>
       <div class="admin">
         <h2 class="list">管理者一覧</h2>
-        <table class="admin-list">
+        <table class="table__admin">
           <tr>
             <th>管理者名</th>
             <th>メールアドレス</th>
@@ -193,7 +191,7 @@ export default {
   text-align: right;
 }
 
-.menu-item {
+.menu__item {
   display: block;
   font-size: 18px;
   color: #0E3EDA;
@@ -230,6 +228,12 @@ select {
   margin: 20px auto;
 }
 
+.table__create th {
+  text-align:left;
+}
+
+
+
 button {
   display: block;
   font-size: 20px;
@@ -250,25 +254,25 @@ button {
   background-color: #0074E4;
 }
 
-.owner-list,
-.admin-list {
-  margin-top: 20px;
+.table__owner,
+.table__admin {
+  margin: 20px auto;
   width: 800px;
 }
 
-.admin-list tr,
-.admin-list th,
-.admin-list td,
-.owner-list tr,
-.owner-list th,
-.owner-list td {
+.table__admin tr,
+.table__admin th,
+.table__admin td,
+.table__owner tr,
+.table__owner th,
+.table__owner td {
   border: 1px solid black;
 
 }
-.owner-list th,
-.owner-list td,
-.admin-list th,
-.admin-list td {
+.table__owner th,
+.table__owner td,
+.table__admin th,
+.table__admin td {
   width: 200px;
 }
 

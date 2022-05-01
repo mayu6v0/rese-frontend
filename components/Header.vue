@@ -6,32 +6,31 @@
         <span class="menu__line--middle"></span>
         <span class="menu__line--bottom"></span>
       </div>
-      <a @click="goToHome" class="header-title" :class="isOpen ? 'open' : ''"
-        >Rese</a
+      <a @click="goToHome" class="header--title" :class="isOpen ? 'open' : ''">Rese</a
       >
     </div>
-    <div class="menu-bg" :class="isOpen ? 'open' : ''">
-      <div class="menu-list">
+    <div class="menu__bg" :class="isOpen ? 'open' : ''">
+      <div class="menu__list">
         <ul @click="changeIsOpen">
-          <li class="menu-item">
+          <li class="menu__item">
             <a @click="goToHome">Home</a>
           </li>
-          <li class="menu-item" v-if="!$auth.loggedIn">
+          <li class="menu__item" v-if="!$auth.loggedIn">
             <NuxtLink to="/register">Registration</NuxtLink>
           </li>
-          <li class="menu-item" v-if="!$auth.loggedIn">
+          <li class="menu__item" v-if="!$auth.loggedIn">
             <NuxtLink to="/login">Login</NuxtLink>
           </li>
-          <li class="menu-item" v-if="$auth.loggedIn">
+          <li class="menu__item" v-if="$auth.loggedIn">
             <a @click="logout">Logout</a>
           </li>
-          <li class="menu-item" v-if="$auth.loggedIn">
+          <li class="menu__item" v-if="$auth.loggedIn">
             <NuxtLink to="/mypage">Mypage</NuxtLink>
           </li>
-          <li class="menu-item" v-if="$auth.loggedIn && $auth.user.authority === 'admin'">
+          <li class="menu__item" v-if="$auth.loggedIn && $auth.user.authority === 'admin'">
             <NuxtLink to="/admin">Admin page</NuxtLink>
           </li>
-          <li class="menu-item" v-if="$auth.loggedIn && $auth.user.authority === 'owner'">
+          <li class="menu__item" v-if="$auth.loggedIn && $auth.user.authority === 'owner'">
             <NuxtLink to="/owner">Owner page</NuxtLink>
           </li>
         </ul>
@@ -60,7 +59,7 @@ export default {
       }
     },
     goToHome() {
-      // homeのままのとき検索条件がリセットされる
+      // homeのままのときも検索条件がリセットされる
       this.$emit('reset-filter');
       this.$router.push("/");
     },
@@ -81,13 +80,13 @@ export default {
   /* border: 1px solid red; */
 }
 
-.header-title {
+.header--title {
   color: #0E3EDA;
   font-size: 40px;
   font-weight: bold;
 }
 
-.header-title.open {
+.header--title.open {
   display: none;
 }
 
@@ -147,7 +146,7 @@ export default {
   transform: rotate(-45deg);
 }
 
-.menu-bg {
+.menu__bg {
   display: none;
   width: 100vw;
   height: 100vh;
@@ -158,18 +157,18 @@ export default {
   background-color: #fff;
 }
 
-.menu-bg.open {
+.menu__bg.open {
   display: block;
 }
 
-.menu-list {
+.menu__list {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.menu-item a {
+.menu__item a {
   display: block;
   font-size: 30px;
   color: #0E3EDA;

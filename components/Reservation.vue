@@ -1,53 +1,51 @@
 <template>
-  <div class="reservation-container">
+  <div class="reservation__container">
     <validation-observer ref="obs" v-slot="ObserverProps">
-    <div class="form">
-      <p class="reservation-title">予約</p>
-      <div>
-        <validation-provider v-slot="ProviderProps" rules="required">
-          <input class="select-date" type="date" name="日付" v-model="date" >
-          <div class="error">{{ ProviderProps.errors[0] }}</div>
-        </validation-provider>
-        <validation-provider v-slot="ProviderProps" rules="required">
-          <select class="select-time" name="予約時間" v-model="time">
-            <option value="" selected hidden>Time</option>
-            <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name }}</option>
-          </select>
-          <div class="error">{{ ProviderProps.errors[0] }}</div>
-        </validation-provider>
-        <validation-provider v-slot="ProviderProps" rules="required">
-          <select class="select-number" name="人数" v-model="number">
-            <option value="" selected hidden>Number</option>
-            <option v-for="number in numberList" :key="number.id" :value="number.value">{{ number.name }}人</option>
-          </select>
-          <div class="error">{{ ProviderProps.errors[0] }}</div>
-        </validation-provider>
-        <div class="confirm">
-
-        <table class="confirm--table">
-            <tr>
-              <th>Shop</th>
-              <td>{{ name }}</td>
-            </tr>
-            <tr>
-              <th>Date</th>
-              <td>{{ date }}</td>
-            </tr>
-            <tr>
-              <th>Time</th>
-              <td>{{ time }}</td>
-            </tr>
-            <tr>
-              <th>Number</th>
-              <td>{{ number }}人</td>
-            </tr>
-        </table>
+      <div class="form">
+        <p class="reservation__title">予約</p>
+        <div>
+          <validation-provider v-slot="ProviderProps" rules="required">
+            <input class="select-date" type="date" name="日付" v-model="date" >
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+          </validation-provider>
+          <validation-provider v-slot="ProviderProps" rules="required">
+            <select class="select__time" name="予約時間" v-model="time">
+              <option value="" selected hidden>Time</option>
+              <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name }}</option>
+            </select>
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+          </validation-provider>
+          <validation-provider v-slot="ProviderProps" rules="required">
+            <select class="select__number" name="人数" v-model="number">
+              <option value="" selected hidden>Number</option>
+              <option v-for="number in numberList" :key="number.id" :value="number.value">{{ number.name }}人</option>
+            </select>
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+          </validation-provider>
+          <div class="confirm">
+            <table class="confirm__table">
+              <tr>
+                <th>Shop</th>
+                <td>{{ name }}</td>
+              </tr>
+              <tr>
+                <th>Date</th>
+                <td>{{ date }}</td>
+              </tr>
+              <tr>
+                <th>Time</th>
+                <td>{{ time }}</td>
+              </tr>
+              <tr>
+                <th>Number</th>
+                <td>{{ number }}人</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <button class="reservation-btn" :disabled="ObserverProps.invalid || !ObserverProps.validated" @click="reserve">予約する</button>
+      <button class="reservation-btn" :disabled="ObserverProps.invalid || !ObserverProps.validated" @click="reserve">予約する</button>
     </validation-observer>
-
   </div>
 </template>
 
@@ -109,13 +107,13 @@ export default {
 
 <style scoped>
 
-.reservation-container {
+.reservation__container {
   box-shadow: 5px 5px 5px gray;
   border-radius: 5px;
-
   height: 85%;
   margin: 50px 70px;
 }
+
 .form {
   color: white;
   padding:40px;
@@ -124,31 +122,30 @@ export default {
   height: 90%;
 }
 
-.reservation-title {
+.reservation__title {
   font-size: 28px;
   margin-bottom: 25px;
 }
 
-.select-time {
+.select__time {
   width: 100%;
   height: 25px;
   margin-top: 20px;
 }
 
-.select-number {
+.select__number {
   width: 100%;
   height: 25px;
   margin-top: 20px;
-
 }
 
 .confirm {
   margin-top: 20px;
   padding: 20px;
-  /* border: 1px solid red; */
   background-color: #41B3D3;
 }
-.confirm--table {
+
+.confirm__table {
   width: 100%;
   background-color: #41B3D3;
   border-radius: 5px;
@@ -178,7 +175,7 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
-  .reservation-container {
+  .reservation__container {
   height: 450px;
   margin-top: 30px;
 }

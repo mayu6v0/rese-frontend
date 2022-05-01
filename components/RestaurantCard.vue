@@ -1,21 +1,21 @@
 <template>
   <div class="card">
-    <img class="card-img" :src="url" />
-    <div class="card-content">
-      <p class="card-title">{{ name }}</p>
-      <p class="card-tag card-tag--area">#{{ area }}</p>
-      <p class="card-tag card-tag--genre">#{{ genre }}</p>
+    <img class="card__img" :src="url" />
+    <div class="card__content">
+      <p class="card__title">{{ name }}</p>
+      <p class="card__tag card__tag--area">#{{ area }}</p>
+      <p class="card__tag card__tag--genre">#{{ genre }}</p>
       <br />
       <button @click="goToDetail">詳しくみる</button>
 
       <!-- mypageの時はお気に入り店舗だけが表示される -->
-      <div v-if="mypage" class="favorite-icon">
-        <fa :icon="['fas', 'heart']" class="fontawesome heart-favorite" v-if="favorite_id !== null" @click="deleteFavoriteAtMypage" />
+      <div v-if="mypage" class="favorite__icon">
+        <fa :icon="['fas', 'heart']" class="fontawesome heart__favorite" v-if="favorite_id !== null" @click="deleteFavoriteAtMypage" />
       </div>
       <!-- それ以外（home）の時はお気に入り登録の有無によってハートの表示が変わる -->
-      <div v-else class="favorite-icon">
+      <div v-else class="favorite__icon">
         <!-- お気に入り店舗の時 -->
-        <fa :icon="['fas', 'heart']" class="fontawesome heart-favorite" v-if="isFavorite" @click="deleteFavorite" />
+        <fa :icon="['fas', 'heart']" class="fontawesome heart__favorite" v-if="isFavorite" @click="deleteFavorite" />
         <!-- お気に入り店舗でない時 -->
         <fa :icon="['fas', 'heart']" class="fontawesome heart" v-else @click="addFavorite" />
       </div>
@@ -32,29 +32,25 @@ export default {
     },
     async addFavorite() {
       if(this.$auth.loggedIn && this.$auth.user.email_verified_at !== null) {
-
         const sendData = {
           user_id: this.$auth.user.id,
           restaurant_id: this.id,
       };
       await this.$axios.post(process.env.BASE_URL+"/api/favorite", sendData);
       this.$emit('get-favorite-list');
-        } else {
+      } else {
           this.$router.push("/login");
-        }
+      }
     },
     async deleteFavorite() {
       let deleteFavoriteId = "";
       for (let i = 0; i < this.favoriteList.length; i++) {
         const favorite = this.favoriteList[i];
         if (favorite.restaurant.id === this.id) {
-          // console.log(favorite.id);
           deleteFavoriteId = favorite.id;
         }
       };
-          // console.log(deleteFavoriteId);
       await this.$axios.delete(process.env.BASE_URL+"/api/favorite/"+deleteFavoriteId);
-      console.log(deleteFavoriteId);
       this.$emit('get-favorite-list');
     },
     async deleteFavoriteAtMypage() {
@@ -71,7 +67,6 @@ export default {
     }
   },
 };
-
 </script>
 
 <style scoped>
@@ -81,28 +76,26 @@ export default {
     margin: 20px 10px 0;
     background-color: #fff;
     box-shadow: 5px 5px 5px gray;
-    
-
 }
 
-.card-img {
+.card__img {
   border-radius: 10px 10px 0 0;
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
 
-.card-content {
+.card__content {
   padding:15px 20px ;
   position: relative;
 }
 
-.card-title {
+.card__title {
   font-size: 18px;
   font-weight: bold;
 }
 
-.card-tag {
+.card__tag {
   font-size: 14px;
   margin-top: 10px;
   margin-right: 10px;
@@ -119,7 +112,7 @@ button {
   cursor: pointer;
 }
 
-.favorite-icon {
+.favorite__icon {
   display: inline-block;
   position: absolute;
   bottom: 15px;
@@ -129,12 +122,10 @@ button {
 .heart {
   color: lightgray;
   cursor: pointer;
-
 }
 
-.heart-favorite {
+.heart__favorite {
   color: #f83979;
   cursor: pointer;
-
 }
 </style>

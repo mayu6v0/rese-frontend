@@ -83,6 +83,7 @@ input {
   margin-right: 20px;
   height: 40px;
 }
+
 button {
   color: #fff;
   background-color: blue;
