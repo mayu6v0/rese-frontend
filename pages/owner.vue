@@ -246,7 +246,7 @@ export default {
 
       // // 表示する店舗情報を更新
       this.getDetail();
-      alert('店舗情報が新規作成されました');
+      alert('新規店舗情報が作成されました');
     },
     async updateDetail() {
       const sendData = {
