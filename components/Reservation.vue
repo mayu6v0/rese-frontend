@@ -5,7 +5,7 @@
         <p class="reservation__title">予約</p>
         <div>
           <validation-provider v-slot="ProviderProps" rules="required">
-            <input class="select-date" type="date" name="日付" v-model="date" >
+            <input class="select-date" type="date" name="日付" v-model="date" :min="tommorow" >
             <div class="error">{{ ProviderProps.errors[0] }}</div>
           </validation-provider>
           <validation-provider v-slot="ProviderProps" rules="required">
@@ -58,6 +58,7 @@ export default {
       date: "",
       time: "",
       number: "",
+      today: "",
       timeList: [
         { value: "17:00", name: "17:00" },
         { value: "17:30", name: "17:30" },
@@ -101,7 +102,29 @@ export default {
         this.$router.push("/login");
       };
     },
-  }
+    getStringFromDate(date, format) {
+        // formatのYYYYを文字列に置換
+        format = format.replace(/YYYY/g, date.getFullYear());
+        // 月を文字列に置換して先頭に0を足し、後ろの2文字を取得してMM部分に置換
+        format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+        // 日を文字列に置換して先頭に0を足し、後ろの2文字を取得してMM部分に置換
+        format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
+        return format;
+    },
+  },
+    computed: {
+      tommorow() {
+        //本日に1日足して翌日の日付を取得
+        const tommorow = this.today.setDate(this.today.getDate()+1);
+        //翌日の日付をYYYY-MM-DDの形式に
+        const tommorowStr = this.getStringFromDate(this.today, 'YYYY-MM-DD');
+        return tommorowStr;
+      }
+    },
+    created() {
+      //本日の日付を取得
+      this.today = new Date();
+    }
 };
 </script>
 
