@@ -151,29 +151,29 @@
     </div>
     <div class="images">
       <h2 class="detail__title">店舗画像</h2>
-      <h3 class="detail__title--sub">店舗画像アップロード</h3>
-      <div class="image__upload">
-        <validation-observer ref="obs" v-slot="ObserverProps">
-          <validation-provider v-slot="ProviderProps" rules="required">
-            <input name="画像" @change="changeFile" ref="rfafile" type="file" />
-            <div class="error">{{ ProviderProps.errors[0] }}</div>
-          </validation-provider>
-          <button class="button--upload" :disabled="ObserverProps.invalid" @click="regist">アップロード</button>
-        </validation-observer>
-      </div>
-      <h3 class="detail__title--sub">店舗画像一覧</h3>
-      <table class="detail__table">
-          <tr>
-            <th>画像URL</th>
-            <th class="td__img">画像</th>
-          </tr>
-          <tr  v-for="URL in imagesURL" :key=URL.id>
-            <td>{{ URL.image_url }}</td>
-            <td>
-              <img class="restaurant__img" :src="URL.image_url">
-            </td>
-          </tr>
-      </table>
+        <h3 class="detail__title--sub">店舗画像アップロード</h3>
+          <div class="image__upload">
+            <validation-observer ref="obs" v-slot="ObserverProps">
+              <validation-provider v-slot="ProviderProps" rules="required">
+                <input name="画像" @change="changeFile" ref="rfafile" type="file" />
+                <div class="error">{{ ProviderProps.errors[0] }}</div>
+              </validation-provider>
+              <button class="button--upload" :disabled="ObserverProps.invalid" @click="upload">アップロード</button>
+            </validation-observer>
+          </div>
+        <h3 class="detail__title--sub">店舗画像一覧</h3>
+          <table class="detail__table">
+              <tr>
+                <th>画像URL</th>
+                <th class="td__img">画像</th>
+              </tr>
+              <tr  v-for="URL in imagesURL" :key=URL.id>
+                <td>{{ URL.image_url }}</td>
+                <td>
+                  <img class="restaurant__img" :src="URL.image_url">
+                </td>
+              </tr>
+          </table>
     </div>
   </div>
 </template>
@@ -263,16 +263,14 @@ export default {
     },
     changeFile(e) {
       const files = e.target.files || e.dataTransfer.files;
-	  // ファイルが選択されたら変数に入れる
+	    // ファイルが選択されたらdataのuploadfileに入れる
       this.uploadfile = files[0];
     },
-    // 送信アクション
-    async regist() {
+    async upload() {
       // パラメータ生成
       const params = new FormData();
       // FormDataにアップロードするファイルを設定
       params.append('photo', this.uploadfile);
-      // API実行
       const response = await this.$axios.post(process.env.BASE_URL+"/api/images",
         params,
         {
