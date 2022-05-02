@@ -29,36 +29,35 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        text: "予約情報取得中...",
-        checked: false,
-        username: "",
-        restaurant_name: "",
-        datetime: "",
-        number: ""
-      }
-    },
-    async mounted() {
-      const queryURL = this.$route.query.queryURL || '';
-      if (queryURL != '') {
-        await this.$axios.get(queryURL)
-          .then(data =>{
-            this.text = "予約情報取得完了";
-            this.checked = true;
-            this.username = data.data.user.name;
-            this.restaurant_name = data.data.restaurant.name;
-            this.datetime = data.data.datetime;
-            this.number = data.data.number;
-          }
-          )
-          .catch(err => {
-            this.text = '予約情報が確認できません';
-          });
-      }
-    },
-  }
+export default {
+  data() {
+    return {
+      text: "予約情報取得中...",
+      checked: false,
+      username: "",
+      restaurant_name: "",
+      datetime: "",
+      number: ""
+    }
+  },
+  async mounted() {
+    const queryURL = this.$route.query.queryURL || '';
+    if (queryURL != '') {
+      const resData = await this.$axios.get(queryURL)
+        try {
+          console.log(resData);
+          this.username = resData.data.data.user.name;
+          this.restaurant_name = resData.data.data.restaurant.name;
+          this.datetime = resData.data.data.datetime;
+          this.number = resData.data.data.number;
+          this.text = "予約情報取得完了";
+          this.checked = true;
+        } catch (error) {
+          this.text = '予約情報が確認できません';
+        };
+    }
+  },
+}
 </script>
 
 <style scoped>
