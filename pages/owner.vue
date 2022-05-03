@@ -270,7 +270,7 @@ export default {
       // パラメータ生成
       const params = new FormData();
       // FormDataにアップロードするファイルを設定
-      params.append('photo', this.uploadfile);
+      params.append('uploadimage', this.uploadfile);
       const response = await this.$axios.post(process.env.BASE_URL+"/api/images",
         params,
         {
