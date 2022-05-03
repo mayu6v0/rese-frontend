@@ -28,6 +28,8 @@
         await this.$axios.$get(queryURL)
           try {
             this.text = "メール認証が完了しました";
+            //email_verified_atがnullのままなのでユーザー情報を再取得
+            this.$auth.fetchUser();
             this.verified = true;
             setTimeout(() => {
               this.$router.push("/mypage");
