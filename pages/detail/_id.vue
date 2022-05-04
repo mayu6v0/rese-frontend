@@ -73,7 +73,6 @@ export default {
         const rating = this.reviewList[i].rating;
         ratingArray.push(rating);
       };
-      console.log(ratingArray);
       return ratingArray;
     },
     averageRating() {

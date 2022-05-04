@@ -14,8 +14,8 @@
             <th>送信先</th>
             <validation-provider v-slot="ProviderProps" rules="required">
               <td>
-                <select class="" v-model="mailTo">
-                  <option value="" name="送信先" selected hidden>送信先を選択</option>
+                <select class="" name="送信先" v-model="mailTo">
+                  <option value=""  selected hidden>送信先を選択</option>
                   <option value="user">全ユーザー</option>
                   <option value="owner">全店舗代表者</option>
                   <option value="admin">全管理者</option>
