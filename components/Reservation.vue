@@ -10,35 +10,47 @@
           </validation-provider>
           <validation-provider v-slot="ProviderProps" rules="required">
             <select class="select__time" name="予約時間" v-model="time">
-              <option value="" selected hidden>Time</option>
+              <option value="" selected hidden>ご予約時間を選択</option>
               <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name }}</option>
             </select>
             <div class="error">{{ ProviderProps.errors[0] }}</div>
           </validation-provider>
           <validation-provider v-slot="ProviderProps" rules="required">
             <select class="select__number" name="人数" v-model="number">
-              <option value="" selected hidden>Number</option>
+              <option value="" selected hidden>ご予約人数を選択</option>
               <option v-for="number in numberList" :key="number.id" :value="number.value">{{ number.name }}人</option>
+            </select>
+            <div class="error">{{ ProviderProps.errors[0] }}</div>
+          </validation-provider>
+          <validation-provider v-slot="ProviderProps" rules="required">
+            <select class="select__payment-method" name="お支払い方法" v-model="paymentMethod">
+              <option value="" selected hidden>お支払い方法を選択</option>
+              <option value="cash">当日現金払い</option>
+              <option value="card">カード払い（予約処理完了後に決済画面に遷移します）</option>
             </select>
             <div class="error">{{ ProviderProps.errors[0] }}</div>
           </validation-provider>
           <div class="confirm">
             <table class="confirm__table">
               <tr>
-                <th>Shop</th>
+                <th>店名</th>
                 <td>{{ name }}</td>
               </tr>
               <tr>
-                <th>Date</th>
+                <th>ご予約日</th>
                 <td>{{ date }}</td>
               </tr>
               <tr>
-                <th>Time</th>
+                <th>ご予約時間</th>
                 <td>{{ time }}</td>
               </tr>
               <tr>
-                <th>Number</th>
+                <th>ご予約人数</th>
                 <td>{{ number }}人</td>
+              </tr>
+              <tr>
+                <th>コース</th>
+                <td>Aコース　お一人様4000円（税込）</td>
               </tr>
             </table>
           </div>
@@ -46,11 +58,21 @@
       </div>
       <button class="reservation-btn" :disabled="ObserverProps.invalid || !ObserverProps.validated" @click="reserve">予約する</button>
     </validation-observer>
+    <stripe-checkout
+      ref="checkoutRef"
+      :pk="publishableKey"
+      :session-id="sessionId"
+    />
   </div>
 </template>
 
 <script>
+import { StripeCheckout } from '@vue-stripe/vue-stripe';
+
 export default {
+  components: {
+    StripeCheckout,
+  },
   props: ["id", "name"],
   data() {
     return {
@@ -85,6 +107,10 @@ export default {
         { value: "9", name: "9" },
         { value: "10", name: "10" },
       ],
+      paymentMethod: '',
+      publishableKey:'pk_test_51KvglMLC0jpceEiOEitdpIxN1hmumOrc7kZ6EhzMu5wS6xrdB7sNElAqOQQams1PiAdEzFSIG6k2fRMITYcTxq9u00t1Hifbvk',
+      loading: false,
+      sessionId: '', // session_id from backend リダイレクト先urlや商品情報をこの中に含む
     };
   },
   methods: {
@@ -96,11 +122,30 @@ export default {
           datetime: this.date +" "+ this.time,
           number: this.number,
         };
-        await this.$axios.post(process.env.BASE_URL+"/api/reservation", sendData);
-        this.$router.push("/done");
+        if(this.paymentMethod === 'cash') {
+          await this.$axios.post(process.env.BASE_URL+"/api/reservation", sendData);
+          this.$router.push("/done");
+        };
+        if(this.paymentMethod === 'card') {
+          const resData = await this.$axios.post(process.env.BASE_URL+"/api/reservation-card", sendData);
+          console.log(resData.data.id);
+          //受け取ったidをsessionIdに代入
+          this.sessionId = resData.data.id;
+          //checkoutに遷移し、決済後フロントエンドにリダイレクト
+          this.$refs.checkoutRef.redirectToCheckout();
+        }
       } else {
         this.$router.push("/login");
       };
+    },
+    async submit () {
+      const res = await this.$axios.post(process.env.BASE_URL+"/api/create-checkout-session", {
+          number: this.number
+      });
+      console.log(res.data.id);
+      this.sessionId = res.data.id;
+      // You will be redirected to Stripe's secure checkout page
+      this.$refs.checkoutRef.redirectToCheckout();
     },
     getStringFromDate(date, format) {
         // formatのYYYYを文字列に置換
@@ -133,7 +178,7 @@ export default {
 .reservation__container {
   box-shadow: 5px 5px 5px gray;
   border-radius: 5px;
-  height: 85%;
+  /* height: 85%; */
   margin: 50px 70px;
 }
 
@@ -142,7 +187,7 @@ export default {
   padding:40px;
   border-radius: 5px 5px 0 0;
   background: #0E3EDA;
-  height: 90%;
+  /* height: 90%; */
 }
 
 .reservation__title {
@@ -150,13 +195,9 @@ export default {
   margin-bottom: 25px;
 }
 
-.select__time {
-  width: 100%;
-  height: 25px;
-  margin-top: 20px;
-}
-
-.select__number {
+.select__time,
+.select__number,
+.select__payment-method {
   width: 100%;
   height: 25px;
   margin-top: 20px;
@@ -187,7 +228,7 @@ export default {
   border: none;
   box-shadow: none;
   width: 100%;
-  height: 10%;
+  /* height: 10%; */
   border-radius: 0 0 5px 5px;
   cursor: pointer;
 }
@@ -199,20 +240,15 @@ export default {
 
 @media screen and (max-width: 768px) {
   .reservation__container {
-  height: 450px;
-  margin-top: 30px;
-}
+    margin-top: 30px;
+  }
+
   .form {
     padding:10px 40px;
-    height: 80%;
   }
 
   .confirm {
   padding: 10px;
 }
-
-  .reservation-btn {
-    height: 20%;
-  }
 }
 </style>

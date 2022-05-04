@@ -1,8 +1,9 @@
 <template>
   <div class="container">
     <div class="card__done">
-      <p class="card__ttl">ご予約ありがとうございます</p>
-      <p class="card__txt">ご登録のメールアドレスに予約完了メールをお送りしております</p>
+      <p class="card__ttl">お支払いがキャンセルされました</p>
+      <p class="card__txt">ご予約は完了しております。</p>
+      <p class="card__txt">ご登録のメールアドレス宛の予約完了メールをご確認ください。</p>
       <button @click="goToMypage">戻る</button>
     </div>
   </div>
@@ -12,7 +13,7 @@
 export default {
   methods: {
     goToMypage() {
-    this.$router.push("/mypage");
+    this.$router.push('/mypage');
     },
   }
 }

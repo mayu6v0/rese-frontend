@@ -23,7 +23,12 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    head: {
+    script: [
+      { src: 'https://js.stripe.com/v3' },
+    ],
+  },
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -53,7 +58,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    'nuxt-fontawesome'
+    'nuxt-fontawesome',
+    // '@vue-stripe/vue-stripe'
   ],
   fontawesome: {
     component: "fa",
