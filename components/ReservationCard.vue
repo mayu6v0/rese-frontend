@@ -98,6 +98,7 @@ export default {
       await this.$axios.put(process.env.BASE_URL+"/api/reservation/"+this.id, sendData);
       this.$emit('get-reservation-list');
       this.update = !this.update;
+      alert('予約変更が完了しました');
     },
     getStringFromDate(date, format) {
         // formatのYYYYを文字列に置換
