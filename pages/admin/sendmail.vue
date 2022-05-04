@@ -60,10 +60,10 @@ export default {
   },
   methods: {
     goToNewOwner() {
-      this.$router.push("/admin");
+      this.$router.push("/admin/createowner");
     },
     goToSendMail() {
-      this.$router.push("/sendmail");
+      this.$router.push("/admin/sendmail");
     },
     async sendMail() {
       const sendData = {

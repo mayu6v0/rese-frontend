@@ -208,10 +208,10 @@ export default {
   },
   methods: {
     goToRestaurantInfo() {
-      this.$router.push("/owner");
+      this.$router.push("/owner/restaurantinfo");
     },
     goToReservationInfo() {
-      this.$router.push("/reservationinfo");
+      this.$router.push("/owner/reservationinfo");
     },
     // 店舗情報を取得する
     async getDetail() {
