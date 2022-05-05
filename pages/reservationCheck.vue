@@ -30,6 +30,7 @@
 
 <script>
 export default {
+  middleware: ['auth', 'owner', 'emailVerify'],
   data() {
     return {
       text: "予約情報取得中...",
