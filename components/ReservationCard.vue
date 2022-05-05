@@ -27,7 +27,7 @@
       <div v-else class="update">
         <p class="update__title">予約変更</p>
         <p class="restaurant__name">shop: {{ name }}</p>
-        <input class="select__date" type="date" v-model="newDate" ><br />
+        <input class="select__date" type="date" v-model="newDate" :min="tommorow"><br />
         <select class="select__time" v-model="newTime">
           <option value="" selected hidden>Time</option>
           <option v-for="time in timeList" :key="time.id" :value="time.value">{{ time.name}}</option>
@@ -52,6 +52,7 @@ export default {
       newDate: "",
       newTime: "",
       newNumber: this.number,
+      today: "",
       timeList: [
         { value: "17:00", name: "17:00" },
         { value: "17:30", name: "17:30" },
@@ -130,7 +131,18 @@ export default {
       this.newTime = this.getStringFromTime(this.reservationDate, 'hh:mm');
       return this.newTime;
     },
+    tommorow() {
+        //本日に1日足して翌日の日付を取得
+        const tommorow = this.today.setDate(this.today.getDate()+1);
+        //翌日の日付をYYYY-MM-DDの形式に
+        const tommorowStr = this.getStringFromDate(this.today, 'YYYY-MM-DD');
+        return tommorowStr;
+      }
   },
+  created() {
+      //本日の日付を取得
+      this.today = new Date();
+    }
 };
 </script>
 
