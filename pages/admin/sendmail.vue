@@ -159,4 +159,12 @@ button {
   color: red;
   font-size: 14px;
 }
+
+@media screen and (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    max-width: 400px;
+  }
+}
 </style>

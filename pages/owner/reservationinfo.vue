@@ -174,7 +174,7 @@ export default {
 }
 
 .restaurant__info th {
-  width: 100px;
+  /* width: 100px; */
 }
 
 .reservation {
@@ -193,7 +193,7 @@ export default {
 
 .reservation__table {
   margin: 20px auto 0;
-  width: 1000px;
+  max-width: 1000px;
 }
 
 .reservation__table tr,th,td {
@@ -223,5 +223,11 @@ button {
   padding: 10px 30px;
   margin: 30px auto 0;
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .reservation__table {
+      max-width: 500px;
+  }
 }
 </style>

@@ -277,4 +277,12 @@ button {
   color: red;
   font-size: 14px;
 }
+
+@media screen and (max-width: 768px) {
+  .table__create,
+  .table__owner,
+  .table__admin {
+    max-width: 600px;
+  }
+}
 </style>

@@ -150,8 +150,8 @@
       </validation-observer>
     </div>
     <div class="images">
-      <h2 class="detail__title">店舗画像</h2>
-        <h3 class="detail__title--sub">店舗画像アップロード</h3>
+      <h2 class="image__title">店舗画像</h2>
+        <h3 class="image__title--sub">店舗画像アップロード</h3>
           <div class="image__upload">
             <validation-observer ref="obs" v-slot="ObserverProps">
               <validation-provider v-slot="ProviderProps" rules="required">
@@ -161,16 +161,16 @@
               <button class="button--upload" :disabled="ObserverProps.invalid" @click="upload">アップロード</button>
             </validation-observer>
           </div>
-        <h3 class="detail__title--sub">店舗画像一覧</h3>
-          <table class="detail__table">
+        <h3 class="image__title--sub">店舗画像一覧</h3>
+          <table class="image__table">
               <tr>
                 <th>画像URL</th>
-                <th class="td__img">画像</th>
+                <th>画像</th>
               </tr>
               <tr  v-for="URL in imagesURL" :key=URL.id>
                 <td>{{ URL.image_url }}</td>
                 <td>
-                  <img class="restaurant__img" :src="URL.image_url">
+                  <img class="restaurant__img--list" :src="URL.image_url">
                 </td>
               </tr>
           </table>
@@ -350,7 +350,8 @@ export default {
   background-color: #fff;
 }
 
-.detail__title {
+.detail__title,
+.image__title {
   font-size: 25px;
   color: #fff;
   padding: 20px;
@@ -359,7 +360,7 @@ export default {
 
 input,
 select {
-  width: 600px;;
+  width: 600px;
   height: 30px;
 }
 
@@ -368,21 +369,19 @@ textarea {
   height: 100px;
 }
 
-.detail__table {
-  width: 800px;
+.detail__table,
+.image__table {
+  max-width: 800px;
   margin: 20px auto;
 }
 
-.detail__table th {
+.detail__table th
+.image__table th {
   vertical-align: middle;
 }
 
-.th {
-  width: 200px;
-}
-
-.td__img {
-  width: 100%;
+.image__table td {
+  padding: 0px;
 }
 
 button {
@@ -403,7 +402,7 @@ button {
   padding: 30px;
 }
 
-.detail__title--sub {
+.image__title--sub {
   font-size: 18px;
   padding: 10px;
   color: #fff;
@@ -415,8 +414,36 @@ button {
   padding: 10px 20px;
 }
 
+.restaurant__img--list {
+  width: 100%;
+}
+
 .error {
   color: red;
   font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+  .detail__table,
+  .image__table {
+    max-width: 500px;
+  }
+
+  input,
+  select {
+    width: 400px;
+    height: 30px;
+  }
+
+  textarea {
+    width: 400px;
+    height: 100px;
+  }
+
+  .detail__table,
+  .image__table {
+    max-width: 700px;
+    margin: 20px auto;
+  }
 }
 </style>

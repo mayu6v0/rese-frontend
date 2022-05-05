@@ -25,7 +25,7 @@
           <validation-provider v-slot="ProviderProps" rules="required">
             <select class="select__payment-method" name="お支払い方法" v-model="paymentMethod">
               <option value="" selected hidden>お支払い方法を選択</option>
-              <option value="cash">当日現金払い</option>
+              <option value="cash">現地払い</option>
               <option value="card">カード払い（予約処理完了後に決済画面に遷移します）</option>
             </select>
             <div class="error">{{ ProviderProps.errors[0] }}</div>
