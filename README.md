@@ -8,7 +8,7 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 <br>
 [rese-backend](https://github.com/mayu6v0/rese-backend.git)
 
-## 開発環境
+## 使用技術
 * Nuxt.js　2.15.8
 * PHP 7.4.21
 * Laravel framework 8.75
