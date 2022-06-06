@@ -13,7 +13,7 @@ Rese(リーズ)はある企業のグループ会社の飲食店予約サービ�
 * PHP 7.4.21
 * Laravel framework 8.75
 
-## URL
+## URL 変更
 <https://rese-nuxt.herokuapp.com>
 
 
